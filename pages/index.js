@@ -6,7 +6,14 @@ import Fotter from '../components/footer'
 
 
 
-export default function Home() {
+
+
+
+export default function Home(props) {
+  
+  console.log(props)
+  
+  
   return (
     <div className='bg-[blue] h-full'>
      

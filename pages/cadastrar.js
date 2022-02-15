@@ -9,7 +9,7 @@ export default function Cadastrar() {
                 <div>
                     <form action={`${process.env.DB_HOST + '/usuario'}`} method="POST">
                         <label for="name">Name</label>
-                        <input id="name" type="text" autocomplete="name" required />
+                        <input id="name" type="text" name="name" required />
                         <button type="submit">Register</button>
                     </form>
                 </div>

@@ -9,9 +9,9 @@ import Fotter from '../components/footer'
 
 
 
-export default function Home(props) {
+export default function Home() {
   
-  console.log(props)
+ 
   
   
   return (

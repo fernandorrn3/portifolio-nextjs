@@ -7,11 +7,7 @@ export default function Cadastrar() {
         <div className="grid grid-cols-12 grid-rows-6 h-full ">
             <div className="flex justify-center items-center col-start-1 col-end-13 row-start-1 row-end-7 bg-[pink] ">
                 <div>
-                    <form action={`${process.env.DB_HOST + '/usuario'}`} method="POST">
-                        <label for="name">Name</label>
-                        <input id="name" type="text" name="name" required />
-                        <button type="submit">Register</button>
-                    </form>
+                  <h1>so 1 teste</h1>
                 </div>
             </div>
 

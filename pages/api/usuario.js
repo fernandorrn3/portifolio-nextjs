@@ -8,19 +8,50 @@ export default async function handler(req, res) {
    
   switch(req.method ){
 case 'POST':
-    console.log(req.body.email)
-    const newUser = await prisma.user.create({
+
+
+  const users = await prisma.user.findMany({})
+let checaadm;
+if(!users.length){
+  console.log('array vazio')
+  checaadm = true;
+}else{
+  console.log('array cheio')
+  checaadm = false;
+}
+
+
+    async function main(){
+      const newUser = await prisma.user.create({
         data: {
-          name: 'leandro',
-          email:'jotinha@gmail.com',
-         senha: 'sdfsdfsdfsdf',
-          isAdmin:true
-        },
+          name: req.body.name,
+          email:req.body.email,
+          senha: req.body.senha,
+          isAdmin:checaadm
+        }
       })
       
-      const users = await prisma.user.findMany()
+    }
+main().then(()=>  res.status(200).json({enviou:'login Feito com sucesso'}))
 
-      res.json(req.body.email)
+    
+  .catch((e) => {
+    
+    res.json({enviou:'Email ja Cadastrado tente outro'})
+    throw e
+
+   
+
+    
+  })
+  .finally(async () => {
+    await prisma.$disconnect()
+   
+  })
+   
+  
+
+      
     break;
   case 'GET':
     

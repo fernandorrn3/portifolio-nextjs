@@ -1,13 +1,15 @@
 import Layout from "../components/layout"
 import Header from "../components/header"
 import Fotter from "../components/footer"
+import { useRouter } from 'next/router';
 import { useState } from "react"
 export default function Cadastrar() {
 
     const [nome,setNome] = useState()
     const [email,setEmail] = useState()
     const [senha,setSenha] = useState()
-
+    const [mensagem,setMensagem] = useState({})
+    const router = useRouter();
     
 
 const registerUser = async (e) =>{
@@ -34,15 +36,26 @@ const registerUser = async (e) =>{
 
 
     const result = await res.json()
-    
-     console.log(result)
+    const status = await res.status
+   if(status === 200){
+router.push('/')
+   }
+   setMensagem(result)
+
+   
     
 }
+
+
 
     return (
         <div className="grid grid-cols-12 grid-rows-6 h-full ">
             <div className="flex justify-center items-center col-start-1 col-end-13 row-start-1 row-end-7 bg-[pink] ">
                 <div>
+{Object.keys(mensagem).length > 0 &&
+<p>{mensagem.enviou}</p>
+}
+                
                     <form onSubmit={registerUser} action={`${process.env.DB_HOST + '/usuario'}`} method="POST">
                         <label>Nome</label><br/>
                         <input type="text" name="name" id="nome" onChange={(e) => setNome(e.target.value)}/><br/>

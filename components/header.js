@@ -1,5 +1,5 @@
 import Navbar from './navbar'
-
+import VerificaLogin from './verificalogin'
 export default function Header (){
 
     return(
@@ -7,8 +7,12 @@ export default function Header (){
     <header>
 <Navbar/>
 
+
+
     </header>
     </> 
     )
    
 }
+
+

@@ -1,9 +1,9 @@
 
 import Layout from '../components/layout'
 import Header from '../components/header'
-import Navbar from '../components/navbar'
-import Fotter from '../components/footer'
 
+import Fotter from '../components/footer'
+import VerificaLogin from '../components/verificalogin'
 
 
 
@@ -26,13 +26,3 @@ export default function Home() {
 
 
 
-
-Home.getLayout = function getLayout(Home) {
-  return (
-    <Layout>
-      <Header/>
-    {Home}
-    <Fotter/>
-    </Layout>
-  )
-}

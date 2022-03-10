@@ -1,7 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const { PrismaClient } = require('@prisma/client')
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  errorFormat: 'pretty'
+})
 
 
 export default async function handler(req, res) {
@@ -10,45 +12,51 @@ export default async function handler(req, res) {
 case 'POST':
 
 
+
   const users = await prisma.user.findMany({})
-let checaadm;
-if(!users.length){
-  console.log('array vazio')
-  checaadm = true;
-}else{
-  console.log('array cheio')
-  checaadm = false;
-}
-
-
-    async function main(){
-      const newUser = await prisma.user.create({
-        data: {
-          name: req.body.name,
-          email:req.body.email,
-          senha: req.body.senha,
-          isAdmin:checaadm
-        }
-      })
+  let checaadm;
+  if(!users.length){
+    console.log('array vazio')
+    checaadm = true;
+  }else{
+    console.log('array cheio')
+    checaadm = false;
+  }
+  
+  
+      async function main(){
+        const newUser = await prisma.user.create({
+          data: {
+            name: req.body.name,
+            email:req.body.email,
+            senha: req.body.senha,
+            isAdm:checaadm
+          }
+        })
+        
+      }
+  main()
+  .then(()=>  res.status(200).json({enviou:'login Feito com sucesso'}))
+  
       
-    }
-main().then(()=>  res.status(200).json({enviou:'login Feito com sucesso'}))
+    .catch((e) => {
+      
+      res.json({enviou:'Email ja Cadastrado tente outro'})
+      throw e
+  
+     
+  
+      
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+     
+    })
+     
 
-    
-  .catch((e) => {
-    
-    res.json({enviou:'Email ja Cadastrado tente outro'})
-    throw e
 
-   
 
-    
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-   
-  })
-   
+
   
 
       

@@ -11,7 +11,9 @@ export default async function handler(req, res) {
   switch(req.method ){
 case 'POST':
 
-
+if(req.nome, req.email, req.senha === undefined ){
+ res.status(400).json({enviou:'complete os campos '})
+} else{
 
   const users = await prisma.user.findMany({})
   let checaadm;
@@ -54,7 +56,7 @@ case 'POST':
     })
      
 
-
+}
 
 
   

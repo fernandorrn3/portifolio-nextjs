@@ -1,9 +1,9 @@
+import { signOut, useSession } from "next-auth/react";
 
-import Layout from '../components/layout'
 import Header from '../components/header'
 
 import Fotter from '../components/footer'
-import VerificaLogin from '../components/verificalogin'
+
 
 
 
@@ -11,18 +11,26 @@ import VerificaLogin from '../components/verificalogin'
 
 export default function Home() {
   
- 
+  const { data: session } = useSession();
   
-  
+  console.log(session)
   return (
     <div className='bg-[blue] h-full'>
      
       
-     <h1>index</h1>
+     <h1>home page</h1>
     
     </div>
   )
 }
 
-
+Home.getLayout = function (Home) {
+  return (
+      <Layout>
+          <Header />
+          {Home}
+          <Fotter />
+      </Layout>
+  )
+}
 

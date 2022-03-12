@@ -11,7 +11,11 @@ export default async function handler(req, res) {
   switch(req.method ){
 case 'POST':
 
-if(req.nome, req.email, req.senha === undefined ){
+
+
+
+if(!req.body.name && !req.body.email && !req.body.senha){
+  console.log('esta vazio')
  res.status(400).json({enviou:'complete os campos '})
 } else{
 
@@ -35,15 +39,18 @@ if(req.nome, req.email, req.senha === undefined ){
             isAdm:checaadm
           }
         })
+
+        res.status(200).json({enviou:'login Feito com sucesso'})
         
       }
   main()
-  .then(()=>  res.status(200).json({enviou:'login Feito com sucesso'}))
+
   
       
     .catch((e) => {
       
-      res.json({enviou:'Email ja Cadastrado tente outro'})
+      res.status(400).json({enviou:'Email ja Cadastrado tente outro'})
+      console.log('email cadastrado')
       throw e
   
      

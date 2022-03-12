@@ -20,6 +20,7 @@ const registerUser = async (e) =>{
         email:email,
         senha:senha
     }
+    console.log(process.env.NEXT_PUBLIC_DB_HOST)
     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'usuario', 
     {
         body:JSON.stringify(data),

@@ -1,7 +1,10 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function VerificaLogin() {
+
+    
   const { data: session } = useSession()
+ 
   if (session) {
     return (
       <>

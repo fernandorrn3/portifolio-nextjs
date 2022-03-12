@@ -1,24 +1,59 @@
 import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient()
+import CredentialsProvider from "next-auth/providers/credentials"
+
+
+
+
 export default NextAuth({
-  adapter: PrismaAdapter(prisma),
+  
   // Configure one or more authentication providers
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
     CredentialsProvider({
-      name: 'entra ae',
+      name: 'Credencial',
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        username: { label: "email", type: "email" },
         password: {  label: "Password", type: "password" }
       },
-    })
+      async authorize(credentials, req) {
+        const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'serchuser',{
+          method: 'POST',
+          body: JSON.stringify(credentials),
+          headers:{"Content-Type": "application/json"}
+
+        })
+
+        const user = await res.json()
+       console.log(user)
+ if (res.ok && user) {
+        return user
+      }
+      // Return null if user data could not be retrieved
+      return null
+       
+      }
+    }),
+
+ 
   ],
+
+  callbacks: {
+    async jwt({ token, user }) {
+      // Persist the OAuth access_token to the token right after signin
+      if (user) {
+        token.accessToken = user.access_token
+      }
+      return token
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.accessToken = token.accessToken
+      return session
+    }
+  },
+  secret: "test",
+  jwt: {
+    secret: "test",
+    encryption: true,
+  },
 })

@@ -6,20 +6,29 @@ export default async function handler(req, res){
 switch(req.method){
 case 'POST':
 
-const usuario = {
-
-}
 
 async function main(){
-    const finduser = await prisma.User.findUnique({
+    const findemail = await prisma.User.findUnique({
         where:{
             email:req.body.username
+            
         }
     })
 
+   const findPass = await prisma.User.findMany({
+     where:{
+       senha:req.body.password
+     },
     
+   })
 
-   res.json(finduser) 
+   if(findPass.length === 0){
+     console.log('senha errada')
+
+     res.status(400).json({error:'senha errada'})
+   }
+
+   res.json(findemail) 
 
    
     

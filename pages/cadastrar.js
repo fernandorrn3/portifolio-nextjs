@@ -6,6 +6,7 @@ import { useState } from "react"
 export default function Cadastrar() {
 
     const [nome,setNome] = useState()
+    const [userName,setUserName] = useState()
     const [email,setEmail] = useState()
     const [senha,setSenha] = useState()
     const [mensagem,setMensagem] = useState({})
@@ -18,7 +19,8 @@ const registerUser = async (e) =>{
     const data = {
         name:nome,
         email:email,
-        senha:senha
+        senha:senha,
+        username:userName
     }
     console.log(process.env.NEXT_PUBLIC_DB_HOST)
     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'usuario', 
@@ -60,6 +62,9 @@ router.push('/')
                     <form onSubmit={registerUser} action={`${process.env.DB_HOST + '/usuario'}`} method="POST">
                         <label>Nome</label><br/>
                         <input type="text" name="name" id="nome" onChange={(e) => setNome(e.target.value)}/><br/>
+
+                        <label>userName</label><br/>
+                        <input type="text" name="name" id="nome" onChange={(e) => setUserName(e.target.value)}/><br/>
 
                         <label>Email</label><br/>
                         <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}/><br/>

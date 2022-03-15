@@ -4,7 +4,7 @@ export default function Navbar(){
     
     return(
        
-       <div className="grid grid-cols-12">
+       <div className="grid grid-cols-12 bg-[yellow]">
 <div className="col-span-5">
 <VerificaLogin/>
 

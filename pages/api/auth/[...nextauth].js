@@ -24,7 +24,7 @@ export default NextAuth({
         })
 
         const user = await res.json()
-       console.log(user)
+     
  if (res.ok && user) {
         return user
       }
@@ -48,6 +48,8 @@ export default NextAuth({
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken
+      
+     
       return session
     }
   },
@@ -56,4 +58,8 @@ export default NextAuth({
     secret: "test",
     encryption: true,
   },
+
+  pages:{
+    signIn: '/credentials-signin',
+  }
 })

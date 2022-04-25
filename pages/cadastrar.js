@@ -1,10 +1,12 @@
 import Layout from "../components/layout"
-import Header from "../components/header"
-import Fotter from "../components/footer"
+
 import { useRouter } from 'next/router';
 import { useState } from "react"
-export default function Cadastrar() {
+import { useSession } from "next-auth/react"
 
+
+export default function Cadastrar() {
+    const { data: session, status } = useSession()
     const [nome,setNome] = useState()
     const [userName,setUserName] = useState()
     const [email,setEmail] = useState()
@@ -12,6 +14,10 @@ export default function Cadastrar() {
     const [mensagem,setMensagem] = useState({})
     const router = useRouter();
     
+
+    if (status === "authenticated") {
+        router.push('/')
+      }
 
 const registerUser = async (e) =>{
     e.preventDefault()
@@ -23,7 +29,7 @@ const registerUser = async (e) =>{
         username:userName
     }
     console.log(process.env.NEXT_PUBLIC_DB_HOST)
-    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'usuario', 
+    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'cadastraUser', 
     {
         body:JSON.stringify(data),
 
@@ -52,6 +58,7 @@ router.push('/')
 
 
     return (
+        <Layout> 
         <div className="grid grid-cols-12 grid-rows-6 h-full ">
             <div className="flex justify-center items-center col-start-1 col-end-13 row-start-1 row-end-7 bg-[pink] ">
                 <div>
@@ -83,16 +90,7 @@ router.push('/')
             </div>
 
         </div>
-
-    )
-}
-
-Cadastrar.getLayout = function (Cadastrar) {
-    return (
-        <Layout>
-            <Header />
-            {Cadastrar}
-            <Fotter />
         </Layout>
     )
 }
+

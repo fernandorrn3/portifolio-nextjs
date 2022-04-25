@@ -1,7 +1,9 @@
 import { getCsrfToken } from "next-auth/react"
+import Layout from "../components/layout"
 
 export default function SignIn({ csrfToken }) {
   return (
+    <Layout>
     <div className="grid grid-cols-12 h-full bg-[orange] grid-rows-6 ">
 
 
@@ -26,6 +28,7 @@ export default function SignIn({ csrfToken }) {
    
 
     </div>
+    </Layout>
   
   )
 }

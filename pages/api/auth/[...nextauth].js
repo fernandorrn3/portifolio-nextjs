@@ -16,7 +16,7 @@ export default NextAuth({
         password: {  label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
-        const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'serchuser',{
+        const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'loginUser',{
           method: 'POST',
           body: JSON.stringify(credentials),
           headers:{"Content-Type": "application/json"}
@@ -39,15 +39,21 @@ export default NextAuth({
 
   callbacks: {
     async jwt({ token, user }) {
+     
       // Persist the OAuth access_token to the token right after signin
       if (user) {
         token.accessToken = user.access_token
+        token.username = user.username
       }
+
+     
+      
       return token
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken
+      session.username = token.username
       
      
       return session
@@ -57,7 +63,10 @@ export default NextAuth({
   jwt: {
     secret: "test",
     encryption: true,
+   
   },
+
+
 
   pages:{
     signIn: '/credentials-signin',

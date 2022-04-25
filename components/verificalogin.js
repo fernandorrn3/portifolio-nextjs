@@ -7,16 +7,20 @@ export default function VerificaLogin() {
  
   if (session) {
     return (
+      
       <>
        
         <button onClick={() => signOut()}>Sign out</button>
       </>
+    
     )
   }
   return (
+    
     <>
       
       <button onClick={() => signIn()}>Sign in</button>
     </>
+
   )
 }

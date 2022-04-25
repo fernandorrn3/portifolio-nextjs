@@ -1,36 +1,34 @@
-import { signOut, useSession } from "next-auth/react";
 
-import Header from '../components/header'
-
-import Fotter from '../components/footer'
-
+import { useSession } from "next-auth/react"
+import Layout from "../components/layout"
 
 
 
 
 
 export default function Home() {
-  
-  const { data: session } = useSession();
-  
-  console.log(session)
+ 
+  const { data: session, status } = useSession()
+ console.log(session)
   return (
+    <Layout> 
     <div className='bg-[blue] h-full'>
      
       
      <h1>home page</h1>
     
     </div>
+    </Layout>
   )
 }
 
-Home.getLayout = function (Home) {
-  return (
-      <Layout>
-          <Header />
-          {Home}
-          <Fotter />
-      </Layout>
-  )
-}
+
+
+
+
+
+
+
+
+
 

@@ -1,13 +1,15 @@
-import VerificaLogin from "./verificalogin"
 
+import VerificaLogin from './verificalogin'
 export default function Navbar(){
     
     return(
        
        <div className="grid grid-cols-12 bg-[yellow]">
 <div className="col-span-5">
-<VerificaLogin/>
 
+
+      <VerificaLogin />
+    
 </div>
 <div className="col-span-7">2</div>
        </div>
@@ -15,5 +17,9 @@ export default function Navbar(){
        
     )
 }
+
+
+
+
 
 

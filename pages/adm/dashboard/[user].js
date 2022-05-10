@@ -1,16 +1,36 @@
-import { useSession, getSession } from "next-auth/react"
+import { useSession  } from "next-auth/react"
 import { useRouter } from 'next/router'
 import Layoutpanel from "../../../components/layoutpanel"
-import Botaomenu from "../../../components/btnmenu"
-import {useState} from 'react'
+import Botaomenu from '../../../components/elementos/btnmenu'
+import { useSelector } from 'react-redux'
 
-function Paineladm({ error,finduser }) {
+import {useState,useEffect } from "react";
+
+
+function Paineladm() {
   const { data: session, status } = useSession()
+  const [error,setError] = useState()
   const router = useRouter()
   const { user } = router.query
-  const [valor,setvalor] = useState(false)
+  const estado = useSelector((state) => state.menu)
+  
+  
+
+  useEffect(async ()=>{
+    if(!user){
+      return
+    }
+const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/dashboard/'  + user)
+const result = await res.json()
+const status = res.status
+if(status === 401){
+  setError(result.mensagem)
+}
+
+  },[router])
 
 
+  
 
   if (status === "unauthenticated") {
     return(
@@ -23,30 +43,34 @@ function Paineladm({ error,finduser }) {
      return null;
    }
 
+
+
 if(session.username != user){
   return (
     <h1>Acesso negado</h1>
   )
 }  
-if (error){
-    return(
-      <><h1>{error}</h1></>
-    )
-  } 
 
 
 
+if(error){
+  router.push('/')
+}
 
   
 
 
 
   return(
-    <Layoutpanel>
+   
+ <div className="h-full">
+
      
-     {valor 
-     ?<div className='bg-[blue] h-full ml-[250px]'> 
-<Botaomenu setvalor={setvalor} valor={valor}/>
+     {estado.estado 
+     ?<div className='bg-[blue] h-full ml-[220px] transition-all duration-700'> 
+
+
+        <Botaomenu />
       
       <h1>dashboard page</h1>
      
@@ -54,8 +78,8 @@ if (error){
     
      </div>
 
-     :<div className='bg-[blue] h-full ml-[220px]'>
-<Botaomenu setvalor={setvalor} valor={valor}/>
+     :<div className='bg-[blue] h-full ml-[0] transition-all duration-700'>
+<Botaomenu />
       
       <h1>dashboard page</h1>
     
@@ -65,11 +89,11 @@ if (error){
       }
     
     
+    </div>
+   
 
     
-    
-    
-    </Layoutpanel>
+   
     
   )
 }
@@ -77,7 +101,7 @@ if (error){
 
  
 // This function gets called at build time
-export async function getStaticPaths() {
+/*export async function getStaticPaths() {
  
 const { PrismaClient,Prisma } = require('@prisma/client')
 
@@ -111,9 +135,10 @@ const paths = finduser.map((usuario)=>({
 
 export async function getStaticProps({params}) {
  
-console.log(await getSession())
 
 
+  
+  
 
 const { PrismaClient,Prisma } = require('@prisma/client')
 const prisma = new PrismaClient({
@@ -131,13 +156,13 @@ const prisma = new PrismaClient({
     }
   })
 
- 
+
   try {
 
     if(finduser === null) throw 'usuario nao encontrado acesso negado'
     
     if(!finduser.isAdm) throw 'acesso negado, usuario nao tem permissao para acessar essa rota'
-    if(finduser.isAdm) return {props:{finduser}}
+    if(finduser.isAdm) return {props:{params}}
     
     
   } catch (error) {
@@ -148,11 +173,20 @@ const prisma = new PrismaClient({
 
   return {props: {params}}
  
+}*/
+
+
+
+Paineladm.getLayout = function getLayout(page){
+ 
+  return(
+    <Layoutpanel>
+      
+    {page}
+  </Layoutpanel>
+  )
+ 
 }
-
-
-
-
 
 export default  Paineladm
 

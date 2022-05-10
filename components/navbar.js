@@ -1,5 +1,5 @@
 
-import VerificaLogin from './verificalogin'
+import VerificaLogin from "./elementos/verificalogin"
 export default function Navbar(){
     
     return(

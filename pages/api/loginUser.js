@@ -12,18 +12,26 @@ export default async function handler(req, res) {
           where: {
              email:req.body.username
           },
+        
+          
         })
 
-      
+      const usuario = {
+username:findemail.username,
+email:findemail.email
+      }
 
     try{
 if(findemail === null) throw "email incorreto"
 if(findemail.senha != req.body.password) throw 'senha errada'
-if(findemail.email === req.body.username && findemail.senha === req.body.password) res.json(findemail)
+if(findemail.email === req.body.username && findemail.senha === req.body.password) res.status(200).json(usuario)
     }
 
     catch(err){
-console.log(err)
+     
+      res.status(400).json({mensagem:err})
+      
+
     }
 
      

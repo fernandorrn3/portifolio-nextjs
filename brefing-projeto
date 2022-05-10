@@ -1,0 +1,25 @@
+  usuario vai se inscrever
+  o login que o usuario se inscrever no sistema A  ira ser o login de acesso adm sistema B
+
+  apos realizar a compra ira fazer o cadastro na base de dados
+  passar os modelos do sistema para a base de dados atraves do comando db push
+
+  as informaçoes da base de dados ira se encontrar no menu do painel do adm
+
+  as credencias para puxar os dados da base de dados do usuario ira ser salva no banco de dados do sistema (A) principal
+  essa chave sera necessaria para puxar as informaçoes da base de dados para o sistema (A) 
+
+
+
+sistema A/ usuario infos / salvar credencias acossiada a esse usuario / puxar dados da base de dados
+
+
+=> criar o cms
+=>criar a base de dados com o prisma
+=>criar conta basea de dados
+=>fazer db push para a base de dados heroku
+=>hospedar os arquivos no nestfly
+
+
+
+//

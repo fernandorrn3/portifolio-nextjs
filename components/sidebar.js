@@ -1,11 +1,34 @@
-export default function Sidebar(){
+import MenuElemento from "./elementos/menuElemento"
+import { useSelector } from 'react-redux'
+export default function Sidebar(valor){
+
+  const estado = useSelector((state) => state.menu)
+  
+
+  
     return(
-  <div className="w-[220px]  h-full bg-[red] fixed  left-0 top-0">
-   <p>opcao 1</p>
-   <p>opcao 2</p>
-   <p>opcao 3</p>
-   <p>opcao 4</p>
+<div className="h-full">
+
+{estado.estado? 
+
+<div className="w-[220px] transition-all duration-700   flex-col  h-full bg-[red] fixed overflow-x-hidden left-0 top-0 ">
     
+    <MenuElemento/>
+    
+     
+     </div>
+
+:
+
+<div className="w-[0]   transition-all duration-700 flex-col h-full bg-[red] fixed overflow-x-hidden left-0 top-0 ">
+    
+<MenuElemento/>
+     
+     </div>
+     
+     }
+
+  
     </div>
     )
 }

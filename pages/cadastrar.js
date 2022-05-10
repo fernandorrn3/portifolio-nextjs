@@ -14,7 +14,7 @@ export default function Cadastrar() {
     const [mensagem,setMensagem] = useState({})
     const router = useRouter();
     
-
+    
     if (status === "authenticated") {
         router.push('/')
       }
@@ -22,13 +22,15 @@ export default function Cadastrar() {
 const registerUser = async (e) =>{
     e.preventDefault()
 
+
+
     const data = {
         name:nome,
         email:email,
         senha:senha,
         username:userName
     }
-    console.log(process.env.NEXT_PUBLIC_DB_HOST)
+   
     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'cadastraUser', 
     {
         body:JSON.stringify(data),
@@ -45,14 +47,14 @@ const registerUser = async (e) =>{
 
 
     const result = await res.json()
-    const status = await res.status
+    const status =  res.status
    if(status === 200){
 router.push('/')
    }
    setMensagem(result)
 
    
-    
+   
 }
 
 

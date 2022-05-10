@@ -24,12 +24,20 @@ export default NextAuth({
         })
 
         const user = await res.json()
+        const status = res.status
+       
      
- if (res.ok && user) {
+ if (status === 200) {
         return user
+      }else{
+        
+        throw new Error(user.mensagem)
+
+      
       }
-      // Return null if user data could not be retrieved
-      return null
+      
+      
+     
        
       }
     }),
@@ -38,6 +46,9 @@ export default NextAuth({
   ],
 
   callbacks: {
+
+    
+ 
     async jwt({ token, user }) {
      
       // Persist the OAuth access_token to the token right after signin
@@ -69,6 +80,9 @@ export default NextAuth({
 
 
   pages:{
-    signIn: '/credentials-signin',
+    signIn: '/credentialsSignin',
+    error: '/credentialsSignin'
+ 
+      
   }
 })

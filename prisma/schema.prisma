@@ -18,7 +18,8 @@ model User {
   username      String    @unique
   email         String    @unique
   senha         String
-  emailVerified DateTime?
+  emailVerified Boolean
+  linkemail     String
   isAdm         Boolean   @default(false)
   image         String?
  

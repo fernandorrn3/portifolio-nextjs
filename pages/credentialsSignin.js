@@ -1,7 +1,16 @@
 import { getCsrfToken } from "next-auth/react"
 import Layout from "../components/layout"
-
+import { useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
+import { useRouter } from 'next/router'
 export default function SignIn({ csrfToken }) {
+  const { data: session, status,user } = useSession()
+  const router = useRouter()
+  console.log(router.query.error);
+
+  
+
+ 
   return (
     <Layout>
     <div className="grid grid-cols-12 h-full bg-[orange] grid-rows-6 ">
@@ -15,11 +24,14 @@ export default function SignIn({ csrfToken }) {
       <label>Username</label><br/>
       <input name="username" type="text" /><br/>
       <label>Password</label><br/>
+      
       <input name="password" type="password" /><br/>
       
       <button type="submit">Sign in</button>
     </form> 
 
+    
+   
      </div>
      
      

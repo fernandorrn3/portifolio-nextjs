@@ -1,5 +1,7 @@
 
 
+
+
 export default function Cliente(){
 const buscaClientes = async () =>{
    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'teste',{
@@ -9,6 +11,7 @@ const buscaClientes = async () =>{
 method:'POST'
    })
    const status = res.status
+   
    const response = await res.json()
    console.log(status)
 }

@@ -9,10 +9,7 @@ const prisma = new PrismaClient({
 
 
 export default async function handler(req, res) {
-  res.set({
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-});
+   
   switch(req.method ){
 case 'POST':
 

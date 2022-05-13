@@ -33,9 +33,8 @@ if(status === 401){
   
 
   if (status === "unauthenticated") {
-    return(
-      <h1>acesso negado, usuario precisa autenticar</h1>
-    )
+    alert('acesso negado')
+router.push('/')
    }
 
 
@@ -46,9 +45,8 @@ if(status === 401){
 
 
 if(session.username != user){
-  return (
-    <h1>Acesso negado</h1>
-  )
+  alert('acesso negado')
+router.push('/')
 }  
 
 

@@ -24,7 +24,7 @@ console.log(findLink)
                            emailVerified:true 
                         }
                     })
-
+console.log(updateStatus)
                     res.status(200).json({mensagem:'usuario confirmado com sucesso'})
                 } 
             } catch (error) {

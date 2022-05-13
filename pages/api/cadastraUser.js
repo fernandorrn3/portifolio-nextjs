@@ -47,7 +47,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
           }
         })
         Enviar(req.body.username,result).catch(console.error)
-        res.status(200).json({enviou:'Cadastro Feito com sucesso'})
+        res.status(200)//.json({enviou:'Cadastro Feito com sucesso'})
         
       }
   main()
@@ -56,7 +56,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
       
     .catch((e) => {
       if(e instanceof Prisma.PrismaClientKnownRequestError){
-        res.status(400).json({enviou: e.meta.target + ' ja cadastrado tente outro'})
+        res.status(400)//.json({enviou: e.meta.target + ' ja cadastrado tente outro'})
       }
       
       

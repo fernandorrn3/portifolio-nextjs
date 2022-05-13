@@ -12,7 +12,7 @@ export default async function handler(req, res) {
    
   switch(req.method ){
 case 'POST':
-
+console.log('entrou no post cadastrar')
   var result = '';
   for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);
   

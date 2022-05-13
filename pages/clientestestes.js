@@ -8,8 +8,9 @@ const buscaClientes = async () =>{
       },
 method:'POST'
    })
+   const status = res.status
    const response = await res.json()
-   console.log(response)
+   console.log(status)
 }
     return(
 <button onClick={buscaClientes}>clica ae</button>

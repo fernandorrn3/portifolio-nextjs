@@ -22,7 +22,7 @@ export default function Cadastrar() {
 const registerUser = async (e) =>{
     e.preventDefault()
 
-
+console.log(process.env.NEXT_PUBLIC_DB_HOST )
 
     const data = {
         name:nome,

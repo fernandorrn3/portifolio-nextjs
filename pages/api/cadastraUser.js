@@ -15,7 +15,7 @@ case 'POST':
 
   var result = '';
   for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);
-  Enviar(req.body.username,result).catch(console.error)
+  
 
 if(!req.body.name && !req.body.email && !req.body.senha){
  
@@ -46,7 +46,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
             linkemail: result
           }
         })
-
+        Enviar(req.body.username,result).catch(console.error)
         res.status(200).json({enviou:'Cadastro Feito com sucesso'})
         
       }
@@ -80,7 +80,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
       
     break;
   case 'GET':
-    
+    res.json('ola mundo')
       break;  
   }
  

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function Produtos(){
     const mp = useMercadopago.v2('APP_USR-30f2c97d-c6b1-42b9-8a4a-3062c19b6a3b');
    
-useEffect(()=>{
+useEffect(async ()=>{
     if(mp){
        // Step #3
 const cardForm = mp.cardForm({

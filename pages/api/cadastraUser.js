@@ -12,7 +12,7 @@ export default async function handler(req, res) {
    
   switch(req.method ){
 case 'POST':
-console.log('entrou no post cadastrar')
+
   var result = '';
   for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);
   
@@ -46,8 +46,11 @@ if(!req.body.name && !req.body.email && !req.body.senha){
             linkemail: result
           }
         })
+        console.log('chegou aqui')
         Enviar(req.body.username,result).catch(console.error)
-        res.status(200)//.json({enviou:'Cadastro Feito com sucesso'})
+        res.status(200)
+        console.log('chegou no status')
+        res.json({enviou:'Cadastro Feito com sucesso'})
         
       }
   main()
@@ -56,7 +59,8 @@ if(!req.body.name && !req.body.email && !req.body.senha){
       
     .catch((e) => {
       if(e instanceof Prisma.PrismaClientKnownRequestError){
-        res.status(400)//.json({enviou: e.meta.target + ' ja cadastrado tente outro'})
+        res.status(400)
+        res.json({enviou: e.meta.target + ' ja cadastrado tente outro'})
       }
       
       

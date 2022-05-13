@@ -47,10 +47,10 @@ if(!req.body.name && !req.body.email && !req.body.senha){
           }
         })
         console.log('chegou aqui')
-       
+        Enviar(req.body.username,result).catch(console.error)
         res.status(200)
         console.log('chegou no status')
-        res.json({enviou:'Cadastro Feito com sucesso'})
+        res.json('Cadastro Feito com sucesso')
         
       }
   main()

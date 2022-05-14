@@ -29,12 +29,33 @@ if(!req.body.name && !req.body.email && !req.body.senha){
   
        async function main(){
        
+        /*const users = await prisma.user.findMany({})
+        if(!users.length){
+          console.log('array vazio')
+          checaadm = true;
+        }else{
+          console.log('array cheio')
+          checaadm = false;
+        }*/
+      
+    try {
+     await prisma.user.create({
+name:req.body.name,
+username:req.body.username,
+email:req.body.email,
+senha:req.body.senha,
+emailVerified:false,
+linkemail:result,
+isAdm:false,
+      })
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        res.status(400).json({mensagem:e.meta.target + ' ja utilizado'})
+      }
+    }
        
-        
-    
-       
-        res.status(200).json({mensagem:'passou viado'})
-       
+      
+       res.status(200).json({mensagem:'usuario criado com sucesso'})
        
         
       }
@@ -42,18 +63,9 @@ if(!req.body.name && !req.body.email && !req.body.senha){
 
   
       
-    .catch((e) => {
-      if(e instanceof Prisma.PrismaClientKnownRequestError){
-        res.status(400).json({enviou: e.meta.target + ' ja cadastrado tente outro'})
-      }
-      
-      
-      
-  
-     
-      throw e
-      
-    })
+  .catch((e) => {
+    throw e
+  })
     .finally(async () => {
       await prisma.$disconnect()
      

@@ -28,15 +28,8 @@ if(!req.body.name && !req.body.email && !req.body.senha){
   //cadastrou, salvou o link e enviou o email para o usuario para ele clicar no link e confirmar que é ele mesmo
   
        async function main(){
-        await prisma.$connect()
-        const users = await prisma.user.findMany({})
-        if(!users.length){
-          console.log('array vazio')
-          checaadm = true;
-        }else{
-          console.log('array cheio')
-          checaadm = false;
-        }
+       
+       
         const newUser = await prisma.user.create({
           data: {
             name: req.body.name,

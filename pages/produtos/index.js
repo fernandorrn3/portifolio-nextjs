@@ -6,8 +6,9 @@ export default function Produtos(){
     const mp = useMercadopago.v2('APP_USR-478d9509-d133-4dec-94ff-7b29ed98764b');
    
 useEffect(async ()=>{
-    if(mp){
-       // Step #3
+    if(!mp){
+      return null
+    }
 const cardForm = mp.cardForm({
     amount: "100.5",
     autoMount: true,
@@ -103,7 +104,7 @@ const cardForm = mp.cardForm({
       }
     },
   });
-    }
+    
    
 },[mp])
 

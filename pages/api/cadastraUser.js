@@ -46,8 +46,10 @@ if(!req.body.name && !req.body.email && !req.body.senha){
             linkemail: result
           }
         })
+
+        console.log('atualizou?')
     
-        Enviar(req.body.username,result).catch(console.error)
+       
         res.status(200)
        
         

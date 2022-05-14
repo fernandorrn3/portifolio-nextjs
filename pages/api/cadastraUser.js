@@ -30,17 +30,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
        async function main(){
        
        
-        const newUser = await prisma.user.create({
-          data: {
-            name: req.body.name,
-            username:req.body.username,
-            email:req.body.email,
-            senha: req.body.senha,
-            isAdm:checaadm,
-            emailVerified:false,
-            linkemail: result
-          }
-        })
+        
     
        
         res.status(200).json({mensagem:'passou viado'})

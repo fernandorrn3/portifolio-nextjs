@@ -52,7 +52,7 @@ console.log(process.env.NEXT_PUBLIC_DB_HOST )
   
     
    if(status === 200){
-       console.log(response)
+       
 router.push('/')
    }
    

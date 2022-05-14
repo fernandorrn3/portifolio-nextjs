@@ -50,7 +50,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
        
         res.status(200)
        
-        res.json({enviou:'Cadastro Feito com sucesso'})
+       
         
       }
   main()

@@ -57,7 +57,11 @@ console.log(process.env.NEXT_PUBLIC_DB_HOST )
    if(status === 200){
        
 router.push('/')
+   }else{
+    setMensagem(response.mensagem)
+    
    }
+
    
 
    
@@ -72,7 +76,7 @@ router.push('/')
             <div className="flex justify-center items-center col-start-1 col-end-13 row-start-1 row-end-7 bg-[pink] ">
                 <div>
 {Object.keys(mensagem).length > 0 &&
-<p>{mensagem.enviou}</p>
+<p>{mensagem}</p>
 }
                 
                     <form onSubmit={registerUser} action={`${process.env.DB_HOST + '/usuario'}`} method="POST">

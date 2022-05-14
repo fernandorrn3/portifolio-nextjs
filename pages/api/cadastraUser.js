@@ -35,7 +35,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
   //cadastrou, salvou o link e enviou o email para o usuario para ele clicar no link e confirmar que é ele mesmo
   
       async function main(){
-        const newUser = await prisma.user.create({
+        /*const newUser = await prisma.user.create({
           data: {
             name: req.body.name,
             username:req.body.username,
@@ -45,10 +45,10 @@ if(!req.body.name && !req.body.email && !req.body.senha){
             emailVerified:false,
             linkemail: result
           }
-        })
+        })*/
     
        
-        res.status(200)
+        res.status(200).json({mensagem:'passou viado'})
        
        
         

@@ -13,7 +13,7 @@ method:'POST'
    const status = res.status
    
    const response = await res.json()
-   console.log(status)
+   console.log(response)
 }
     return(
 <button onClick={buscaClientes}>clica ae</button>

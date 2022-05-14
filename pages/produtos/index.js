@@ -9,6 +9,7 @@ useEffect(async ()=>{
     if(!mp){
       return 
     }
+    console.log(mp)
 const cardForm = mp.cardForm({
     amount: "100.5",
     autoMount: true,

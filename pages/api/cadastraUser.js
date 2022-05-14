@@ -17,10 +17,10 @@ case 'POST':
   for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);*/
   let checaadm;
 
-/*if(!req.body.name && !req.body.email && !req.body.senha){
+if(!req.body.name && !req.body.email && !req.body.senha){
  
  res.status(400).json({enviou:'preencha todos os campos '})
-}*/ 
+}
 
   
   
@@ -36,7 +36,7 @@ case 'POST':
           console.log('array cheio')
           checaadm = false;
         }
-        /*const newUser = await prisma.user.create({
+        const newUser = await prisma.user.create({
           data: {
             name: req.body.name,
             username:req.body.username,
@@ -46,7 +46,7 @@ case 'POST':
             emailVerified:false,
             linkemail: result
           }
-        })*/
+        })
     
        
         res.status(200).json({mensagem:'passou viado'})
@@ -60,8 +60,7 @@ case 'POST':
       
     .catch((e) => {
       if(e instanceof Prisma.PrismaClientKnownRequestError){
-        res.status(400)
-        res.json({enviou: e.meta.target + ' ja cadastrado tente outro'})
+        res.status(400).json({enviou: e.meta.target + ' ja cadastrado tente outro'})
       }
       
       

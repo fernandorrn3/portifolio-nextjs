@@ -49,13 +49,12 @@ console.log(process.env.NEXT_PUBLIC_DB_HOST )
     
     
     const status =  res.status
-    const response = await res.json()
-    console.log(response)
+    
    if(status === 200){
        console.log(response)
 router.push('/')
    }
-   setMensagem(response)
+   
 
    
    

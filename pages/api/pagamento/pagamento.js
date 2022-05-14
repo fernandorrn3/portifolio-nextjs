@@ -1,7 +1,8 @@
 const mercadopago = require('mercadopago');
 export default function handler(req,res){
     
-    
+    //criar conta comprador teste no mercado pago
+    //criar conta vendedor teste mercado pago
     
     switch(req.method){
         case 'POST':

@@ -7,7 +7,7 @@ export default function Produtos(){
    
 useEffect(async ()=>{
     if(!mp){
-      return null
+      return 
     }
 const cardForm = mp.cardForm({
     amount: "100.5",

@@ -3,7 +3,7 @@ import { useMercadopago } from "react-sdk-mercadopago/lib"
 import { useEffect } from "react";
 //process.env.NEXT_PUBLIC_DB_HOST + 'pagamento/pagamento'
 export default function Produtos(){
-    const mp = useMercadopago.v2('APP_USR-30f2c97d-c6b1-42b9-8a4a-3062c19b6a3b');
+    const mp = useMercadopago.v2('APP_USR-d64afc73-4431-4ff0-b910-ce937301ec85');
    
 useEffect(async ()=>{
     if(mp){

@@ -7,7 +7,24 @@ const prisma = new PrismaClient({
   errorFormat: 'pretty'
 })
 
+/*
+ "id": 1123961101,
+    "nickname": "TESTMFSSZIJ6",
+    "password": "qatest3854",
+    "site_status": "active",
+    "email": "test_user_96397872@testuser.com"
 
+
+
+{
+    "id": 1123956850,
+    "nickname": "TESTUMWXWQD7",
+    "password": "qatest6058",
+    "site_status": "active",
+    "email": "test_user_91565392@testuser.com"
+}
+
+*/
 export default async function handler(req, res) {
    
   switch(req.method ){

@@ -29,33 +29,39 @@ if(!req.body.name && !req.body.email && !req.body.senha){
   
        async function main(){
        
-        /*const users = await prisma.user.findMany({})
+        const users = await prisma.user.findMany({})
+        console.log(users)
         if(!users.length){
           console.log('array vazio')
           checaadm = true;
         }else{
           console.log('array cheio')
           checaadm = false;
-        }*/
+        }
       
     try {
-     await prisma.user.create({
-name:req.body.name,
-username:req.body.username,
-email:req.body.email,
-senha:req.body.senha,
-emailVerified:false,
-linkemail:result,
-isAdm:false,
+     await prisma.User.create({
+       data:{
+        name:req.body.name,
+        username:req.body.username,
+        email:req.body.email,
+        senha:req.body.senha,
+        emailVerified:false,
+        linkemail:result,
+        isAdm:checaadm,
+       }
+
       })
-    } catch (e) {
+    } 
+    catch (e) {
+      console.log(e.code)
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         res.status(400).json({mensagem:e.meta.target + ' ja utilizado'})
       }
     }
        
       
-       res.status(200).json({mensagem:'usuario criado com sucesso'})
+     res.status(200).json({mensagem:'usuario criado com sucesso'}) 
        
         
       }
@@ -67,6 +73,7 @@ isAdm:false,
     throw e
   })
     .finally(async () => {
+      console.log('fecheou')
       await prisma.$disconnect()
      
     })

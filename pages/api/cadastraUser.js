@@ -36,7 +36,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
           console.log('array cheio')
           checaadm = false;
         }
-        const newUser = await prisma.user.create({
+         await prisma.user.create({
           data: {
             name: req.body.name,
             username:req.body.username,

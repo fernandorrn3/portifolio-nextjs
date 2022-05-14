@@ -15,26 +15,27 @@ case 'POST':
 
   /*var result = '';
   for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);*/
-  
+  let checaadm;
 
 /*if(!req.body.name && !req.body.email && !req.body.senha){
  
  res.status(400).json({enviou:'preencha todos os campos '})
 }*/ 
 
-  /*const users = await prisma.user.findMany({})
-  let checaadm;
-  if(!users.length){
-    console.log('array vazio')
-    checaadm = true;
-  }else{
-    console.log('array cheio')
-    checaadm = false;
-  }*/
+  
+  
   
   //cadastrou, salvou o link e enviou o email para o usuario para ele clicar no link e confirmar que é ele mesmo
   
-      async function main(){
+       async function main(){
+        const users = await prisma.user.findMany({})
+        if(!users.length){
+          console.log('array vazio')
+          checaadm = true;
+        }else{
+          console.log('array cheio')
+          checaadm = false;
+        }
         /*const newUser = await prisma.user.create({
           data: {
             name: req.body.name,

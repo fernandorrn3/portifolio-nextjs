@@ -49,7 +49,10 @@ console.log(process.env.NEXT_PUBLIC_DB_HOST )
     
     
     const status =  res.status
-  
+  console.log(status)
+
+  const response = await res.json()
+  console.log(response)
     
    if(status === 200){
        

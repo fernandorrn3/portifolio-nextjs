@@ -8,7 +8,7 @@ const prisma = new PrismaClient({
 })
 
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
    
   switch(req.method ){
 case 'POST':
@@ -20,7 +20,7 @@ case 'POST':
 if(!req.body.name && !req.body.email && !req.body.senha){
  
  res.status(400).json({enviou:'preencha todos os campos '})
-} else{
+} 
 
   const users = await prisma.user.findMany({})
   let checaadm;
@@ -76,7 +76,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
     })
      
 
-}
+
 
 
   

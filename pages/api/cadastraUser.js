@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 const { PrismaClient,Prisma } = require('@prisma/client')
 
-import Enviar from '../../lib/sendmail'
+
 
 const prisma = new PrismaClient({
   errorFormat: 'pretty'
@@ -13,8 +13,8 @@ export default async function handler(req, res) {
   switch(req.method ){
 case 'POST':
 
-  var result = '';
-  for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);
+  /*var result = '';
+  for (var i = 80; i > 0; --i) result += (Math.floor(Math.random()*256)).toString(16);*/
   
 
 if(!req.body.name && !req.body.email && !req.body.senha){

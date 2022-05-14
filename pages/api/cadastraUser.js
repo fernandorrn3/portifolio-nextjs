@@ -68,7 +68,7 @@ case 'POST':
       
   
      
-  
+      throw e
       
     })
     .finally(async () => {

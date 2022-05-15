@@ -6,7 +6,7 @@ export default function handler(req,res){
     
     switch(req.method){
         case 'POST':
-            mercadopago.configurations.setAccessToken("APP_USR-8155162828679316-050618-6fac7991e5b1186fec476817644af7d1-1081753292");
+            mercadopago.configurations.setAccessToken("APP_USR-8040008064625736-051422-231580ccf78dba5d7a004153aa780326-1123961101");
             mercadopago.payment.save(req.body)
           .then(function(response) {
             console.log('alo mundo passou')

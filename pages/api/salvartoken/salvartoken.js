@@ -4,19 +4,20 @@ export default function handler(req,res){
 switch(req.method){
     case "POST":
 async function main(){
-    const inseretoken = await prisma.user.update({
+    const user = await prisma.user.update({
         where: {
-          username: 'fernandorrn',
+          id: 1,
         },
-       
-            create: {
-              data: {
-                  token:req.body 
-              },
+        data: {
+          posts: {
+            createMany: {
+              data: [{ title: 'My first post' }, { title: 'My second post' }],
             },
-     
+          },
+        },
       })
 }
+
 
 main()
 

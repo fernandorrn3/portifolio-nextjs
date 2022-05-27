@@ -23,12 +23,26 @@ model User {
   isAdm         Boolean   @default(false)
   image         String?
   token Token?
+  posts     Post[]
  
 }
 
   model Token {
   id Int @id @default(autoincrement())
-  
-  user User @relation(fields: [UserId], references: [id])
+  codigo String
+  user User? @relation(fields: [UserId], references: [id])
   UserId Int
+}
+
+
+
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean  @default(false)
+  title     String   @db.VarChar(255)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
 }

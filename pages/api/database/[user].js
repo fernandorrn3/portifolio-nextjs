@@ -1,5 +1,5 @@
 export default function handler(req,res){
-    console.log('xoxo')
+    
    
     switch(req.method){
         case 'GET':

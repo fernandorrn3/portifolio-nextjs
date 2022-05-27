@@ -11,11 +11,13 @@ async function main(){
         data: {
           token: {
             create: {
-            codigo: 'My first codigo' 
+            codigo: 'My second codigo' 
             },
           },
         },
       })
+
+      res.json({mensagem:'token salvo com sucesso'})
 }
 
 main()

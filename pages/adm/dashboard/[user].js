@@ -20,7 +20,7 @@ function Paineladm() {
     if(!user){
       return
     }
-const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/dashboard/'  + user)
+const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/checkuser/'  + user)
 const result = await res.json()
 const status = res.status
 if(status === 401){
@@ -98,80 +98,6 @@ if(error){
 
 
  
-// This function gets called at build time
-/*export async function getStaticPaths() {
- 
-const { PrismaClient,Prisma } = require('@prisma/client')
-
-
-const prisma = new PrismaClient({
-  errorFormat: 'pretty' 
-})
-
-
-
-const finduser = await prisma.user.findMany({}) 
-
-const paths = finduser.map((usuario)=>({
-  params:{user: usuario.username}
-}))
-
-
-
-
-  return { paths, fallback: 'blocking' }
-}
-
-
-
-
-
-
-
-
-
-
-export async function getStaticProps({params}) {
- 
-
-
-  
-  
-
-const { PrismaClient,Prisma } = require('@prisma/client')
-const prisma = new PrismaClient({
-  errorFormat: 'pretty' 
-})
-
-
-  const finduser = await prisma.user.findUnique({
-    where:{
-      username:params.user
-    },
-    select:{
-      username:true,
-      isAdm:true
-    }
-  })
-
-
-  try {
-
-    if(finduser === null) throw 'usuario nao encontrado acesso negado'
-    
-    if(!finduser.isAdm) throw 'acesso negado, usuario nao tem permissao para acessar essa rota'
-    if(finduser.isAdm) return {props:{params}}
-    
-    
-  } catch (error) {
-    return {props: {error}}
-  }
-
-
-
-  return {props: {params}}
- 
-}*/
 
 
 

@@ -16,6 +16,12 @@ return(
 
 
   <h3> 
+  <Link href="/adm/token/fernandorrn">
+    <a>token</a>
+  </Link>
+  </h3>
+
+  <h3> 
   <Link href="/">
     <a>index</a>
   </Link>

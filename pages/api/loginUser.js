@@ -5,7 +5,7 @@ const prisma = new PrismaClient({
 export default async function handler(req, res) {
   switch (req.method) {
     case 'POST':
-
+console.log(req.body.username)
 
       async function main() {
         const findemail = await prisma.User.findUnique({

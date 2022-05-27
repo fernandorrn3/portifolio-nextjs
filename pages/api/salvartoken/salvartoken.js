@@ -9,15 +9,14 @@ async function main(){
           id: 1,
         },
         data: {
-          posts: {
-            createMany: {
-              data: [{ title: 'My first post' }, { title: 'My second post' }],
+          token: {
+            create: {
+            codigo: 'My first codigo' 
             },
           },
         },
       })
 }
-
 
 main()
 

@@ -4,8 +4,32 @@ export default function handler(req,res){
 switch(req.method){
     case "POST":
 async function main(){
-    const insereToken = await prisma.user.update
+    const inseretoken = await prisma.user.update({
+        where: {
+          username: 'fernandorrn',
+        },
+       
+            create: {
+              data: {
+                  token:req.body 
+              },
+            },
+     
+      })
 }
+
+main()
+
+  
+      
+.catch((e) => {
+  throw e
+})
+  .finally(async () => {
+    console.log('fecheou')
+    await prisma.$disconnect()
+   
+  })
     break;
 
     case "GET":

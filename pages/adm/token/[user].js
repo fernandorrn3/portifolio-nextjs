@@ -2,6 +2,7 @@ import { useSession  } from "next-auth/react"
 import { useRouter } from 'next/router'
 import Layoutpanel from "../../../components/layoutpanel"
 import Botaomenu from '../../../components/elementos/btnmenu'
+
 import { useSelector } from 'react-redux'
 import Gerar from "../../../lib/gerartoken"
 import {useState,useEffect } from "react";
@@ -56,7 +57,6 @@ import {useState,useEffect } from "react";
     return(
         <div className="h-full">
 
-     
         {estado.estado 
         ?<div className='h-full ml-[220px] transition-all duration-700'> 
    
@@ -64,8 +64,9 @@ import {useState,useEffect } from "react";
            <Botaomenu />
          
          <h1>manager token page</h1>
-        <Gerar/>
          
+        <Gerar user={user}/>
+        
        
         </div>
    
@@ -73,14 +74,16 @@ import {useState,useEffect } from "react";
    <Botaomenu />
          
          <h1>manager token page</h1>
-         <Gerar/>
+        
+         <Gerar user={user}/>
          
          
         </div>
          }
        
-       
        </div>
+       
+     
     )
 }
 

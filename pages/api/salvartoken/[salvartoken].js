@@ -1,23 +1,51 @@
 const {PrismaClient,Prisma}  = require ('@prisma/client')
 export default function handler(req,res){
     const prisma = new PrismaClient({errorFormat: 'pretty'})
+    const { salvartoken } = req.query
+    console.log(req.query)
 switch(req.method){
+
     case "POST":
+       
 async function main(){
-    const user = await prisma.user.update({
+
+    const checatoken = await prisma.user.findUnique({
+where:{
+    username:salvartoken
+},
+
+include:{
+   token:{
+       select:{
+           codigo:true
+       }
+   } 
+}
+    })
+    
+    
+   
+
+    if(checatoken.token === null){
+ const user = await prisma.user.update({
         where: {
-          id: 1,
+          username: salvartoken,
         },
         data: {
           token: {
             create: {
-            codigo: 'My second codigo' 
+            codigo: req.body
             },
           },
         },
       })
 
-      res.json({mensagem:'token salvo com sucesso'})
+      res.json({mensagem:'token de acesso salvo com sucesso'})
+    } 
+
+    
+
+      res.json({mensagem:'Voce ja possui o token de acesso'})
 }
 
 main()

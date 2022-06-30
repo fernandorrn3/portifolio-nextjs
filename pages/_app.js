@@ -1,9 +1,10 @@
 
 import '../styles/globals.css'
+import './teste.css'
 import { SessionProvider } from "next-auth/react"
 import { Provider } from 'react-redux'
-import store from '../store';
-export default function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+import { wrapper } from '../store';
+const MyApp = ({ Component, pageProps: { session, ...pageProps } })=> {
   const getLayout = Component.getLayout || ((page) => page);
 
   return (
@@ -13,7 +14,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
     
   
    
-<Provider store={store}>
+
 
   <SessionProvider session={session}> 
   {getLayout (
@@ -24,7 +25,9 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps } 
   )}
 
 </SessionProvider>
-</Provider> 
+
 </>
   )
 }
+
+export default wrapper.withRedux(MyApp)

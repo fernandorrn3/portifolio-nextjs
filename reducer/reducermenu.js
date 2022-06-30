@@ -4,8 +4,7 @@ const initialState = {
   }
 
 const menuReducer = createSlice({
-    name:'abrir/fechar',
-    
+name:'abrir/fechar',    
 initialState,
     reducers:{
 abrirEfechar(state,action){

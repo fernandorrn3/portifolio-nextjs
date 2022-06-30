@@ -1,4 +1,5 @@
-import { Main } from 'next/document'
+//pegar token do adm do site
+
 
 const {PrismaClient,Prisma}  = require ('@prisma/client')
 const prisma = new PrismaClient({errorFormat: 'pretty'})
@@ -17,7 +18,8 @@ const getTokenuser = await prisma.user.findUnique({
         username:true,
         token:{
 select:{
-    codigo:true
+    clientid:true,
+    acesstoken:true
 }
         }
     }

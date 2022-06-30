@@ -34,7 +34,8 @@ include:{
         data: {
           token: {
             create: {
-            codigo: req.body
+            clientid: req.body.clientid,
+            acesstoken:req.body.secret
             },
           },
         },

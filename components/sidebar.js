@@ -2,7 +2,7 @@ import MenuElemento from "./elementos/menuElemento"
 import { useSelector } from 'react-redux'
 export default function Sidebar(valor){
 
-  const estado = useSelector((state) => state.menu)
+  const estado = useSelector((state) => state.menuReducer)
   
 
   

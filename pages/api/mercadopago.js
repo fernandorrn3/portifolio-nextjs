@@ -5,6 +5,7 @@ export default function Mercadopago (req,res){
     switch(req.method){
         case "POST":
           body = req.body
+          console.log(req.body)
    res.json(req.body)
             break;
 

@@ -12,7 +12,7 @@ export default function Mercadopago (req,res){
             break;
 
             case'GET':
-            res.send(body)
+            res.send('body')
             break;
     }
 }

@@ -17,7 +17,7 @@ test_user_48422516@testuser.com*/
       "email": "test_user_9811954@testuser.com"
   }*/
 
-    const mercadopago = useMercadopago.v2('APP_USR-ee66bf4e-7844-4b76-a95e-00b84cf984f8',{
+    const mercadopago = useMercadopago.v2('TEST-2b8722f0-4b5d-466a-a13f-893888463e50',{
       locale: 'pt-BR'
     })
   
@@ -99,7 +99,7 @@ const cardForm = mercadopago.cardForm({
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
-           'Authorization': 'Bearer APP_USR-5759687126222695-063012-33152790f6b184df09af231242552afb-1152142933'
+           'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
          },
          body: JSON.stringify({
            token,

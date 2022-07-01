@@ -1,187 +1,181 @@
-import Layout from "../../components/layout"
-import {
-    PayPalScriptProvider,
- 
-    PayPalHostedFieldsProvider,
-    PayPalHostedField,
+import { useMercadopago } from 'react-sdk-mercadopago';
+import { useEffect } from 'react'
+import { useSession } from "next-auth/react"
+
+export default function Checkout(){
+
+
+  /* 
+test_user_48422516@testuser.com*/
+
+
+
+//inserir ordem do pedido no banco de dados
+//para eu inserir banco de dados primeiro devo criar uma tabela e relacionar ela ao usuario em questao
+
+
+    const mercadopago = useMercadopago.v2('TEST-2b8722f0-4b5d-466a-a13f-893888463e50',{
+      locale: 'pt-BR'
+    })
+  
+    useEffect(async () => {
+
     
-} from "@paypal/react-paypal-js";
-import { useEffect, useState } from "react";
-import { useRouter } from 'next/router'
-import { useSelector } from "react-redux";
-import Gerartoken from "../../lib/geratokenpaypal";
-import Gerartokendinan from "../../lib/gerartokendinan";
+        if (mercadopago) {
+          mercadopago.checkout({
+            preference: {
+                id: '1152142933-e64fae24-7692-425c-9006-aeba414d72de'
+            },
+            render: {
+                container: '.cho-container',
+                label: 'Pay',
+            }
+        })
+        // Step #3
+const cardForm = mercadopago.cardForm({
+  amount: '100.5',
+  iframe: true,
+  form: {
+    id: 'form-checkout',
+    cardholderName: {
+      id: 'form-checkout__cardholderName',
+      placeholder: "Titular do cartão",
+    },
+    cardholderEmail: {
+      id: 'form-checkout__cardholderEmail',
+      placeholder: 'E-mail'
+    },
+    cardNumber: {
+      id: 'form-checkout__cardNumber-container',
+      placeholder: 'Número do cartão',
+    },
+    securityCode: {
+      id: 'form-checkout__securityCode-container',
+      placeholder: 'Código de segurança'
+    },
+    installments: {
+      id: 'form-checkout__installments',
+      placeholder: 'Parcelas'
+    },
+    expirationDate: {
+      id: 'form-checkout__expirationDate-container',
+      placeholder: 'Data de vencimento (MM/YYYY)',
+    },
+    identificationType: {
+      id: 'form-checkout__identificationType',
+      placeholder: 'Tipo de documento'
+    },
+    identificationNumber: {
+      id: 'form-checkout__identificationNumber',
+      placeholder: 'Número do documento'
+    },
+    issuer: {
+      id: 'form-checkout__issuer',
+      placeholder: 'Banco emissor'
+    }
+  },
+  callbacks: {
+    onFormMounted: function (error) {
+      if (error) return console.log('Callback para tratar o erro: montando o cardForm ', error)
+    },
+    onSubmit: async function (event) {
+      event.preventDefault();
 
-export default function Produtos() {
-const credencials = useSelector((state)=>state.reducercredential)
-const produtos = useSelector((state)=> state.reducercarrinho)
-const [clienttoken, setclienttoken] = useState()
+      const {
+        paymentMethodId: payment_method_id,
+        issuerId: issuer_id,
+        cardholderEmail: email,
+        amount,
+        token,
+        installments,
+        identificationNumber,
+        identificationType
+      } = cardForm.getCardFormData();
 
-    const router = useRouter()
-    const { user } = router.query
+      const res = await  fetch('https://api.mercadopago.com/v1/payments', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
+         },
+         body: JSON.stringify({
+           token,
+           issuer_id,
+           payment_method_id,
+           transaction_amount: Number(amount),
+           installments: Number(installments),
+           description: 'product description',
+           payer: {
+             email,
+             identification: {
+               type: identificationType,
+               number: identificationNumber
+            }
+          }
+        })
+      })
+      const response = await res.json()
+      console.log(response)
+    },
+    onFetching: function (resource) {
+      console.log('fetching... ', resource)
+      const progressBar = document.querySelector('.progress-bar')
+      progressBar.removeAttribute('value')
 
-
-
-    useEffect(() => {
-        if (!user) {
-            return
+      return () => {
+        progressBar.setAttribute('value', '0')
+      }
+    }
+  }
+});
+            
         }
-      
-      
-        (async ()=>{
-            const token = await Gerartoken(process.env.NEXT_PUBLIC_CLIENT_ID, process.env.NEXT_PUBLIC_SECRET)
-            const tokencompradordinan = await Gerartokendinan(token)
-            setclienttoken(tokencompradordinan) 
-        })()
-      
+    }, [mercadopago])
+  const gerar = async ()=>{
+    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'cache-control': 'no-cache',
+          'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
+      },
+      body: JSON.stringify({
+          'items': [
+              {
+                  'title': 'Meu produto',
+                  'quantity': 1,
+                  'unit_price': 75.76
+              }
+          ]
+      })
+  });
 
-
-    }, [user])
-
-
-    const initialOptions = {
-        "client-id": process.env.NEXT_PUBLIC_CLIENT_ID,
-        "currency": "BRL",
-        "components": "buttons,hosted-fields",
-       "data-client-token":clienttoken
-    };
-
-
-    
-
-
-    /*if (typeof window !== "undefined") {
-if(credencials.length !== 0){
-    localStorage.setItem('acesstoken', credencials[0].acesstoken)
-    localStorage.setItem('tokenclient', credencials[0].tokenclient)
-    initialOptions['data-client-token'] = credencials[0].tokenclient
-    console.log('diferente de 0')
-}else{
-    const novotoken = localStorage.getItem('tokenclient')
-    console.log(novotoken)
-    initialOptions['data-client-token'] = novotoken
-    console.log('igual a zero')
-}
-        
-        
-        }
-
-
-console.log(initialOptions['data-client-token'])*/
-
-
-
-
-    /* 
- 
-   const gerarorder = async ()=>{
- const res = await fetch('https://api-m.sandbox.paypal.com/v2/checkout/orders',{
-     method:'POST',
-     headers:{
-         'Content-Type':'application/json',
-         Authorization: `Bearer ${tokenacesso}`
-     },
-     body: JSON.stringify({ 
-     'intent': 'CAPTURE',
-     'application_context':{
-         'return_url': 'http://localhost:3000/checkout/fernandorrn'
-     },
-     'purchase_units': [
-         {
-             'amount': {
-                 'currency_code': 'BRL',
-                 'value': '100.00'
-             }
-         }
-     ]
- })
- })
- 
- const response = await res.json()
- settokenorder(response.id)
- console.log(response)
- 
-   }
- 
-   const pagarpaypal = async () =>{
- const response = await fetch(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${tokenorder}/capture`,{
-     method:'POST',
-     headers:{
-         'Content-Type': 'application/json',
-         Authorization: `Bearer ${tokenacesso}`
-     }
- })
-   }*/
-
-   
-
-   
-
-
-
-    
-
-    
-
-
-
-    return (
-        <>
-
-            <h1>pagina checkout</h1>
-{clienttoken ? (
-<PayPalScriptProvider options={initialOptions}>
-<PayPalHostedFieldsProvider  createOrder={() => {
-                    // Here define the call to create and order
-                    return fetch(
-                        "https://api-m.sandbox.paypal.com/v2/checkout/orders"
-                    )
-                        .then((response) => response.json())
-                        .then((order) => order.id)
-                        .catch((err) => {
-                            // Handle any error
-                        });
-                }}>
-<PayPalHostedField
-                    id="card-number"
-                    hostedFieldType="number"
-                    options={{ selector: "#card-number" }}
-                />
-                <PayPalHostedField
-                    id="cvv"
-                    hostedFieldType="cvv"
-                    options={{ selector: "#cvv" }}
-                />
-                <PayPalHostedField
-                    id="expiration-date"
-                    hostedFieldType="expirationDate"
-                    options={{
-                        selector: "#expiration-date",
-                        placeholder: "MM/YY",
-                    }}
-                />
-</PayPalHostedFieldsProvider>
-</PayPalScriptProvider>):(<h1>Carregando...</h1>)}
-           
-
-
-        </>
-    )
-
-
-
-}
-
-const Submit = () =>{
+    const res = await response.json()
+    console.log(res)
+  }
     return(
-        <button>submit</button>
-    )
-}
+        <div>
+           
+     
+            
+<h1>pagina de teste</h1>
+<form id="form-checkout">
+   <div id="form-checkout__cardNumber-container" className="container"></div>
+   <div id="form-checkout__expirationDate-container" className="container"></div>
+   <input type="text" name="cardholderName" id="form-checkout__cardholderName"/>
+   <input type="email" name="cardholderEmail" id="form-checkout__cardholderEmail"/>
+   <div id="form-checkout__securityCode-container" className="container"></div>
+   <select name="issuer" id="form-checkout__issuer"></select>
+   <select name="identificationType" id="form-checkout__identificationType"></select>
+   <input type="text" name="identificationNumber" id="form-checkout__identificationNumber"/>
+   <select name="installments" id="form-checkout__installments"></select>
+   <button type="submit" id="form-checkout__submit">Pagar</button>
+   <progress value="0" className="progress-bar">Carregando...</progress>
+ </form>
+<div><button onClick={gerar}>clica aqui</button></div>
+<div className="cho-container" />
 
-Produtos.getLayout = function (page) {
-    return (
-        <Layout>
-            {page}
-        </Layout>
+        </div>
+        
     )
 }

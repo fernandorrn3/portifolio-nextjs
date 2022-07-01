@@ -1,12 +1,14 @@
 var mercadopago = require('mercadopago');
-let body
+
+//preciso identificar o usuario que fez a compra
 
 export default function Mercadopago (req,res){
+    const {mercadopago} = req.query
     switch(req.method){
         case "POST":
-          body = req.body
+        console.log(mercadopago)
           console.log(req.body)
-   res.json(req.body)
+   
             break;
 
             case'GET':

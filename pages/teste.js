@@ -3,11 +3,8 @@ import { useEffect } from 'react'
 export default function Teste(){
 
 
-  /* comprador "id": 1151154655,
-    "nickname": "TESTMRB6RRIE",
-    "password": "qatest1531",
-    "site_status": "active",
-    "email": "test_user_38412646@testuser.com"*/
+  /* 
+test_user_48422516@testuser.com*/
 
 
 
@@ -20,7 +17,7 @@ export default function Teste(){
       "email": "test_user_9811954@testuser.com"
   }*/
 
-    const mercadopago = useMercadopago.v2('TEST-821a6b40-906f-4f67-a4e3-482c1d72e35e',{
+    const mercadopago = useMercadopago.v2('APP_USR-ee66bf4e-7844-4b76-a95e-00b84cf984f8',{
       locale: 'pt-BR'
     })
   
@@ -102,7 +99,7 @@ const cardForm = mercadopago.cardForm({
          method: 'POST',
          headers: {
            'Content-Type': 'application/json',
-           'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
+           'Authorization': 'Bearer APP_USR-5759687126222695-063012-33152790f6b184df09af231242552afb-1152142933'
          },
          body: JSON.stringify({
            token,

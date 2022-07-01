@@ -8,6 +8,7 @@ export default function Mercadopago (req,res){
         case "POST":
         console.log(mercadopago)
           console.log(req.body)
+          res.send(req.body)
    
             break;
 

@@ -1,71 +1,74 @@
-//pegar o clientId, pegar o acesstoken
-//gerar token de chamada api
-//usar esse token para chamar o token do comprador
-
-
-
-
-//gerar order na pagina de confirmar nao ira capturar o endereço de entrega
-
-
-import { useSelector } from "react-redux"
-import Layout from "../../components/layout"
-import { useEffect,useState } from "react"
-import Link from "next/link"
-import { useDispatch } from "react-redux"
-import { addcredencial } from "../../reducer/reducercredential"
-import Gerartoken from "../../lib/geratokenpaypal"
-import Gerartokendinan from "../../lib/gerartokendinan"
+import Layout from "../../components/layout";
+import { useDispatch } from "react-redux";
+import { useState,useEffect } from "react";
+import { useSelector } from "react-redux";
+import { addid } from "../../reducer/reduceridorder";
+import Link from "next/link";
 export default function Confirma(){
+    const [id,setorderid] = useState()
+    const dispatch = useDispatch()
 
-const dispatch = useDispatch()
+const resultado = useSelector((state) => state.reducercarrinho)
 
-    useEffect(async ()=>{
-    /*const auth = Buffer.from(process.env.NEXT_PUBLIC_CLIENT_ID + ":" + process.env.NEXT_PUBLIC_SECRET).toString("base64");
-const res = await fetch("https://api-m.sandbox.paypal.com/v1/oauth2/token",{
-    method:'POST',
-    headers:{
-        Authorization: `Basic ${auth}`
+
+
+useEffect(async ()=>{
+if(!resultado){
+    return
+}
+const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'cache-control': 'no-cache',
+        'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
     },
-    body: "grant_type=client_credentials",
-})
+    body: JSON.stringify({
+        'items': [
+            {
+                'title': resultado[0].nome,
+                'quantity':  parseInt( resultado[0].quantidade),
+                'unit_price': parseInt(resultado[0].valor) 
+            }
+        ],
+        'back_urls':{
+          'success': 'https://portifolio-nextjs-alpha.vercel.app/api/mercadopago/' + 'usuario'
+        },
+    })
+});
 
-const response = await res.json()*/
-
-const token = await Gerartoken(process.env.NEXT_PUBLIC_CLIENT_ID, process.env.NEXT_PUBLIC_SECRET)
-const tokencompradordinan = await Gerartokendinan(token)
-
+const res = await response.json()
+        console.log(res)
+       setorderid(res)
 
 
+},[])
 
+   
 
+     const guardarid = () =>{
+        console.log(id.id)
 
-dispatch(addcredencial({
-    acesstoken:token,
-    tokenclient:tokencompradordinan
-}))
-
-
-    },[])
-    const selecionar = useSelector((state)=> state.reducercarrinho)
-    console.log(selecionar)
-
-    
+        dispatch(addid({
+            guardarid:id.id
+        }))
+       
+      }
     return(
-        
+
         <>
-        <h1>confirmar compra</h1>
-        <Link href={'/checkout/fernandorrn'} ><a>confirmar pagamento</a></Link>
+        <h1>confirma-pagamento</h1>
+        <div><Link href={'./checkout/fernandorrn'}><a>confirmar-order</a></Link> </div>
+        <div><button onClick={guardarid} >guardar-id</button></div>
         </>
-        
+      
     )
 }
 
-
 Confirma.getLayout = function(page){
     return(
-        <Layout>
-            {page}
-        </Layout>
+       <Layout>
+        {page}
+       </Layout> 
     )
 }

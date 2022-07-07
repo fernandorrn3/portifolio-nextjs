@@ -1,6 +1,6 @@
 
 import '../styles/globals.css'
-import './checkout/checkout.css'
+
 import { SessionProvider } from "next-auth/react"
 import { Provider } from 'react-redux'
 import { wrapper } from '../store';
@@ -16,7 +16,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } })=> {
    
 
 
-  <SessionProvider session={session}> 
+  <SessionProvider session={session} refetchInterval={5 * 60}> 
   {getLayout (
     
  

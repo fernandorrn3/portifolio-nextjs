@@ -1,8 +1,16 @@
 import { useMercadopago } from 'react-sdk-mercadopago';
 import { useEffect } from 'react'
 import { useSession } from "next-auth/react"
-
+import { useSelector } from 'react-redux';
+import styles from './checkout.module.css'
+import { useRouter } from 'next/router';
+import { route } from 'next/dist/server/router';
 export default function Checkout(){
+    const { data: session, status } = useSession()
+const estado = useSelector((state) => state.reduceridorder)
+
+const router = useRouter()
+
 
 
   /* 
@@ -19,12 +27,14 @@ test_user_48422516@testuser.com*/
     })
   
     useEffect(async () => {
-
+     if(estado.length === 0){
+      router.push('/storage')
+     }
     
         if (mercadopago) {
           mercadopago.checkout({
             preference: {
-                id: '1152142933-e64fae24-7692-425c-9006-aeba414d72de'
+                id: parseInt(estado[0].guardarid)
             },
             render: {
                 container: '.cho-container',
@@ -131,40 +141,24 @@ const cardForm = mercadopago.cardForm({
             
         }
     }, [mercadopago])
-  const gerar = async ()=>{
-    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'cache-control': 'no-cache',
-          'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
-      },
-      body: JSON.stringify({
-          'items': [
-              {
-                  'title': 'Meu produto',
-                  'quantity': 1,
-                  'unit_price': 75.76
-              }
-          ]
-      })
-  });
 
-    const res = await response.json()
-    console.log(res)
-  }
+
+  
+
     return(
         <div>
            
      
             
 <h1>pagina de teste</h1>
-<form id="form-checkout">
-   <div id="form-checkout__cardNumber-container" className="container"></div>
-   <div id="form-checkout__expirationDate-container" className="container"></div>
+
+<div className={styles.lorota}> 
+<form id="form-checkout" >
+   <div id="form-checkout__cardNumber-container" className={styles.container}></div>
+   <div id="form-checkout__expirationDate-container" className={styles.container}></div>
    <input type="text" name="cardholderName" id="form-checkout__cardholderName"/>
    <input type="email" name="cardholderEmail" id="form-checkout__cardholderEmail"/>
-   <div id="form-checkout__securityCode-container" className="container"></div>
+   <div id="form-checkout__securityCode-container" className={styles.container}></div>
    <select name="issuer" id="form-checkout__issuer"></select>
    <select name="identificationType" id="form-checkout__identificationType"></select>
    <input type="text" name="identificationNumber" id="form-checkout__identificationNumber"/>
@@ -172,7 +166,9 @@ const cardForm = mercadopago.cardForm({
    <button type="submit" id="form-checkout__submit">Pagar</button>
    <progress value="0" className="progress-bar">Carregando...</progress>
  </form>
-<div><button onClick={gerar}>clica aqui</button></div>
+</div>
+
+
 <div className="cho-container" />
 
         </div>

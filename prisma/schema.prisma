@@ -24,6 +24,7 @@ model User {
   image         String?
   token Token?
   posts     Post[]
+  compras Compras[]
  
 }
 
@@ -33,10 +34,18 @@ model User {
   clientid String
   acesstoken String?
   user User? @relation(fields: [UserId], references: [id])
-  UserId Int?
+  UserId Int? @unique
 }
+//cloud.prisma.io
 
-
+model Compras {
+id Int @id @default(autoincrement())
+produto String?
+idProduto String
+pago Boolean
+user User? @relation(fields: [comprasId],references: [id])
+comprasId Int? 
+}
 
 
 model Post {

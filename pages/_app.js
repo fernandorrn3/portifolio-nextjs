@@ -1,6 +1,6 @@
 
 import '../styles/globals.css'
-
+import '../pages/checkout/check.css'
 import { SessionProvider } from "next-auth/react"
 import { Provider } from 'react-redux'
 import { wrapper } from '../store';

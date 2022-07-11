@@ -24,9 +24,9 @@ const router = useRouter()
 
 
 
-  /* 
+ 
 
-test_user_48422516@testuser.com*/
+
 
 //
 
@@ -62,23 +62,22 @@ test_user_48422516@testuser.com*/
 //1152142933-b1a1215e-1d5a-4eaa-ba87-f0c08796b823
 
 
-    const mercadopago = useMercadopago.v2('TEST-2b8722f0-4b5d-466a-a13f-893888463e50',{
+    const mercadopago = useMercadopago.v2('TEST-d8d031a1-af5b-45a8-8dd2-5933d1ad0c65',{
       locale: 'pt-BR'
     })
   
-    
-    useEffect(async () => {
+    // test_user_60844175@testuser.com
+    // test_user_48422516@testuser.com
+    useEffect(() => {
    
       console.log(formulario.current.id)
-      if(idOrder.length === 0){
-        return router.push('/storage')
-       }
+      
     
     
         if (mercadopago) {
           mercadopago.checkout({
             preference: {
-                id: idOrder[0].guardarid,
+                id: '1158821207-a737e057-d333-41f2-af37-1be2164980db',
             },
             render: {
                 container: '.cho-container',
@@ -87,7 +86,7 @@ test_user_48422516@testuser.com*/
         })
   // Step #3
 const cardForm = mercadopago.cardForm({
-  amount: '100.5',
+  amount: '200.5',
   iframe: true,
   form: {
     id: formulario.current.id,

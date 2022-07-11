@@ -21,23 +21,21 @@ export default function Confirma() {
             headers: {
                 'Content-Type': 'application/json',
                 'cache-control': 'no-cache',
-                'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
+                'Authorization': 'Bearer TEST-8858163312914307-071117-a4ff00221a96edaed4b73410e09df6b1-1158821207'
             },
             body: JSON.stringify({
                 'items': [
                     {
-                        'title': resultado[0].nome,
-                        'quantity': parseInt(resultado[0].quantidade),
-                        'unit_price': parseInt(resultado[0].valor),
+                        'title': "Meu produto",
+                        'quantity': 1,
+                        'unit_price': 65.77,
                        
 
                     }
-                ],
+                ]
 
               
-                'back_urls': {
-                    'success': 'https://portifolio-nextjs-alpha.vercel.app/api/mercadopago/' + 'usuario'
-                },
+                
             })
         });
 

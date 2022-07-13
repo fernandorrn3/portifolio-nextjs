@@ -14,7 +14,7 @@
     "@paypal/react-paypal-js": "^7.8.0",
     "@prisma/client": "^3.10.0",
     "@reduxjs/toolkit": "^1.8.1",
-    "mercadopago": "^1.5.13",
+    "mercadopago": "^1.5.14",
     "next": "12.0.10",
     "next-auth": "^4.2.1",
     "next-redux-wrapper": "^7.0.5",

@@ -14,6 +14,8 @@ export default function Mercadopago (req,res){
           .catch(function(error) {
             console.error(error);
           });
+
+          res.json(req.body)
    
             break;
 

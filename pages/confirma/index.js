@@ -26,9 +26,9 @@ export default function Confirma() {
             body: JSON.stringify({
                 'items': [
                     {
-                        'title': "Meu produto",
-                        'quantity': 1,
-                        'unit_price': 65.77,
+                        'title': "camisa e short",
+                        'quantity': 2,
+                        'unit_price': 75.77,
                        
 
                     }

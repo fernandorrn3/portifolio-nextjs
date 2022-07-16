@@ -1,5 +1,5 @@
 var mercadopago = require('mercadopago');
-mercadopago.configurations.setAccessToken("TEST-8858163312914307-071117-a4ff00221a96edaed4b73410e09df6b1-1158821207");
+mercadopago.configurations.setAccessToken("TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933");
 //preciso identificar o usuario que fez a compra
 
 export default function Mercadopago (req,res){

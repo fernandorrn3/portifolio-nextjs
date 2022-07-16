@@ -4,14 +4,14 @@ export default function Pagou() {
 
 
 
-    const mercadopago = useMercadopago.v2('TEST-d8d031a1-af5b-45a8-8dd2-5933d1ad0c65', {
+    const mercadopago = useMercadopago.v2('TEST-2b8722f0-4b5d-466a-a13f-893888463e50', {
         locale: 'pt-BR'
     });
     useEffect(() => {
         if (mercadopago) {
             mercadopago.checkout({
                 preference: {
-                    id: '1158821207-7d7cf63f-c68c-4dd2-b83e-85a46684f3a0'
+                    id: '1152142933-ee9a89b9-3d2a-45b9-8590-850e5fb91ed7'
                 },
                 render: {
                     container: '.cho-container',

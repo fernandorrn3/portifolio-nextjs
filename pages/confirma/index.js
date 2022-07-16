@@ -10,7 +10,7 @@ export default function Confirma() {
 
     const resultado = useSelector((state) => state.reducercarrinho)
 
-
+   
 
     useEffect(async () => {
         if (!resultado) {
@@ -21,7 +21,7 @@ export default function Confirma() {
             headers: {
                 'Content-Type': 'application/json',
                 'cache-control': 'no-cache',
-                'Authorization': 'Bearer TEST-8858163312914307-071117-a4ff00221a96edaed4b73410e09df6b1-1158821207'
+                'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
             },
             body: JSON.stringify({
                 'items': [
@@ -74,3 +74,6 @@ Confirma.getLayout = function (page) {
         </Layout>
     )
 }
+
+
+//MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+ZqgD892U9/HXsa7XqBZUayPquAfh9xx4iwUbTSUAvTlmiXFQNTp0Bvt/5vK2FhMj39qSv1zi2OuBjvW38q1E374nzx6NNBL5JosV0+SDINTlCG0cmigHuBOyWzYmjgca+mtQu4WczCaApNaSuVqgb8u7Bd9GCOL4YJotvV5+81frlSwQXralhwRzGhj/A57CGPgGKiuPT+AOGmykIGEZsSD9RKkyoKIoc0OS8CPIzdBOtTQCIwrLn2FxI83Clcg55W8gkFSOS6rWNbG5qFZWMll6yl02HtunalHmUlRUL66YeGXdMDC2PuRcmZbGO5a/2tbVppW6mfSWG3NPRpgwIDAQAB

@@ -16,9 +16,10 @@ const [error,setError] = useState()
           };
           
           fetch('https://sandbox.api.pagseguro.com/public-keys', options)
-            .then(response => response.json())
+            .then(response => response.status)
             .then(response => setError(response))
-            .catch(err => setError(err));
+            
+            .catch(err => console.error(err));
     }
 
 
@@ -27,6 +28,7 @@ const [error,setError] = useState()
         <div>
             <div>
                 <h1>{error}</h1>
+                <h1>testando-api</h1>
                 <button onClick={pagarcartao}>Pagar</button>
             </div>
 

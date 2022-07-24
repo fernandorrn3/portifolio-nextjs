@@ -70,18 +70,22 @@ export default NextAuth({
       return session
     }
   },
-  secret: "test",
+  
   jwt: {
-    secret: "test",
+    maxAge: 1800,
+    secret: "flamengoamormaior",
     encryption: true,
    
   },
 
+  session:{
+    maxAge: 1800,
+  },
 
 
   pages:{
-    signIn: '/credentialsSignin',
-    error: '/credentialsSignin'
+    signIn: '/login',
+    error: '/login'
  
       
   }

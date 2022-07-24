@@ -12,14 +12,16 @@ function Paineladm() {
   const [error,setError] = useState()
   const router = useRouter()
   const { user } = router.query
-  const estado = useSelector((state) => state.menu)
+  const estado = useSelector((state) => state.menuReducer)
   
   
 
   useEffect(async ()=>{
+ 
     if(!user){
       return
     }
+   
 const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/checkuser/'  + user)
 const result = await res.json()
 const status = res.status
@@ -29,23 +31,26 @@ if(status === 401){
 
   },[router])
 
-
-  
+if(!user){
+  return null
+}
+  if(!session){
+    return null;
+  }
 
   if (status === "unauthenticated") {
-    alert('acesso negado')
+    alert('acesso negado nao esta autenticado')
 router.push('/')
    }
 
+   console.log(user)
 
-   if(!session){
-     return null;
-   }
+   console.log(session)
 
 
 
 if(session.username != user){
-  alert('acesso negado')
+alert('acesso negado  nomes inconscistente ')
 router.push('/')
 }  
 

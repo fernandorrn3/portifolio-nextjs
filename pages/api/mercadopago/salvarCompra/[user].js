@@ -4,6 +4,7 @@ export default function Salvarcompras(req, res) {
 
     switch (req.method) {
         case 'POST':
+            console.log(req.body)
             async function main() {
                 const addcompra = await prisma.user.update({
                     where: {
@@ -13,16 +14,14 @@ export default function Salvarcompras(req, res) {
                         compras: {
                             createMany: {
                                 data: {
-                                    produto: 'uma camisa',
-                                    idProduto: req.body,
+                                    Idcompras: req.body,
                                     pago: true
-
                                 }
                             }
                         }
                     }
                 })
-                res.json({ mensagem: 'testando-aplicacao' })
+                res.json({ mensagem: 'Produto salvo' })
             }
             main()
 

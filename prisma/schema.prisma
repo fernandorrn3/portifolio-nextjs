@@ -7,14 +7,12 @@ datasource db {
   provider          = "postgres"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-
 }
 
-
-
 model User {
-  id            Int    @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   name          String
+  lastName      String
   username      String    @unique
   email         String    @unique
   senha         String
@@ -22,29 +20,28 @@ model User {
   linkemail     String
   isAdm         Boolean   @default(false)
   image         String?
-  token Token?
-  posts     Post[]
-  compras Compras[]
- 
+  token         Token?
+  posts         Post[]
+  compras       Compras[]
 }
 
-  model Token {
-  id Int @id @default(autoincrement())
-  codigo String?
-  clientid String
+model Token {
+  id         Int     @id @default(autoincrement())
+  codigo     String?
+  clientid   String
   acesstoken String?
-  user User? @relation(fields: [UserId], references: [id])
-  UserId Int? @unique
+  user       User?   @relation(fields: [UserId], references: [id])
+  UserId     Int?    @unique
 }
+
 //cloud.prisma.io
 
 model Compras {
-id Int @id @default(autoincrement())
-Idcompras String
-user User @relation(fields: [comprasId],references: [id])
-comprasId Int
+  id        Int    @id @default(autoincrement())
+  Idcompras String
+  user      User   @relation(fields: [comprasId], references: [id])
+  comprasId Int
 }
-
 
 model Post {
   id        Int      @id @default(autoincrement())
@@ -52,6 +49,6 @@ model Post {
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
   title     String   @db.VarChar(255)
-  author    User    @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
 }

@@ -60,6 +60,7 @@ if(!req.body.name && !req.body.email && !req.body.senha){
      await prisma.User.create({
        data:{
         name:req.body.name,
+        lastName:req.body.lastname,
         username:req.body.username,
         email:req.body.email,
         senha:req.body.senha,

@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 export default function Cadastrar() {
     const { data: session, status } = useSession()
     const [nome,setNome] = useState()
+    const [lastname,setLast] = useState()
     const [userName,setUserName] = useState()
     const [email,setEmail] = useState()
     const [senha,setSenha] = useState()
@@ -26,6 +27,7 @@ console.log(process.env.NEXT_PUBLIC_DB_HOST )
 
     const data = {
         name:nome,
+        lastName:lastname,
         email:email,
         senha:senha,
         username:userName
@@ -82,6 +84,9 @@ router.push('/')
                     <form onSubmit={registerUser} action={`${process.env.DB_HOST + '/usuario'}`} method="POST">
                         <label>Nome</label><br/>
                         <input type="text" name="name" id="nome" onChange={(e) => setNome(e.target.value)}/><br/>
+
+                        <label>Sobre-nome</label><br/>
+                        <input type="text" name="lastname" id="lastname" onChange={(e) => setLast(e.target.value)}/><br/>
 
                         <label>userName</label><br/>
                         <input type="text" name="name" id="nome" onChange={(e) => setUserName(e.target.value)}/><br/>

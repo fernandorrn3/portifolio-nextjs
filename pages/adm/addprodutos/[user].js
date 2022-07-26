@@ -3,9 +3,8 @@ import { useRouter } from 'next/router'
 import Layoutpanel from "../../../components/layoutpanel"
 import Botaomenu from '../../../components/elementos/btnmenu'
 import { useSelector } from 'react-redux'
-
 import {useState,useEffect } from "react";
-
+import Formaddproduto from "../../../components/addProduto/addproduto"
 
 function Addproduto() {
   const { data: session, status } = useSession()
@@ -43,9 +42,7 @@ if(!user){
 router.push('/')
    }
 
-   console.log(user)
 
-   console.log(session)
 
 
 
@@ -70,12 +67,12 @@ if(error){
 
      
      {estado.estado 
-     ?<div className='bg-[blue] h-full ml-[220px] transition-all duration-700'> 
+     ?<div className='h-full ml-[220px] transition-all duration-700'> 
 
 
         <Botaomenu />
       
-      <h1>dashboard page</h1>
+      <Formaddproduto/>
      
       
     
@@ -84,7 +81,7 @@ if(error){
      :<div className='bg-[blue] h-full ml-[0] transition-all duration-700'>
 <Botaomenu />
       
-      <h1>dashboard page</h1>
+<Formaddproduto/>
     
       
       
@@ -106,7 +103,7 @@ if(error){
 
 
 
-Paineladm.getLayout = function getLayout(page){
+Addproduto.getLayout = function getLayout(page){
  
   return(
     <Layoutpanel>

@@ -27,7 +27,7 @@ console.log(process.env.NEXT_PUBLIC_DB_HOST )
 
     const data = {
         name:nome,
-        lastName:lastname,
+        lastname:lastname,
         email:email,
         senha:senha,
         username:userName

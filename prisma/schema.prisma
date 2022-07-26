@@ -23,6 +23,7 @@ model User {
   token         Token?
   posts         Post[]
   compras       Compras[]
+  produtos      Produtos[]
 }
 
 model Token {
@@ -41,6 +42,19 @@ model Compras {
   Idcompras String
   user      User   @relation(fields: [comprasId], references: [id])
   comprasId Int
+}
+
+model Produtos {
+  id Int @id @default(autoincrement())
+  title String @unique
+  description String?
+  picture_url String?
+  category_id Int?
+  category_name String?
+  quantity Int
+  unit_price Int
+  user User @relation(fields: [produtosId], references: [id])
+  produtosId Int
 }
 
 model Post {

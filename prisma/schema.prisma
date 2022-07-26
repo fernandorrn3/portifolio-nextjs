@@ -49,10 +49,9 @@ model Produtos {
   title String @unique
   description String?
   picture_url String?
-  category_id Int?
   category_name String?
-  quantity String
-  unit_price String
+  quantity Int
+  unit_price Int
   user User @relation(fields: [produtosId], references: [id])
   produtosId Int
 }

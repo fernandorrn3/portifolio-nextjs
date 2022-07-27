@@ -3,10 +3,12 @@ export default function Salvarprodutos(req, res) {
     const prisma = new PrismaClient({ errorFormat: 'pretty' })
     switch (req.method) {
         case 'POST':
+         
+        
             console.log(req.body)
             console.log(req.query.user)
-            res.json({ mensagem: 'produto salvo com sucesso' })
-           /* async function Main() {
+      
+           async function Main() {
                 const user = await prisma.user.update({
                     where: {
                         username: req.query.user
@@ -17,7 +19,7 @@ export default function Salvarprodutos(req, res) {
                                 data: {
                                     title:req.body.titulo,
                                     description:req.body.descrição,
-                                    category_name:req.body.category_name,
+                                    category_name:req.body.categoria,
                                     quantity:req.body.quantidade,
                                     unit_price:req.body.preço
 
@@ -35,8 +37,8 @@ export default function Salvarprodutos(req, res) {
 
                 .finally(async () => {
                     await prisma.$disconnect()
-                })*/
-
+                })
+                res.json({ mensagem: 'produto salvo com sucesso' })
             break;
     }
 }

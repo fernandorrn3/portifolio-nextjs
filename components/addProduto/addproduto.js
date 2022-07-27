@@ -17,19 +17,24 @@ const {user} = router.query
   }
     const salvarProdutos = async (e) => {
         e.preventDefault()
-     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/' + user,{
-        method:'POST',
-        body:JSON.stringify({
+        const data = {
             titulo:titulo,
             categoria:categoria,
             quantidade:quantidade,
-            preço:preco,
-            descrição:descricao
-            
+            preco:preco,
+            descricao:descricao
+        }
+     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/' + user,{
+        body:JSON.stringify(data),
 
-        })
+        headers: {
+            'Content-Type': 'application/json'
+          },
+
+          method: 'POST'
      })
      const response = await res.json()
+     console.log(response)
     
     }
 
@@ -51,7 +56,7 @@ const {user} = router.query
 <input type={'number'} name='preco' onChange={e => setpreco(e.target.value)} placeholder='preco'/><br/>
 
 <label>descrição</label><br/>
-<textarea name='descrição' onChange={e => setdescricao(e.target.descricao)}></textarea><br/>
+<textarea name='descrição' onChange={e => setdescricao(e.target.value)}></textarea><br/>
 
 <input type="submit" value="Enviar" />
 

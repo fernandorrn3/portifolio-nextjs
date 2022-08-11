@@ -1,6 +1,6 @@
 export default function Fotter(){
     return(
-      <div className="bg-[pink] ml-[220px] ">  
+      <div className="bg-[pink] ">  
           
           <h1>footer</h1>
       

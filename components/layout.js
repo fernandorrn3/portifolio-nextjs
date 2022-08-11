@@ -17,7 +17,7 @@ export default function Layout ({children}){
       
         <Header/>
         
-        <main className="h-screen">{children}</main>
+        <main className="flex flex-col">{children}</main>
         <Fotter/>
         </>
     )

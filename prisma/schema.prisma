@@ -8,17 +8,17 @@ datasource db {
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
-
+//==================================================base de dados usuario==========================================
 model User {
-  id            Int       @id @default(autoincrement())
+  id            Int        @id @default(autoincrement())
   name          String
   lastName      String
-  username      String    @unique
-  email         String    @unique
+  username      String     @unique
+  email         String     @unique
   senha         String
   emailVerified Boolean
   linkemail     String
-  isAdm         Boolean   @default(false)
+  isAdm         Boolean    @default(false)
   image         String?
   token         Token?
   posts         Post[]
@@ -31,12 +31,14 @@ model Token {
   codigo     String?
   clientid   String
   acesstoken String?
-  user       User?   @relation(fields: [UserId], references: [id])
-  UserId     Int?    @unique
+  user       User    @relation(fields: [UserId], references: [id])
+  UserId     Int     @unique
 }
 
-//cloud.prisma.io
 
+
+
+//===========================================base dados ecommerce===================================================
 model Compras {
   id        Int    @id @default(autoincrement())
   Idcompras String
@@ -44,17 +46,67 @@ model Compras {
   comprasId Int
 }
 
+
 model Produtos {
-  id Int @id @default(autoincrement())
-  title String @unique
+  id          Int       @id @default(autoincrement())
+  title       String    @unique
   description String?
   picture_url String?
-  category_name String?
-  quantity String
-  unit_price String
-  user User @relation(fields: [produtosId], references: [id])
-  produtosId Int
+  quantity    String
+  unit_price  String
+  user        User      @relation(fields: [userId], references: [id])
+  categoria CatProd @relation(fields: [categoriasId],references: [id])
+  userId  Int
+  categoriasId Int
+  tagsEprod TagsEProdutos[]
+  detalheProdutos DetalhesProduto?
+  infoprodutos Infoproduto? 
 }
+
+
+model DetalhesProduto {
+  id Int @id @default(autoincrement())
+  title String
+  propiedade String?
+  valor String?
+  produtos Produtos @relation(fields: [produtosId], references: [id])
+  produtosId Int @unique
+}
+
+model Infoproduto {
+  id Int @id @default(autoincrement())
+  titulo String
+  propriedade String?
+  valor String?
+   produtos Produtos @relation(fields: [produtosId],references: [id])
+   produtosId Int @unique
+}
+
+model CatProd {
+  id          Int      @id @default(autoincrement())
+  catNome     String
+  produtos Produtos[]
+}
+
+
+
+model Tags {
+  id Int @id @default(autoincrement())
+  tagName String
+  prodEtags TagsEProdutos[]
+}
+
+model TagsEProdutos {
+produtos Produtos @relation(fields: [produtosId], references: [id])
+produtosId Int
+tags Tags @relation(fields: [tagsId], references: [id])
+tagsId Int
+ @@id([produtosId,tagsId])
+}
+
+
+
+//=========================================base de dados blog ============================================
 
 model Post {
   id        Int      @id @default(autoincrement())
@@ -65,3 +117,13 @@ model Post {
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
 }
+
+
+
+//1 produto pode pertencer somente a uma categoria, porem uma categoria pode ter varios posts
+
+//categoria
+//tag
+//tamanho
+//detalhe produto
+//informaçoes

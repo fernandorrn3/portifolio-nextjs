@@ -1,5 +1,6 @@
 import Produto from "../../components/produto"
 import Layout from "../../components/layout"
+import Carrinho from "../../components/elementos/carrinho/carrinho"
 import { useEffect } from "react"
 export default function Homeloja(){
     
@@ -9,13 +10,13 @@ export default function Homeloja(){
     useEffect(async ()=>{
         const res = await fetch('https://viacep.com.br/ws/20910210/json/')
         const response = await res.json()
-        console.log(response)
+        
     })
     return(
-        <>
-        <h1>Home loja</h1>
+        <div className="flex flex-col grid grid-cols-12">
         <Produto/>
-        </>
+      
+        </div>
 
     )
 }

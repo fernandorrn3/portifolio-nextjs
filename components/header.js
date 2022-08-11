@@ -4,7 +4,7 @@ export default function Header (){
 
     return(
         <>
-    <header>
+    <header className='grid grid-cols-12'>
 <Navbar/>
 
 

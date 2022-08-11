@@ -6,7 +6,7 @@ import reducercredential from "./reducer/reducercredential";
 import reduceridorder from "./reducer/reduceridorder";
 import reducerProdutos from "./reducer/reducerProdutos";
 
-const combinedReducer =  combineReducers({
+  export const combinedReducer =  combineReducers({
   menuReducer,
   reducercarrinho,
   reducercredential,
@@ -14,6 +14,8 @@ const combinedReducer =  combineReducers({
   reducerProdutos
 })
 
+
+//thunks e uma função que pode interagir com a loja e despachar açoes, ela tem acesso aaos dados armazenados na loja
 
 export  const makeStore =  () => 
 configureStore({reducer:combinedReducer})

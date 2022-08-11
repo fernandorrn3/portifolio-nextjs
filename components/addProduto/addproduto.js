@@ -1,8 +1,10 @@
-
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { inserirProdutos } from '../../reducer/reducerProdutos';
+import { useDispatch } from 'react-redux';
 export default function Formaddproduto(){
+    const dispatch = useDispatch()
     const [titulo,settitulo] = useState()
     const [categoria,setcategoria] = useState()
     const [quantidade,setquantidade] = useState()
@@ -22,19 +24,11 @@ const {user} = router.query
             categoria:categoria,
             quantidade:quantidade,
             preco:preco,
-            descricao:descricao
+            descricao:descricao,
+            user:user
         }
-     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/' + user,{
-        body:JSON.stringify(data),
-
-        headers: {
-            'Content-Type': 'application/json'
-          },
-
-          method: 'POST'
-     })
-     const response = await res.json()
-     console.log(response)
+       dispatch(inserirProdutos(data))
+    
     
     }
 
@@ -50,10 +44,10 @@ const {user} = router.query
 <input type={'text'} name='categoria' onChange={e => setcategoria(e.target.value)} placeholder='Categoria'/><br/>
 
 <label>quantidade</label><br/>
-<input type={'number'} name='quantidade' onChange={e => setquantidade(e.target.value)} placeholder='quantidade'/><br/>
+<input type={'text'} name='quantidade' onChange={e => setquantidade(e.target.value)} placeholder='quantidade'/><br/>
 
 <label>preco</label><br/>
-<input type={'number'} name='preco' onChange={e => setpreco(e.target.value)} placeholder='preco'/><br/>
+<input type={'text'} name='preco' onChange={e => setpreco(e.target.value)} placeholder='preco'/><br/>
 
 <label>descrição</label><br/>
 <textarea name='descrição' onChange={e => setdescricao(e.target.value)}></textarea><br/>

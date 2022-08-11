@@ -21,6 +21,15 @@ sistema A/ usuario infos / salvar credencias acossiada a esse usuario / puxar da
 =>hospedar os arquivos no nestfly
 
 
-
+======================================================//==========================================================================
 //criar o processo de compra completo com o sistema de assinatura e market-place
-//começo adicionando o produto no carrinho e verificando se o mesmo ja foi adicionado, se ja tiver sido adicionado ira apenas atualizar a quantidade do produto
+//começo adicionando o produto no carrinho e verificando se o mesmo ja foi adicionado
+//se ja tiver sido adicionado, ira aumentar somente a quantidade
+
+=>todos os produtos ira ser puxado da base de dados
+=>componente do produto com os dados que vao ser puxados da base de dados
+
+-> a loja com a url principal sera de acesso a todos os usuarios
+
+puxar da base de dados todos os produtos da tabela loja
+puxar produtos da loja onde isAdm tabela usuario é = true

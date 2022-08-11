@@ -55,9 +55,9 @@ model Produtos {
   quantity    String
   unit_price  String
   user        User      @relation(fields: [userId], references: [id])
-  categoria CatProd @relation(fields: [categoriasId],references: [id])
+  categoria CatProd? @relation(fields: [categoriasId],references: [id])
   userId  Int
-  categoriasId Int
+  categoriasId Int?
   tagsEprod TagsEProdutos[]
   detalheProdutos DetalhesProduto?
   infoprodutos Infoproduto? 

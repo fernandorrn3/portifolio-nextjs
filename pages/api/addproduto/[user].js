@@ -6,16 +6,10 @@ export default function Salvarprodutos(req, res) {
     switch (req.method) {
         case 'POST':
          
-     //caso propriedade e valor estejam vazios adiciona somente o produto
-     //caso propriedade e valor estejam cheios adiciona o produto o a propriedade e o valor
+   
 
-     //adicionar caracteristicas a produto especifico
-     //achar esse produto pelo titulo
-
-
-     //cria um produto e conecta a um usuario existente
-     //cria uma nova categoria e conecta a esse produto existente
-     
+     //criar um produto
+     //apos criar esse produto criar uma categoria e adicionar a um produto existente
      
             console.log(req.body)
             console.log(req.query.user)
@@ -23,7 +17,7 @@ export default function Salvarprodutos(req, res) {
            async function Main() {
 
 
-                /*const user = await prisma.user.update({
+                const user = await prisma.user.update({
                     where: {
                         username: req.query.user
                     },
@@ -42,7 +36,9 @@ export default function Salvarprodutos(req, res) {
 
 
                     }
-                })*/
+                })
+
+
               
             }
             Main()

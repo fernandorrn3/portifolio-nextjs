@@ -26,7 +26,7 @@ export function upActionProduto(dados) {
 }
 
 
-
+//buscar produtos
 export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async () => {
 
     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/user')
@@ -36,11 +36,9 @@ export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async ()
 
 })
 
+//inserir produto
+export const inserirProdutos = createAsyncThunk('produtos/inserirProdutos',async postInicial => {
 
-export const inserirProdutos = createAsyncThunk(
-    'produtos/inserirProdutos',
-
-    async postInicial => {
         console.log(postInicial)
         const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/' + postInicial.user, {
             body: JSON.stringify(postInicial),

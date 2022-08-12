@@ -9,11 +9,21 @@ import Formaddproduto from "../../../components/addProduto/addproduto"
 function Addproduto() {
   const { data: session, status } = useSession()
   const [error,setError] = useState()
+  const [styleMenu,setStyle] = useState('h-full ml-[220px] transition-all duration-700')
   const router = useRouter()
   const { user } = router.query
   const estado = useSelector((state) => state.menuReducer)
+
   
-  
+  useEffect(()=>{
+    if(estado.estado){
+      setStyle('h-full ml-[220px] transition-all duration-700')
+        }else{
+          setStyle('bg-[blue] h-full ml-[0] transition-all duration-700')
+        }
+console.log(styleMenu)      
+  },[estado])
+
 
   useEffect(async ()=>{
  
@@ -57,17 +67,16 @@ if(error){
   router.push('/')
 }
 
-  
-
+ 
 
 
   return(
-   
+   //
  <div className="h-full">
 
      
-     {estado.estado 
-     ?<div className='h-full ml-[220px] transition-all duration-700'> 
+      
+     <div className={styleMenu}> 
 
 
         <Botaomenu />
@@ -75,19 +84,7 @@ if(error){
       <Formaddproduto/>
      
       
-    
-     </div>
-
-     :<div className='bg-[blue] h-full ml-[0] transition-all duration-700'>
-<Botaomenu />
-      
-<Formaddproduto/>
-    
-      
-      
-     </div>
-      }
-    
+  </div>
     
     </div>
    

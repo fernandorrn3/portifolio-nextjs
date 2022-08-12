@@ -8,6 +8,8 @@ export default function CriarRef(){
     const [image,setimage] = useState()
     const [value,setValor] = useState()
     const [prop,setProp] = useState()
+    const [catnome,setcatnome] = useState()
+    const [catid,setcatid] = useState()
     const [objeto,setobjeto] = useState([])
 
 const firebaseConfig = {
@@ -64,7 +66,7 @@ setobjeto(prevArray  =>[...prevArray ,caracteristicas])
 
 }
 
-
+//
 const enviarProps = async ()=>{
 const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/fernandorrn',{
     method:'POST',
@@ -75,18 +77,58 @@ const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/fernandorr
 })
 }
 
-    return(
-        <div><h1>Criar refs</h1>
-      <button onClick={enviar}>enviar </button><br/>
-      <input type={'file'} placeholder='up img' onChange={e=>setimage(e.target.files[0])}/>
-      <button onClick={downloadfile}>download file</button><br/>
 
-      <input type={'text'} placeholder={'add-propriedade'} onChange={e=>setProp(e.target.value)} /><br/>
-      <input type={'text'} placeholder={'add-valor'} onChange={e=>setValor(e.target.value)}/><br/>
+const enviarCategoria = async(e)=>{
+
+    const enviarAcategoria = {
+       editando:e.target.name,
+        catenome:catnome,
+        cateid:catid
+    }
+
+
+    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/fernandorrn',{
+        method:'POST',
+        headers:{
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify(enviarAcategoria)
+    })
+
+    const response = await res.json()
+    console.log(response)
+ 
+}
+
+    return(
+        <div>
+            <div className="flex flex-col bg-[green]"> 
+            <h1>Criar refs</h1>
+     
+      <div><input type={'file'} placeholder='up img' onChange={e=>setimage(e.target.files[0])}/></div>
+      <div> <button onClick={enviar}>enviar </button></div>
+     <div><button onClick={downloadfile}>download file</button></div> 
+     </div>
+
+     <div className="flex flex-col bg-[blue]"> 
+    <div><input type={'text'} placeholder={'add-propriedade'} onChange={e=>setProp(e.target.value)} /></div> 
+     <div><input type={'text'} placeholder={'add-valor'} onChange={e=>setValor(e.target.value)}/></div> 
+     <div><button onClick={mandar}>adicionar</button></div>
+      <div><button onClick={enviarProps}>Enviar-props</button></div>
+     </div>
+
+
+<div className="flex flex-col bg-[yellow]">
+    <h1>mandar Categoria produto</h1>
+    <div><input type={'text'} onChange={e=> setcatnome(e.target.value)} placeholder='nome categoria'/></div>
+    <div><input type={'number'} onChange={e=> setcatid(e.target.value)} placeholder='id-Categoria'/></div>
+
+    <div><button onClick={enviarCategoria} name={'categoria'}>enviar Categoria</button></div>
+</div>
+   
       
 
-      <button onClick={mandar}>enviar</button><br/>
-      <button onClick={enviarProps}>Enviar-props</button>
+     
       
       </div>
       

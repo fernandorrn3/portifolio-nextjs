@@ -33,3 +33,21 @@ sistema A/ usuario infos / salvar credencias acossiada a esse usuario / puxar da
 
 puxar da base de dados todos os produtos da tabela loja
 puxar produtos da loja onde isAdm tabela usuario é = true
+
+casos de uso para adicionar o produto
+
+//adiciona produto 
+//adicionar produto +  detahles
+//adicionar produto + caracteristica
+//adicionar produto + categoria
+
+//adicionar produto + detalhes + categoria + caracteristica
+
+
+
+
+
+//ter uma rota so para adicionar e outra rota so para editar
+
+
+//botao de editar o produto

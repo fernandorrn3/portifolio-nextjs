@@ -46,7 +46,7 @@ model Compras {
   comprasId Int
 }
 
-
+//================================================produtos=======================================================
 model Produtos {
   id          Int       @id @default(autoincrement())
   title       String    @unique
@@ -54,9 +54,9 @@ model Produtos {
   picture_url String?
   quantity    String
   unit_price  String
-  user        User      @relation(fields: [userId], references: [id])
+  user        User?      @relation(fields: [userId], references: [id])
   categoria CatProd? @relation(fields: [categoriasId],references: [id])
-  userId  Int
+  userId  Int?
   categoriasId Int?
   tagsEprod TagsEProdutos[]
   detalheProdutos DetalhesProduto?

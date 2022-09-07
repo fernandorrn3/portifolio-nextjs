@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { inserirProdutos } from '../../reducer/reducerProdutos';
 import { useDispatch } from 'react-redux';
+import EditorTexto from '../elementos/editortexto/editorTexto';
+
 export default function Formaddproduto() {
     const dispatch = useDispatch()
     const [titulo, settitulo] = useState()
@@ -29,14 +31,22 @@ export default function Formaddproduto() {
 
     //adicionar produto + detalhes + categoria + caracteristica
 
-    //adicinar 1 produto, criar uma categoria, conectar 1 produto a uma categoria
+
 
     const salvarProdutos = async (e) => {
         e.preventDefault()
         console.log('mandou?')
         switch (e.target.name) {
             case 'produtos':
-                console.log('produto')
+                const dataProdutos = {
+                    adicionando: e.target.name,
+                    titulo: titulo,
+                    quantidade: quantidade,
+                    preco: preco,
+                    descricao: descricao,
+                    user: user
+                }
+                dispatch(inserirProdutos(data))
                 break;
             case 'produtos/detalhe':
                 console.log('produto/detalhe')
@@ -58,15 +68,7 @@ export default function Formaddproduto() {
                 dispatch(inserirProdutos(data))
                 break;
         }
-        /*const data = {
-            adicionando:e.target.name,
-            titulo:titulo,           
-            quantidade:quantidade,
-            preco:preco,
-            descricao:descricao,
-            user:user
-        }
-       dispatch(inserirProdutos(data))*/
+
 
 
     }
@@ -96,16 +98,16 @@ export default function Formaddproduto() {
                             <label>quantidade</label><br />
                             <input type={'text'} name='quantidade' onChange={e => setquantidade(e.target.value)} placeholder='quantidade' />
                         </div>
-                        <div> 
-                        <label>preco</label><br />
-                        <input type={'text'} name='preco' onChange={e => setpreco(e.target.value)} placeholder='preco' />
+                        <div>
+                            <label>preco</label><br />
+                            <input type={'text'} name='preco' onChange={e => setpreco(e.target.value)} placeholder='preco' />
                         </div>
-                        <div> 
-                        <label>descrição</label><br />
-                        <textarea name='descrição' onChange={e => setdescricao(e.target.value)}></textarea><br />
+                        <div>
+                            <label>descrição</label><br />
+                            <textarea name='descrição' onChange={e => setdescricao(e.target.value)}></textarea><br />
                         </div>
                         <div className={styleButtonCat}>
-                        <div><input type="submit" value="Enviar Produtos" /></div>
+                            <div><input type="submit" value="Enviar Produtos" /></div>
                         </div>
 
                     </form>
@@ -127,13 +129,30 @@ export default function Formaddproduto() {
                 </div>
             </div>
 
-            <div className='flex flex-col bg-[yellow]'>
-                <h1>adcionar detalhe-produtos</h1>
+            <div className='flex flex-col '>
+                <div><h1>adcionar detalhe-produtos</h1></div>
+                <div>
+                    <form className='flex flex-col' id='container'>
+
+                        <div><label>Adicionar titulo detalhe</label></div>
+                        <div><input type={'text'} placeholder='adicionar titulo-detalhe' /></div>
+
+
+                    </form>
+                    <div><EditorTexto/></div>
+                   
+                </div>
+                
             </div>
             <div className='flex flex-col bg-[#00ff00]'>
                 <h1>adcionar caracteristicas-produtos</h1>
             </div>
-            <div> <button onClick={adicionarCategoria}>add Categoria</button></div>
+            <div> <button className='bg-[#cc9900]' onClick={adicionarCategoria}>add Categoria</button></div>
+            <div> <button className='bg-[#ff6699]' onClick={adicionarCategoria}>add detalhes</button></div>
         </div>
     )
 }
+
+
+
+

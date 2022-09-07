@@ -35,6 +35,19 @@ export default function Salvarprodutos(req, res) {
                             }
 
                             })
+
+                            const RelacionaUser = await prisma.user.update({
+                               where:{
+                                username:req.query.user
+                               },
+                               data:{
+                                produtos:{
+                                    connect:{
+                                        title:req.body.titulo
+                                    }
+                                }
+                               }
+                            })
                         break;
 
                     /*case 'produto':

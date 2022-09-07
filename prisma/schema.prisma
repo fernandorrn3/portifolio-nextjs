@@ -59,28 +59,11 @@ model Produtos {
   userId  Int?
   categoriasId Int?
   tagsEprod TagsEProdutos[]
-  detalheProdutos DetalhesProduto?
-  infoprodutos Infoproduto? 
+  editor Editorprod?
+  
 }
 
 
-model DetalhesProduto {
-  id Int @id @default(autoincrement())
-  title String
-  propiedade String?
-  valor String?
-  produtos Produtos @relation(fields: [produtosId], references: [id])
-  produtosId Int @unique
-}
-
-model Infoproduto {
-  id Int @id @default(autoincrement())
-  titulo String
-  propriedade String?
-  valor String?
-   produtos Produtos @relation(fields: [produtosId],references: [id])
-   produtosId Int @unique
-}
 
 model CatProd {
   id          Int      @id @default(autoincrement())
@@ -116,8 +99,28 @@ model Post {
   title     String   @db.VarChar(255)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
+  editpost Editpost?
 }
 
+//==============================Editor=======================================================================
+
+model Editorprod {
+  id Int @id @default(autoincrement())
+  nome String?
+  conteudo String
+  produto Produtos? @relation(fields: [produtosID],references: [id])
+  postId Int @unique
+  produtosID Int @unique
+}
+
+
+model Editpost {
+  id Int @id @default (autoincrement())
+  nome String?
+  conteudo String
+  posts Post? @relation(fields: [postId],references: [id])
+  postId Int @unique
+}
 
 
 //1 produto pode pertencer somente a uma categoria, porem uma categoria pode ter varios posts

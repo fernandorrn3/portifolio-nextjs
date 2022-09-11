@@ -1,32 +1,25 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 
-const initialState = {
-    editor: [],
-    status: 'iddle',
-    error: null
+const initialState = {}
 
-}
 
-export const editorProduto = createAsyncThunk('editor/produto', conteudo => {
-return conteudo
-})
 
 
 const editorReducer = createSlice({
     initialState,
     name: 'editor',
 
-    extraReducers(builder) {
-        builder
-            .addCase(editorProduto.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-               state.editor.push(action.payload)
-               
-
-            })
+  reducers:{
+    addEditor(state,action){
+    console.log(action.payload)
+return {
+    ...state,
+    data:action.payload
+}
     }
+  }
 
 })
-
+export const  {addEditor} = editorReducer.actions
 export default editorReducer.reducer
 

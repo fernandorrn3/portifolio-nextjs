@@ -11,17 +11,17 @@ export default function Layoutpanel ({children}){
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 </Head>
-
-<div className="flex flex-row"> 
+<div className="flex flex-col"> 
+<div className="flex flex-row h-full "> 
 
 
 <Sidebar />
 
-<main className="h-screen w-screen">{children}</main>
+<main className="h-full w-screen">{children}</main>
 </div>
 
 <Fotter/>
-
+</div>
 </>
    ) 
 

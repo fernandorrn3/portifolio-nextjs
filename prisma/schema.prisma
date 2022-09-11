@@ -109,7 +109,7 @@ model Editorprod {
   nome String?
   conteudo String
   produto Produtos? @relation(fields: [produtosID],references: [id])
-  postId Int @unique
+ 
   produtosID Int @unique
 }
 

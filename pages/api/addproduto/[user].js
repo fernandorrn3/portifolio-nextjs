@@ -1,77 +1,140 @@
 const { Prisma, PrismaClient } = require('@prisma/client')
-
-
 export default function Salvarprodutos(req, res) {
+    const { user } = req.query
     const prisma = new PrismaClient({ errorFormat: 'pretty' })
     switch (req.method) {
         case 'POST':
 
 
+            //cria o produto
+            //categoria ativo? cria categoria e conecta ao produto
+            //detalhes ativo? cria detalhes e conecta ao produto
+            //caracteristica ativo? cria caracteristica e conecta ao produto
 
+            //conecta produto a categoria
+            //conecta o produto a detalhes
+            //conecta a produto a categoria
 
-            console.log(req.body.adicionado)
+            //conecta produto a usuario
+            //retorna esse produto para inseri-lo na loja redux
+
             console.log(req.body)
+            console.log(user)
 
             async function Main() {
+                const produtos = await prisma.produtos.create({
 
-                //criar uma categoria, criar um produto
-                //adicionar esse produto a um usuario
+                    data: {
+                        title: req.body.titulo,
+                        description: req.body.descricao,
+                        quantity: req.body.quantidade,
+                        unit_price: req.body.preco
 
-                switch (req.body.adicionado) {
-                    case 'produtos/categoria':
-                        const categoria = await prisma.catProd.create({
-                            data: {
-                                catNome: req.body.categoria,
-                            
+
+                    }
+                })
+
+
+                if (req.body.ativaagora.categoria == 'ativado') {
+                    const categoria = await prisma.catProd.create({
+                        data: {
+                            catNome: req.body.categoria,
                             produtos: {
-                                    create:
-                                    {
-                                        title: req.body.titulo,
-                                        description: req.body.descricao,
-                                        quantity: req.body.quantidade,
-                                        unit_price: req.body.preco
-                                    }
+                                connect: {
+                                    title: req.body.titulo
                                 }
                             }
-
-                            })
-
-                            const RelacionaUser = await prisma.user.update({
-                               where:{
-                                username:req.query.user
-                               },
-                               data:{
-                                produtos:{
-                                    connect:{
-                                        title:req.body.titulo
-                                    }
-                                }
-                               }
-                            })
-                        break;
-
-                    /*case 'produto':
-                        const user = await prisma.user.update({
-                            where: {
-                                username: req.query.user
-                            },
-                            data: {
-                                produtos: {
-                                    createMany: {
-                                        data: {
-                                            title:req.body.titulo,
-                                            description:req.body.descricao,                                   
-                                            quantity:req.body.quantidade,
-                                            unit_price:req.body.preco
-        
-                                        }
-                                    }
-                                }
-        
-                            }
-                        })
-                     break;*/
+                        }
+                    })
                 }
+
+
+                if (req.body.ativaagora.detalhes == 'ativado') {
+                    const detahleProduto = await prisma.editorprod.create({
+                        data: {
+                            nome: 'detalhes',
+                            conteudo: req.body.enviarEditor.data,
+                            produtos:{
+                                connect:{
+                                    title:req.body.titulo
+                                }
+                            }
+                        }
+                    })
+                }
+
+
+                const relacionarUsuario = await prisma.user.update({
+                    where: {
+                        username: req.query.user
+                    },
+                    data: {
+                        produtos: {
+                            connect: {
+                                title: req.body.titulo
+                            }
+                        }
+                    }
+                })
+
+
+
+
+                /* switch (req.body.adicionado) {
+                     case 'produtos/categoria':
+                         const categoria = await prisma.catProd.create({
+                             data: {
+                                 catNome: req.body.categoria,
+ 
+                                 produtos: {
+                                     create:
+                                     {
+                                         title: req.body.titulo,
+                                         description: req.body.descricao,
+                                         quantity: req.body.quantidade,
+                                         unit_price: req.body.preco
+                                     }
+                                 }
+                             }
+ 
+                         })
+ 
+                         const RelacionaUser = await prisma.user.update({
+                             where: {
+                                 username: req.query.user
+                             },
+                             data: {
+                                 produtos: {
+                                     connect: {
+                                         title: req.body.titulo
+                                     }
+                                 }
+                             }
+                         })
+                         break;
+ 
+                     /*case 'produto':
+                         const user = await prisma.user.update({
+                             where: {
+                                 username: req.query.user
+                             },
+                             data: {
+                                 produtos: {
+                                     createMany: {
+                                         data: {
+                                             title:req.body.titulo,
+                                             description:req.body.descricao,                                   
+                                             quantity:req.body.quantidade,
+                                             unit_price:req.body.preco
+         
+                                         }
+                                     }
+                                 }
+         
+                             }
+                         })
+                      break;
+                     }*/
             }
             Main()
                 .catch((e) => {
@@ -81,7 +144,7 @@ export default function Salvarprodutos(req, res) {
                 .finally(async () => {
                     await prisma.$disconnect()
                 })
-            res.json({ mensagem: 'produto salvo com sucesso' })
+            res.json(produtos)
             break;
 
 

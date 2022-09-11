@@ -6,7 +6,8 @@ import { criarTag } from "../../../lib/editor";
 import { criarContainer } from "../../../lib/editor";
 import { criarCaixas } from "../../../lib/editor";
 import { useDispatch } from "react-redux";
-import { editorProduto } from "../../../reducer/reducerEditText";
+import { addEditor } from "../../../reducer/reducerEditText";
+import { useSelector } from "react-redux";
 export default function EditorTexto() {
     const router = useRouter()
     const dispatch = useDispatch()
@@ -14,25 +15,37 @@ export default function EditorTexto() {
     const [caixa, setCaixa] = useState()
     const [elemento, setElemento] = useState()
     const [inicial, setInicial] = useState()
+    const [selecionado,setSelecionado] = useState()
     const [linhaEcoluna, setLinhaEcoluna] = useState('')
     const [objetos, setObjetos] = useState([])
     const divRef = useRef()
     const testandoContainer = useRef()
+ 
 
-    //criar elemento
+    
 
 
 
     useEffect(() => {
 
         if (tag) {
-            if (!caixa) {
+            if (caixa == ' ') {
                 alert('caixa vazia cria uma caixa')
+                setTag('')
                 return null
             }
-            const container = divRef.current
-            criarTag(tag, container, caixa, clickElement)
-            setTag('')
+            
+            if(caixa.id != 'caixaelemento'){
+                alert('crie uma caixa primeiro')
+                setTag('')
+                return null
+            }
+            else {
+                const container = divRef.current
+                criarTag(tag, caixa, clickElement,teclaPress)
+                setTag('')
+            }
+           
         }
 
     }, [tag])
@@ -54,14 +67,15 @@ export default function EditorTexto() {
 
 
     const clickElement = (e) => {
+        
         setElemento(e.target)
     }
 
 
-    const editarElemento = (e) => {
+    const alinharElemento = (e) => {
 
         if (!elemento) {
-            console.log('selecione o elemento')
+            console.log('selecione o elemento a ser alinhado')
 
         } else {
 
@@ -103,10 +117,11 @@ export default function EditorTexto() {
     }
 
 
-
     const criarLinha = () => {
-        //remover todos os flex-row e flex-col
-
+if(caixa.id == 'caixaelemento'){
+    caixa.firstChild.classList.add('w-[100%]')
+    caixa.lastChild.classList.add('w-[100%]')
+}
         caixa.classList.remove('flex-row')
         caixa.classList.remove('flex-col')
         caixa.classList.remove('flex')
@@ -135,6 +150,10 @@ export default function EditorTexto() {
     }
 
 
+    const teclaPress = (e) =>{
+console.log(e.target)
+    }
+
     const passaMouse = (e)=>{
         
         e.target.className += ' outline outline-offset-2 outline-pink-500 '
@@ -145,16 +164,18 @@ e.target.classList.remove("outline","outline-offset-2" ,"outline-pink-500")
     }
 
     const salvar = () => {
-const data = {
-    conteudo:divRef.current.innerHTML
+       
+const conteudo = divRef.current.innerHTML
+
+
+testandoContainer.current.innerHTML = divRef.current.innerHTML
+dispatch(addEditor(conteudo))
 }
-dispatch(editorProduto(divRef.current.innerHTML))
-    }
 
-
+//mandar para o redux e depois recuperar quando for enviar para a base de dados
 
     return (
-        <div className="flex h-full flex-col w-[50%] px-8 py-8">
+        <div className="flex h-full flex-col w-[100%] px-8 py-8">
             <div>
                 <div><h1>Elementos criados</h1></div>
 
@@ -163,7 +184,7 @@ dispatch(editorProduto(divRef.current.innerHTML))
 
             <div><button onClick={selecionarTag} name="p" className='bg-[red]'>p</button></div>
 
-            <div><button onClick={editarElemento} name="centralizar" className='bg-[red]'>centralizar</button></div>
+            <div><button onClick={alinharElemento} name="centralizar" className='bg-[red]'>centralizar</button></div>
 
             <div><button onClick={criarContainers} name="div" className='bg-[red]'>Criar-container</button></div>
 
@@ -177,17 +198,18 @@ dispatch(editorProduto(divRef.current.innerHTML))
 
             <div className="flex flex-col bg-[yellow] h-full w-full px-2 py-2" id='teste' contentEditable={'true'} onClick={(e) => {
 
-                if (divRef.current.firstChild == null) {
+               if (divRef.current.firstChild == null) {
                     setCaixa(' ')
                     console.log('null')
                 } else {
                     console.log('nao null')
                 }
 
+
             }} ref={divRef} >
             </div>
 <div ref={testandoContainer} className='bg-[green]'>
-<h1>testando container bando di preto</h1>
+<h1>pré visiualizaçao conteudo</h1>
 </div>
         </div>
     )

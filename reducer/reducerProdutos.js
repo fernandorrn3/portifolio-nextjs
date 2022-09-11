@@ -13,13 +13,9 @@ const initialState = {
 export function upActionProduto(dados) {
     return async function midwareUpProd(dispatch, getState) {
         const fetchProduto = getState()
-
         const produtosStore = fetchProduto.reducerProdutos.produtos
         console.log(produtosStore)
         const procuraProdutos = produtosStore.find(el => el.id == dados.id)
-
-        
-      
         dispatch(upQuantidade(procuraProdutos))
 
     }
@@ -37,25 +33,24 @@ export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async ()
 })
 
 //inserir produto
-export const inserirProdutos = createAsyncThunk('produtos/inserirProdutos',async postInicial => {
+export const inserirProdutos = createAsyncThunk('produtos/inserirProdutos', async postInicial => {
 
-        console.log(postInicial)
-        const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/' + postInicial.user, {
-            body: JSON.stringify(postInicial),
+    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/' + postInicial.user, {
+        body: JSON.stringify(postInicial),
 
-            headers: {
-                'Content-Type': 'application/json'
-            },
+        headers: {
+            'Content-Type': 'application/json'
+        },
 
-            method: 'POST'
-        })
-        const response = await res.json()
-        return response
+        method: 'POST'
+    })
+    const response = await res.json()
+    console.log(response)
+    return response
 
-    }
+}
 
 )
-
 
 const produtoReducer = createSlice({
     name: 'produtos',
@@ -66,17 +61,17 @@ const produtoReducer = createSlice({
         upQuantidade(state, action) {
 
 
-           
+
             const fetchProduto = state.produtos.find(el => el.id === action.payload.id)
-            
+
             const flow = parseInt(fetchProduto.quantity)
 
             fetchProduto.quantity = flow
-            
-           
+
+
             if (fetchProduto) {
-                
-                fetchProduto.quantity = parseInt(fetchProduto.quantity + 1) 
+
+                fetchProduto.quantity = parseInt(fetchProduto.quantity + 1)
             }
 
 
@@ -85,9 +80,6 @@ const produtoReducer = createSlice({
 
     extraReducers(builder) {
         builder
-
-
-
             .addCase(inserirProdutos.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.produtos.push(action.payload)
@@ -109,8 +101,6 @@ const produtoReducer = createSlice({
             })
     }
 })
-
-
 
 
 export const { upQuantidade } = produtoReducer.actions

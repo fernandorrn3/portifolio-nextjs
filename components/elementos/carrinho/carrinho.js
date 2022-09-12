@@ -49,14 +49,14 @@ function CorpoCarrinho (){
     const selectCarrinho = useSelector((elemento) => elemento.reducercarrinho)
     return(
         <div>
-{selectCarrinho.map(el => (
-    <div  className="grid grid-cols-8"> 
+{selectCarrinho.map((el,index) => {
+    <div key={index} className="grid grid-cols-8"> 
     <div className="col-span-2"><h1>imagem</h1></div>
     <div className="col-span-4"><h1>{el.nome}</h1></div>
     <div className="col-span-2"><h1>{el.valor}</h1></div>
     </div>
    
-))
+})
 
 }
         </div>

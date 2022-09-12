@@ -27,6 +27,35 @@ export default function Formaddproduto() {
     const router = useRouter()
     const { user } = router.query
 
+    useEffect(() => {
+        addDetalhe ? setStyleDetail('flex flex-col my-4 bg-[#00CD66] ') : setStyleDetail('hidden')
+        addDetalhe ? setAtivado(prevState => {
+            return { ...prevState, detalhes: 'ativado' }
+        }) : setAtivado(prevState => {
+            return { ...prevState, detalhes: 'desativado' }
+        })
+    }, [addDetalhe])
+
+    useEffect(() => {
+        addCaracte ? setStyleCaracte('flex flex-col my-4 bg-[#00ff00] ') : setStyleCaracte('hidden')
+        addCaracte ? setAtivado(prevState => {
+            return { ...prevState, caracteristicas: 'ativado' }
+        }) : setAtivado(prevState => {
+            return { ...prevState, caracteristicas: 'desativado' }
+        })
+
+    }, [addCaracte])
+    useEffect(() => {
+        addCategoria ? setStyleButtonCat('hidden') : setStyleButtonCat('flex flex-col')
+        addCategoria ? setStyleCat('flex flex-col bg-[blue] visible') : setStyleCat('flex flex-col bg-[blue] invisible')
+        addCategoria ? setAtivado(prevState => {
+            return { ...prevState, categoria: 'ativado' }
+        }) : setAtivado(prevState => {
+            return { ...prevState, categoria: 'desativado' }
+        })
+
+    }, [addCategoria])
+
 
 
     if (!user) {
@@ -100,35 +129,7 @@ export default function Formaddproduto() {
         addCaracte ? setAddCaracte(false) : setAddCaracte(true)
     }
 
-    useEffect(() => {
-        addDetalhe ? setStyleDetail('flex flex-col my-4 bg-[#00CD66] ') : setStyleDetail('hidden')
-        addDetalhe ? setAtivado(prevState => {
-            return { ...prevState, detalhes: 'ativado' }
-        }) : setAtivado(prevState => {
-            return { ...prevState, detalhes: 'desativado' }
-        })
-    }, [addDetalhe])
-
-    useEffect(() => {
-        addCaracte ? setStyleCaracte('flex flex-col my-4 bg-[#00ff00] ') : setStyleCaracte('hidden')
-        addCaracte ? setAtivado(prevState => {
-            return { ...prevState, caracteristicas: 'ativado' }
-        }) : setAtivado(prevState => {
-            return { ...prevState, caracteristicas: 'desativado' }
-        })
-
-    }, [addCaracte])
-    useEffect(() => {
-        addCategoria ? setStyleButtonCat('hidden') : setStyleButtonCat('flex flex-col')
-        addCategoria ? setStyleCat('flex flex-col bg-[blue] visible') : setStyleCat('flex flex-col bg-[blue] invisible')
-        addCategoria ? setAtivado(prevState => {
-            return { ...prevState, categoria: 'ativado' }
-        }) : setAtivado(prevState => {
-            return { ...prevState, categoria: 'desativado' }
-        })
-
-    }, [addCategoria])
-
+    
     return (
         <div className='flex flex-col'>
             <div className='flex flex-col bg-[green]'>

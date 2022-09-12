@@ -53,16 +53,28 @@ export default function Salvarprodutos(req, res) {
                     const detahleProduto = await prisma.editorprod.create({
                         data: {
                             nome: 'detalhes',
-                            conteudo: req.body.enviarEditor.data,
-                            produtos:{
-                                connect:{
-                                    title:req.body.titulo
+                            conteudo: req.body.enviarDetalhes.data,
+                            produto: {
+                                connect: {
+                                    title: req.body.titulo
                                 }
                             }
                         }
                     })
                 }
-
+                if (req.body.ativaagora.caracteristicas == 'ativado') {
+                    const caractereProdutos = await prisma.editorprod.create({
+                        data: {
+                            nome: 'caracteristicas',
+                            conteudo: req.body.enviarCaracter.data,
+                            produto: {
+                                connect: {
+                                    title: req.body.titulo
+                                }
+                            }
+                        }
+                    })
+                }
 
                 const relacionarUsuario = await prisma.user.update({
                     where: {
@@ -78,63 +90,7 @@ export default function Salvarprodutos(req, res) {
                 })
 
 
-
-
-                /* switch (req.body.adicionado) {
-                     case 'produtos/categoria':
-                         const categoria = await prisma.catProd.create({
-                             data: {
-                                 catNome: req.body.categoria,
- 
-                                 produtos: {
-                                     create:
-                                     {
-                                         title: req.body.titulo,
-                                         description: req.body.descricao,
-                                         quantity: req.body.quantidade,
-                                         unit_price: req.body.preco
-                                     }
-                                 }
-                             }
- 
-                         })
- 
-                         const RelacionaUser = await prisma.user.update({
-                             where: {
-                                 username: req.query.user
-                             },
-                             data: {
-                                 produtos: {
-                                     connect: {
-                                         title: req.body.titulo
-                                     }
-                                 }
-                             }
-                         })
-                         break;
- 
-                     /*case 'produto':
-                         const user = await prisma.user.update({
-                             where: {
-                                 username: req.query.user
-                             },
-                             data: {
-                                 produtos: {
-                                     createMany: {
-                                         data: {
-                                             title:req.body.titulo,
-                                             description:req.body.descricao,                                   
-                                             quantity:req.body.quantidade,
-                                             unit_price:req.body.preco
-         
-                                         }
-                                     }
-                                 }
-         
-                             }
-                         })
-                      break;
-                     }*/
+                res.json(produtos)
             }
             Main()
                 .catch((e) => {
@@ -144,7 +100,7 @@ export default function Salvarprodutos(req, res) {
                 .finally(async () => {
                     await prisma.$disconnect()
                 })
-            res.json(produtos)
+
             break;
 
 

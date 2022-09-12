@@ -3,8 +3,42 @@ import verificaPermisao from "../../../lib/verificauser";
 export default function handler(req,res){
     const prisma = new PrismaClient({errorFormat: 'pretty'})
     const { user } = req.query
-    
+    switch(req.method){
+        case 'GET':
 
-    verificaPermisao(user,req,res)
+        async function main(){
+            const finduser = await prisma.user.findUnique({
+                where:{
+                  username:user
+                }
+              
+              })
+          
+          try {
+              if(!finduser.isAdm) throw 'acesso negado rota exclusiva para adm'
+              if(finduser.isAdm){ 
+                res.json({mensagem: `bem vindo ${user}`  }) 
+                res.status(200).end()
+              } 
+          } catch (error) {
+              res.json({mensagem:error})
+              res.status(401).end()
+          }
+        }
+
+        main()
+
+        .catch((e) => {
+            throw e
+          })
+          .finally(async () => {
+            await prisma.$disconnect()
+          })
+          
+            
+        break;
+    }
+
+    //verificaPermisao(user,req,res)
 
 }

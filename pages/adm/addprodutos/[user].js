@@ -31,13 +31,17 @@ function Addproduto() {
       return
     }
 
-    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/checkuser/' + user)
-    const result = await res.json()
+    const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/checkuser/' + user,{
+      headers:{
+        'Content-type': 'application/json'
+      }
+    })
     const status = res.status
     if (status === 401) {
       setError(result.mensagem)
     }
-
+    const result = await res.json()
+    console.log(result)
   }, [router])
 
   if (!user) {

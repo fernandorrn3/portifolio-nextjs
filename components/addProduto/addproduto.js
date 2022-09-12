@@ -20,7 +20,10 @@ export default function Formaddproduto() {
     const [styleDetail, setStyleDetail] = useState('hidden')
     const [styleCaracte, setStyleCaracte] = useState('invisible')
     const [styleButtonCat, setStyleButtonCat] = useState('flex flex-col')
-    const pegarEditor = useSelector(state => state.reducerEditText)
+    const [tipo, setTipo] = useState()
+    const pegardetalhe = useSelector(state => state.reducerEditText)
+    const pegarCaractere = useSelector(state => state.reducerProdCarac)
+
     const router = useRouter()
     const { user } = router.query
 
@@ -44,26 +47,33 @@ export default function Formaddproduto() {
     //caracteristica esta ativado? entao manda caracteristica
     const salvarProdutos = async (e) => {
         const dataProdutos = {}
-       
 
-
-        if (ativado.caracteristicas === 'ativado') {
-
-
-        }
         if (ativado.categoria === 'ativado') {
-            dataProdutos.categoria = categoria
             dataProdutos.ativaagora = {
                 categoria: 'ativado'
             }
+            dataProdutos.categoria = categoria
         }
+
+        if (ativado.caracteristicas === 'ativado') {
+
+            dataProdutos.ativaagora = {
+                caracteristicas: 'ativado'
+            }
+            dataProdutos.enviarCaracter = pegarCaractere
+        }
+
+
         if (ativado.detalhes === 'ativado') {
-            
-           dataProdutos.ativaagora = {
-            detalhes:'ativado'
-           }
-           dataProdutos.enviarEditor = pegarEditor
+
+            dataProdutos.ativaagora = {
+                detalhes: 'ativado'
+            }
+            dataProdutos.enviarDetalhes = pegardetalhe
+
         }
+
+
         if (ativado.produtos === 'ativado') {
             dataProdutos.user = user
             dataProdutos.titulo = titulo
@@ -72,7 +82,6 @@ export default function Formaddproduto() {
             dataProdutos.preco = preco
             dispatch(inserirProdutos(dataProdutos))
         }
-
 
     }
 
@@ -101,7 +110,7 @@ export default function Formaddproduto() {
     }, [addDetalhe])
 
     useEffect(() => {
-        addCaracte ? setStyleCaracte('flex flex-col my-4 bg-[#00ff00] visible') : setStyleCaracte('invisible')
+        addCaracte ? setStyleCaracte('flex flex-col my-4 bg-[#00ff00] ') : setStyleCaracte('hidden')
         addCaracte ? setAtivado(prevState => {
             return { ...prevState, caracteristicas: 'ativado' }
         }) : setAtivado(prevState => {
@@ -163,7 +172,7 @@ export default function Formaddproduto() {
 
                 <div className={styleDetail}>
                     <div><h1>adcionar detalhe-produtos</h1></div>
-                    <EditorTexto/>
+                    <EditorTexto tipo={'detalhes'} />
                     <div>
 
 
@@ -174,15 +183,16 @@ export default function Formaddproduto() {
 
                 <div className={styleCaracte}>
                     <div><h1>adcionar caracteristicas-produtos</h1></div>
+                    <EditorTexto tipo={'caracteristica'} />
                 </div>
             </div>
 
-            <div className='flex flex-col'> 
-            <div className='my-4'> <button className='bg-[#cc9900]' onClick={adicionarCategoria}>add Categoria</button></div>
-            <div className='my-4'> <button className='bg-[#ff6699]' onClick={addDetalhes}>add detalhes</button></div>
-            <div className='my-4'> <button className='bg-[#00FF7F]' onClick={addCaracteristicas}>add caracteristica</button></div>
-            <div className='my-4'><button className='bg-[#483D8B]' onClick={salvarProdutos}>Enviar</button></div>
-        </div>
+            <div className='flex flex-col'>
+                <div className='my-4'> <button className='bg-[#cc9900]' onClick={adicionarCategoria}>add Categoria</button></div>
+                <div className='my-4'> <button className='bg-[#ff6699]' onClick={addDetalhes}>add detalhes</button></div>
+                <div className='my-4'> <button className='bg-[#00FF7F]' onClick={addCaracteristicas}>add caracteristica</button></div>
+                <div className='my-4'><button className='bg-[#483D8B]' onClick={salvarProdutos}>Enviar</button></div>
+            </div>
         </div>
     )
 }

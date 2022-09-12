@@ -7,8 +7,8 @@ import { criarContainer } from "../../../lib/editor";
 import { criarCaixas } from "../../../lib/editor";
 import { useDispatch } from "react-redux";
 import { addEditor } from "../../../reducer/reducerEditText";
-import { useSelector } from "react-redux";
-export default function EditorTexto() {
+import { addCaracter } from "../../../reducer/reducerProdCarac";
+export default function EditorTexto({tipo}) {
     const router = useRouter()
     const dispatch = useDispatch()
     const [tag, setTag] = useState()
@@ -163,13 +163,17 @@ console.log(e.target)
 e.target.classList.remove("outline","outline-offset-2" ,"outline-pink-500")
     }
 
-    const salvar = () => {
+const salvar = () => {
        
 const conteudo = divRef.current.innerHTML
-
-
 testandoContainer.current.innerHTML = divRef.current.innerHTML
+if(tipo == 'detalhes'){
 dispatch(addEditor(conteudo))
+}
+if(tipo == 'caracteristica'){
+    dispatch(addCaracter(conteudo))
+}
+
 }
 
 //mandar para o redux e depois recuperar quando for enviar para a base de dados

@@ -5,6 +5,7 @@ import { inserirProdutos } from '../../reducer/reducerProdutos';
 import { useDispatch } from 'react-redux';
 import EditorTexto from '../elementos/editortexto/editorTexto';
 import { useSelector } from 'react-redux';
+
 export default function Formaddproduto() {
     const dispatch = useDispatch()
     const [titulo, settitulo] = useState()
@@ -19,16 +20,18 @@ export default function Formaddproduto() {
     const [styleCat, setStyleCat] = useState('invisible')
     const [styleDetail, setStyleDetail] = useState('hidden')
     const [styleCaracte, setStyleCaracte] = useState('invisible')
-    const [styleButtonCat, setStyleButtonCat] = useState('flex flex-col')
     const [tipo, setTipo] = useState()
     const pegardetalhe = useSelector(state => state.reducerEditText)
     const pegarCaractere = useSelector(state => state.reducerProdCarac)
-
+   
     const router = useRouter()
     const { user } = router.query
 
     useEffect(() => {
-        addDetalhe ? setStyleDetail('flex flex-col my-4 bg-[#00CD66] ') : setStyleDetail('hidden')
+      
+
+        addDetalhe ? setStyleDetail('flex flex-col my-4 bg-[#00CD66]') : setStyleDetail('hidden')
+       
         addDetalhe ? setAtivado(prevState => {
             return { ...prevState, detalhes: 'ativado' }
         }) : setAtivado(prevState => {
@@ -37,7 +40,9 @@ export default function Formaddproduto() {
     }, [addDetalhe])
 
     useEffect(() => {
+       
         addCaracte ? setStyleCaracte('flex flex-col my-4 bg-[#00ff00] ') : setStyleCaracte('hidden')
+       
         addCaracte ? setAtivado(prevState => {
             return { ...prevState, caracteristicas: 'ativado' }
         }) : setAtivado(prevState => {
@@ -46,8 +51,8 @@ export default function Formaddproduto() {
 
     }, [addCaracte])
     useEffect(() => {
-        addCategoria ? setStyleButtonCat('hidden') : setStyleButtonCat('flex flex-col')
-        addCategoria ? setStyleCat('flex flex-col bg-[blue] visible') : setStyleCat('flex flex-col bg-[blue] invisible')
+
+        addCategoria ? setStyleCat('flex flex-col bg-[blue] ') : setStyleCat('hidden')
         addCategoria ? setAtivado(prevState => {
             return { ...prevState, categoria: 'ativado' }
         }) : setAtivado(prevState => {
@@ -78,28 +83,20 @@ export default function Formaddproduto() {
         const dataProdutos = {}
 
         if (ativado.categoria === 'ativado') {
-            dataProdutos.ativaagora = {
-                categoria: 'ativado'
-            }
+            dataProdutos.categoriaAtiva = 'ativado'
             dataProdutos.categoria = categoria
         }
 
         if (ativado.caracteristicas === 'ativado') {
-
-            dataProdutos.ativaagora = {
-                caracteristicas: 'ativado'
-            }
+            dataProdutos.caracteristicasAtiva = 'ativado'
             dataProdutos.enviarCaracter = pegarCaractere
         }
 
 
         if (ativado.detalhes === 'ativado') {
-
-            dataProdutos.ativaagora = {
-                detalhes: 'ativado'
-            }
+            dataProdutos.detalhesAtiva = 'ativado'
             dataProdutos.enviarDetalhes = pegardetalhe
-
+console.log(dataProdutos)
         }
 
 
@@ -129,9 +126,9 @@ export default function Formaddproduto() {
         addCaracte ? setAddCaracte(false) : setAddCaracte(true)
     }
 
-    
+
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col h-full'>
             <div className='flex flex-col bg-[green]'>
                 <div><h1>adicionar somente o produto</h1></div>
                 <div>
@@ -194,7 +191,14 @@ export default function Formaddproduto() {
                 <div className='my-4'> <button className='bg-[#00FF7F]' onClick={addCaracteristicas}>add caracteristica</button></div>
                 <div className='my-4'><button className='bg-[#483D8B]' onClick={salvarProdutos}>Enviar</button></div>
             </div>
+
+
+
+
         </div>
+
+        
+
     )
 }
 

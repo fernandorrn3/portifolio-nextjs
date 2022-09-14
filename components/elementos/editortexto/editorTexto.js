@@ -179,7 +179,7 @@ if(tipo == 'caracteristica'){
 //mandar para o redux e depois recuperar quando for enviar para a base de dados
 
     return (
-        <div className="flex h-full flex-col w-[100%] px-8 py-8">
+        <div className="flex flex-col w-[100%] px-8 py-8">
             <div>
                 <div><h1>Elementos criados</h1></div>
 

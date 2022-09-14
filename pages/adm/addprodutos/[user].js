@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/router'
 import Layoutpanel from "../../../components/layoutpanel"
+import Layoutpp from "../../../components/layountpp"
 import Botaomenu from '../../../components/elementos/btnmenu'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
@@ -17,9 +18,9 @@ function Addproduto() {
 
   useEffect(() => {
     if (estado.estado) {
-      setStyle('h-full ml-[220px] transition-all duration-700')
+      setStyle('ml-[220px] w-full transition-all duration-700 ')
     } else {
-      setStyle('bg-[blue] h-full ml-[0] transition-all duration-700')
+      setStyle('bg-[blue] ml-[0] w-full transition-all duration-700 ')
     }
     console.log(styleMenu)
   }, [estado])
@@ -80,7 +81,7 @@ function Addproduto() {
 
 
 
-      <div className={styleMenu}>
+      <div className={styleMenu} id='addProdutosId'>
 
 
         <Botaomenu />

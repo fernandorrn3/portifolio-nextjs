@@ -21,7 +21,7 @@ export default function Salvarprodutos(req, res) {
             console.log(req.body)
             console.log(user)
 
-            async function Main() {
+           async function Main() {
                 const produtos = await prisma.produtos.create({
 
                     data: {
@@ -35,7 +35,8 @@ export default function Salvarprodutos(req, res) {
                 })
 
 
-                if (req.body.ativaagora.categoria == 'ativado') {
+                if (req.body.categoriaAtiva == 'ativado') {
+                    console.log('entrou categoria')
                     const categoria = await prisma.catProd.create({
                         data: {
                             catNome: req.body.categoria,
@@ -49,7 +50,8 @@ export default function Salvarprodutos(req, res) {
                 }
 
 
-                if (req.body.ativaagora.detalhes == 'ativado') {
+                if (req.body.detalhesAtiva == 'ativado') {
+                    console.log('entrou detalhes')
                     const detahleProduto = await prisma.editorprod.create({
                         data: {
                             nome: 'detalhes',
@@ -62,10 +64,12 @@ export default function Salvarprodutos(req, res) {
                         }
                     })
                 }
-                if (req.body.ativaagora.caracteristicas == 'ativado') {
+                if (req.body.caracteristicasAtiva == 'ativado') {
+                   
+                    console.log('entrou caracteristicas')
                     const caractereProdutos = await prisma.editorprod.create({
                         data: {
-                            nome: 'caracteristicas',
+                            nome: 'caracteristicas ',
                             conteudo: req.body.enviarCaracter.data,
                             produto: {
                                 connect: {
@@ -91,6 +95,7 @@ export default function Salvarprodutos(req, res) {
 
 
                 res.json(produtos)
+                
             }
             Main()
                 .catch((e) => {

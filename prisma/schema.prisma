@@ -59,7 +59,7 @@ model Produtos {
   userId  Int?
   categoriasId Int?
   tagsEprod TagsEProdutos[]
-  editor Editorprod?
+  editor Editorprod[]
   
 }
 
@@ -109,8 +109,7 @@ model Editorprod {
   nome String?
   conteudo String
   produto Produtos? @relation(fields: [produtosID],references: [id])
- 
-  produtosID Int @unique
+  produtosID Int? 
 }
 
 

@@ -5,7 +5,7 @@ import reducercarrinho from "./reducer/reducercarrinho";
 import reducercredential from "./reducer/reducercredential";
 import reduceridorder from "./reducer/reduceridorder";
 import reducerProdutos from "./reducer/reducerProdutos";
-import reducerEditText from "./reducer/reducerEditText";
+import reducerDetalhesProd from "./reducer/reducerDetalhesProd";
 import reducerProdCarac from "./reducer/reducerProdCarac";
   export const combinedReducer =  combineReducers({
   menuReducer,
@@ -13,7 +13,7 @@ import reducerProdCarac from "./reducer/reducerProdCarac";
   reducercredential,
   reduceridorder,
   reducerProdutos,
-  reducerEditText,
+  reducerDetalhesProd,
   reducerProdCarac
 })
 

@@ -14,7 +14,7 @@ export function upActionProduto(dados) {
     return async function midwareUpProd(dispatch, getState) {
         const fetchProduto = getState()
         const produtosStore = fetchProduto.reducerProdutos.produtos
-        console.log(produtosStore)
+       
         const procuraProdutos = produtosStore.find(el => el.id == dados.id)
         dispatch(upQuantidade(procuraProdutos))
 
@@ -59,7 +59,7 @@ const produtoReducer = createSlice({
     reducers: {
 
         upQuantidade(state, action) {
-
+//pego o produto despachado pelo midware, procuro ele no state e atualizo a quantidade
 
 
             const fetchProduto = state.produtos.find(el => el.id === action.payload.id)
@@ -80,6 +80,15 @@ const produtoReducer = createSlice({
 
     extraReducers(builder) {
         builder
+
+        .addCase(inserirProdutos.pending , (state,action)=>{
+            state.status = 'loading'
+        })
+
+        .addCase(inserirProdutos.rejected,(state,action)=>{
+            state.status = 'failed',
+            state.error = action.error.message
+        })
             .addCase(inserirProdutos.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.produtos.push(action.payload)

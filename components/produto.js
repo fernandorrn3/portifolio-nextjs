@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { fetchProdutos } from "../reducer/reducerProdutos"
 import { addcart } from "../reducer/reducercarrinho"
-import {useState } from "react"
+import { useState } from "react"
 import { updateCart } from "../reducer/reducercarrinho"
 import { useEffect } from "react"
 import Link from "next/link"
@@ -11,82 +11,77 @@ export default function Produto() {
     const dispatch = useDispatch()
     const produtos = useSelector((state) => state.reducerProdutos.produtos)
     const produtosStatus = useSelector((state) => state.reducerProdutos.status)
-    const carrinhoprodutos = useSelector((state) => state.reducercarrinho)
-   
+    const carrinhoprodutos = useSelector((state) => state.reducercarrinho.carrinho)
+    const [produtoAtualiza, setProdutoAtualiza] = useState()
 
-   
 
-  
+
     let contador = 0
     let inicio = 0
     let final = 0
     const novoArray = []
-   
+
     //
 
     useEffect(() => {
         if (produtosStatus === 'idle') {
-            
             dispatch(fetchProdutos())
         }
-
-
-        
     }, [produtosStatus, dispatch])
 
 
 
-
-    const testarstore = () => {
-        console.log(carrinhoprodutos)
-    }
-
     const comprar = (e) => {
-      
- 
+        //const quantidade = e.target.parentElement.previousElementSibling.textContent
+        const quantidade = e.target.parentElement.previousElementSibling.lastChild.lastChild.lastChild.lastChild.textContent
+        const valor = e.target.parentElement.previousElementSibling.previousElementSibling.textContent
+        const nome = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent
+        const id = e.target.id
+        const transforma = parseInt(quantidade) + 1
 
-//const quantidade = e.target.parentElement.previousElementSibling.textContent
-const quantidade = e.target.parentElement.previousElementSibling.lastChild.lastChild.lastChild.lastChild.textContent
-const valor = e.target.parentElement.previousElementSibling.previousElementSibling.textContent
-const nome = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent
-const id = e.target.id
+        const serchproduto = carrinhoprodutos.filter(el => el.id === id)
+        setProdutoAtualiza(serchproduto)
+        if (serchproduto.length > 0) {
+            dispatch(updateCart(serchproduto[0]))
+            dispatch(upActionProduto(serchproduto[0]))
 
+        } else {
+            dispatch(addcart({
+                title: nome,
+                unit_price: valor,
+                quantity: transforma,
+                adicionado: false,
+                id: id
 
- const serchproduto = carrinhoprodutos.filter(el => el.id === id)
+            }))
+            dispatch(upActionProduto({
+                nome: nome,
+                valor: valor,
+                quantidade: quantidade,
+                adicionado: false,
+                id: id
 
- if(serchproduto.length > 0){
- dispatch(updateCart(serchproduto[0]))
- dispatch(upActionProduto(serchproduto[0]))
-   
- }else{
-    dispatch(addcart({
-        nome: nome,
-        valor: valor,
-        quantidade: quantidade,
-        adicionado: false,
-        id:id
-       
-    }))
- }
-       
+            }))
+        }
+
     }
 
-    
+
 
     const produtosElementos = produtos.map((ele, index, arr) => (
 
 
         <div className=
-        "bg-[green] w-[15rem] sm:w-[15rem] md:w-[15rem] lg:w-[20rem] xl:w-[25rem] 2xl:w-[30rem] mx-1" 
-         key={index} >
+            "bg-[green] w-[15rem] sm:w-[15rem] md:w-[15rem] lg:w-[20rem] xl:w-[25rem] 2xl:w-[30rem] mx-1"
+            key={index} >
 
             <div className="nome-produto" ><h1>{ele.title}</h1></div>
             <div className="valor-produto" ><h1>{ele.unit_price}</h1></div>
-            <div className="quantidade-produto"><Quantidadeprt valor={ele.quantity}/></div>
+            <div className="quantidade-produto"><Quantidadeprt valor={ele.quantity} /></div>
 
             <div><button className="Comprar" id={ele.id} onClick={comprar}>Comprar</button> </div>
-            <div><button className="Comprar" onClick={testarstore}>testar</button></div>
-            <div><Link href={'/confirma'}><a>finalizar compra</a></Link></div>
+
+            <div><Link href={'/cart'}><a>finalizar compra</a></Link></div>
         </div>
 
 
@@ -105,22 +100,22 @@ const id = e.target.id
             novoArray.push(novo)
         }
     }
-    
-   for(let i =0; i<=novoArray.length;i++){
-    if(novoArray[i]){
-       if(novoArray[i].length < 2){
-        novoArray[i].shift()
-       }
+
+    for (let i = 0; i <= novoArray.length; i++) {
+        if (novoArray[i]) {
+            if (novoArray[i].length < 2) {
+                novoArray[i].shift()
+            }
+        }
+
+
     }
-       
-    
-   }
 
- 
 
- 
+
+
     return (
-        <div className="grid grid-cols-12 col-start-2 col-end-12 mx-1 my-1">
+        <div className="grid grid-cols-12 col-start-2 col-end-12 mx-1 my-1 min-h-screen">
 
             <div className="hidden sm:flex col-start-1 col-end-4 bg-[orange]">
                 <h1>bar-filter</h1>
@@ -134,7 +129,7 @@ const id = e.target.id
                     )
                 })}
 
-              
+
             </div>
         </div>
 
@@ -146,43 +141,43 @@ const id = e.target.id
 
 //adicionei,atualiza no carrinho e tambem atualiza a quantidade no produto
 
-const Quantidadeprt = (props)=>{
+const Quantidadeprt = (props) => {
     const produtos = useSelector((state) => state.reducerProdutos.produtos)
-    const [adicionado,setadicionado] = useState(false)
-   
-    
-    const addQuantidade = () =>{
-        console.log(adicionado)
-         if(adicionado){
-             setadicionado(false)
-         }else{
-             setadicionado(true)
-         }
-     } 
-        return(
-            <div> 
+    const [adicionado, setadicionado] = useState(false)
+
+
+    const addQuantidade = () => {
+
+        if (adicionado) {
+            setadicionado(false)
+        } else {
+            setadicionado(true)
+        }
+    }
+    return (
         <div>
-            <button onClick={addQuantidade}>Quantidade</button>
-            </div>
-            {adicionado ?  
-            
-            <div className="flex flex-col bg-[yellow] visible absolute"> 
             <div>
-<h1>{props.valor} unidades</h1>
+                <button onClick={addQuantidade}>Quantidade</button>
             </div>
-            </div>
-           
-            :  
-            <div className="flex flex-col bg-[yellow] invisible absolute"> 
-            <div>
-<h1>{props.valor} unidades</h1>
-            </div>
-            </div>
+            {adicionado ?
+
+                <div className="flex flex-col bg-[yellow] visible absolute">
+                    <div>
+                        <h1>{props.valor} unidades</h1>
+                    </div>
+                </div>
+
+                :
+                <div className="flex flex-col bg-[yellow] invisible absolute">
+                    <div>
+                        <h1>{props.valor} unidades</h1>
+                    </div>
+                </div>
             }
         </div>
-        )
-   
-   
+    )
+
+
 }
 
 

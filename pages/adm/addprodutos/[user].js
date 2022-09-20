@@ -1,7 +1,6 @@
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/router'
 import Layoutpanel from "../../../components/layoutpanel"
-import Layoutpp from "../../../components/layountpp"
 import Botaomenu from '../../../components/elementos/btnmenu'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";

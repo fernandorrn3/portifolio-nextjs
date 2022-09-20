@@ -8,6 +8,7 @@ datasource db {
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
+
 //==================================================base de dados usuario==========================================
 model User {
   id            Int        @id @default(autoincrement())
@@ -35,9 +36,6 @@ model Token {
   UserId     Int     @unique
 }
 
-
-
-
 //===========================================base dados ecommerce===================================================
 model Compras {
   id        Int    @id @default(autoincrement())
@@ -48,79 +46,72 @@ model Compras {
 
 //================================================produtos=======================================================
 model Produtos {
-  id          Int       @id @default(autoincrement())
-  title       String    @unique
-  description String?
-  picture_url String?
-  quantity    String
-  unit_price  String
-  user        User?      @relation(fields: [userId], references: [id])
-  categoria CatProd? @relation(fields: [categoriasId],references: [id])
-  userId  Int?
+  id           Int             @id @default(autoincrement())
+  title        String          @unique
+  description  String?
+  picture_url  String?
+  quantity     String
+  estoque      String
+  unit_price   String
+  user         User?           @relation(fields: [userId], references: [id])
+  categoria    CatProd?        @relation(fields: [categoriasId], references: [id])
+  userId       Int?
   categoriasId Int?
-  tagsEprod TagsEProdutos[]
-  editor Editorprod[]
-  
+  tagsEprod    TagsEProdutos[]
+  editor       Editorprod[]
 }
 
-
-
 model CatProd {
-  id          Int      @id @default(autoincrement())
-  catNome     String
+  id       Int        @id @default(autoincrement())
+  catNome  String
   produtos Produtos[]
 }
 
-
-
 model Tags {
-  id Int @id @default(autoincrement())
-  tagName String
+  id        Int             @id @default(autoincrement())
+  tagName   String
   prodEtags TagsEProdutos[]
 }
 
 model TagsEProdutos {
-produtos Produtos @relation(fields: [produtosId], references: [id])
-produtosId Int
-tags Tags @relation(fields: [tagsId], references: [id])
-tagsId Int
- @@id([produtosId,tagsId])
+  produtos   Produtos @relation(fields: [produtosId], references: [id])
+  produtosId Int
+  tags       Tags     @relation(fields: [tagsId], references: [id])
+  tagsId     Int
+
+  @@id([produtosId, tagsId])
 }
-
-
 
 //=========================================base de dados blog ============================================
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  published Boolean  @default(false)
-  title     String   @db.VarChar(255)
-  author    User     @relation(fields: [authorId], references: [id])
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  published Boolean   @default(false)
+  title     String    @db.VarChar(255)
+  author    User      @relation(fields: [authorId], references: [id])
   authorId  Int
-  editpost Editpost?
+  editpost  Editpost?
 }
 
 //==============================Editor=======================================================================
 
 model Editorprod {
-  id Int @id @default(autoincrement())
-  nome String?
-  conteudo String
-  produto Produtos? @relation(fields: [produtosID],references: [id])
-  produtosID Int? 
+  id         Int       @id @default(autoincrement())
+  nome       String?
+  conteudo   String
+  produto    Produtos? @relation(fields: [produtosID], references: [id])
+  produtosID Int?
 }
-
 
 model Editpost {
-  id Int @id @default (autoincrement())
-  nome String?
+  id       Int     @id @default(autoincrement())
+  nome     String?
   conteudo String
-  posts Post? @relation(fields: [postId],references: [id])
-  postId Int @unique
+  posts    Post?   @relation(fields: [postId], references: [id])
+  postId   Int     @unique
 }
-
 
 //1 produto pode pertencer somente a uma categoria, porem uma categoria pode ter varios posts
 

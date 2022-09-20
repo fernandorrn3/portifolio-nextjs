@@ -6,23 +6,26 @@ import { criarTag } from "../../../lib/editor";
 import { criarContainer } from "../../../lib/editor";
 import { criarCaixas } from "../../../lib/editor";
 import { useDispatch } from "react-redux";
-import { addEditor } from "../../../reducer/reducerEditText";
+import { addDetalhes } from "../../../reducer/reducerDetalhesProd";
 import { addCaracter } from "../../../reducer/reducerProdCarac";
-export default function EditorTexto({tipo}) {
+import { deleteDetalhes } from "../../../reducer/reducerDetalhesProd";
+import { deleteCaracter } from "../../../reducer/reducerProdCarac";
+export default function EditorTexto({ tipo }) {
     const router = useRouter()
     const dispatch = useDispatch()
     const [tag, setTag] = useState()
     const [caixa, setCaixa] = useState()
     const [elemento, setElemento] = useState()
     const [inicial, setInicial] = useState()
-    const [selecionado,setSelecionado] = useState()
+    const [selecionado, setSelecionado] = useState()
     const [linhaEcoluna, setLinhaEcoluna] = useState('')
     const [objetos, setObjetos] = useState([])
     const divRef = useRef()
+    const salvarButton = useRef()
     const testandoContainer = useRef()
- 
 
-    
+
+
 
 
 
@@ -34,18 +37,18 @@ export default function EditorTexto({tipo}) {
                 setTag('')
                 return null
             }
-            
-            if(caixa.id != 'caixaelemento'){
+
+            if (caixa.id != 'caixaelemento') {
                 alert('crie uma caixa primeiro')
                 setTag('')
                 return null
             }
             else {
                 const container = divRef.current
-                criarTag(tag, caixa, clickElement,teclaPress)
+                criarTag(tag, caixa, clickElement, teclaPress)
                 setTag('')
             }
-           
+
         }
 
     }, [tag])
@@ -60,14 +63,13 @@ export default function EditorTexto({tipo}) {
 
 
 
-
     const selecionarTag = (e) => {
         setTag(e.target.name)
     }
 
 
     const clickElement = (e) => {
-        
+
         setElemento(e.target)
     }
 
@@ -91,7 +93,7 @@ export default function EditorTexto({tipo}) {
     const criarContainers = (e) => {
         const container = divRef.current
 
-        criarContainer(container, selecionarContainer,passaMouse,tiraMouse)
+        criarContainer(container, selecionarContainer, passaMouse, tiraMouse)
         const ultimo = divRef.current.lastChild
 
         setObjetos(prevState => {
@@ -118,10 +120,10 @@ export default function EditorTexto({tipo}) {
 
 
     const criarLinha = () => {
-if(caixa.id == 'caixaelemento'){
-    caixa.firstChild.classList.add('w-[100%]')
-    caixa.lastChild.classList.add('w-[100%]')
-}
+        if (caixa.id == 'caixaelemento') {
+            caixa.firstChild.classList.add('w-[100%]')
+            caixa.lastChild.classList.add('w-[100%]')
+        }
         caixa.classList.remove('flex-row')
         caixa.classList.remove('flex-col')
         caixa.classList.remove('flex')
@@ -145,38 +147,59 @@ if(caixa.id == 'caixaelemento'){
             alert('selecione um container')
             return null
         } else {
-            criarCaixas(caixa, selecionarContainer,passaMouse,tiraMouse)
+            criarCaixas(caixa, selecionarContainer, passaMouse, tiraMouse)
         }
     }
 
 
-    const teclaPress = (e) =>{
-console.log(e.target)
+    const teclaPress = (e) => {
+        console.log(e.target)
     }
 
-    const passaMouse = (e)=>{
-        
+    const passaMouse = (e) => {
+
         e.target.className += ' outline outline-offset-2 outline-pink-500 '
     }
 
-    const tiraMouse = (e) =>{
-e.target.classList.remove("outline","outline-offset-2" ,"outline-pink-500")
+    const tiraMouse = (e) => {
+        e.target.classList.remove("outline", "outline-offset-2", "outline-pink-500")
+    }
+   
+    const salvar = () => {
+
+        if (divRef.current.childNodes.length == 0) {
+            alert('caixa vazia salve alguma coisa')
+        } else {
+            if (tipo == 'detalhes') {
+                const conteudo = divRef.current.innerHTML
+                dispatch(addDetalhes(conteudo))
+
+            }
+            if (tipo == 'caracteristica') {
+                const conteudo = divRef.current.innerHTML
+                dispatch(addCaracter(conteudo))
+            }
+        }
+
+
+
     }
 
-const salvar = () => {
-       
-const conteudo = divRef.current.innerHTML
-testandoContainer.current.innerHTML = divRef.current.innerHTML
-if(tipo == 'detalhes'){
-dispatch(addEditor(conteudo))
-}
-if(tipo == 'caracteristica'){
-    dispatch(addCaracter(conteudo))
-}
 
-}
+    const deletar = () => {
 
-//mandar para o redux e depois recuperar quando for enviar para a base de dados
+        if (tipo == 'detalhes') {
+          divRef.current.innerHTML = ''
+          dispatch(deleteDetalhes())
+        }
+        if (tipo == 'caracteristica') {
+            divRef.current.innerHTML = ''
+           dispatch(deleteCaracter())
+        }
+
+    }
+
+   
 
     return (
         <div className="flex flex-col w-[100%] px-8 py-8">
@@ -186,23 +209,24 @@ if(tipo == 'caracteristica'){
             </div>
             <div><button onClick={selecionarTag} className='bg-[blue]' name="h1">h1</button></div>
 
-            <div><button onClick={selecionarTag} name="p" className='bg-[red]'>p</button></div>
+            <div><button onClick={selecionarTag} name="p" className='bg-[#5F9EA0]'>p</button></div>
 
-            <div><button onClick={alinharElemento} name="centralizar" className='bg-[red]'>centralizar</button></div>
+            <div><button onClick={alinharElemento} name="centralizar" className='bg-[#5F9EA0]'>centralizar</button></div>
 
-            <div><button onClick={criarContainers} name="div" className='bg-[red]'>Criar-container</button></div>
+            <div><button onClick={criarContainers} name="div" className='bg-[#5F9EA0]'>Criar-container</button></div>
 
-            <div><button onClick={criarLinha} name="div" className='bg-[red]'>Criar Linha</button></div>
+            <div><button onClick={criarLinha} name="div" className='bg-[#5F9EA0]'>Criar Linha</button></div>
 
-            <div><button onClick={criarColuna} name="div" className='bg-[red]'>Criar coluna</button></div>
+            <div><button onClick={criarColuna} name="div" className='bg-[#5F9EA0]'>Criar coluna</button></div>
 
-            <div><button onClick={criarCaixaElemento} name="div" className='bg-[red]'>Criar caixa</button></div>
+            <div><button onClick={criarCaixaElemento} name="div" className='bg-[#5F9EA0]'>Criar caixa</button></div>
 
-            <div><button onClick={salvar} name="div" className='bg-[red]'>Salvar</button></div>
+            <div><button onClick={salvar} name="div" className='bg-[#32CD32]' ref={salvarButton}>Salvar</button></div>
+            <div><button onClick={deletar} name="div" className='bg-[red]'>deletar</button></div>
 
             <div className="flex flex-col bg-[yellow] h-full w-full px-2 py-2" id='teste' contentEditable={'true'} onClick={(e) => {
 
-               if (divRef.current.firstChild == null) {
+                if (divRef.current.firstChild == null) {
                     setCaixa(' ')
                     console.log('null')
                 } else {
@@ -212,9 +236,10 @@ if(tipo == 'caracteristica'){
 
             }} ref={divRef} >
             </div>
-<div ref={testandoContainer} className='bg-[green]'>
-<h1>pré visiualizaçao conteudo</h1>
-</div>
+            <div className='bg-[green]'>
+                <h1>pré visiualizaçao conteudo</h1>
+                <div ref={testandoContainer}></div>
+            </div>
         </div>
     )
 }

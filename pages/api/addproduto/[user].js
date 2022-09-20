@@ -18,17 +18,18 @@ export default function Salvarprodutos(req, res) {
             //conecta produto a usuario
             //retorna esse produto para inseri-lo na loja redux
 
-            console.log(req.body)
-            console.log(user)
+      console.log(req.body)
 
            async function Main() {
+            
                 const produtos = await prisma.produtos.create({
 
                     data: {
                         title: req.body.titulo,
                         description: req.body.descricao,
-                        quantity: req.body.quantidade,
-                        unit_price: req.body.preco
+                        quantity: req.body.quantity,
+                        unit_price: req.body.preco,
+                        estoque:req.body.quantidade
 
 
                     }
@@ -93,8 +94,19 @@ export default function Salvarprodutos(req, res) {
                     }
                 })
 
+                /*const retornaProduto = await prisma.produtos.findUnique({
+                    where:{
+                        title:req.body.titulo
+                    },
+                    include:{
+                        categoria:true,
+                        editor:true
+                    }
+                })*/
 
-                res.json(produtos)
+                
+
+                res.json({mensagem:'produtos inseridos com sucesso'})
                 
             }
             Main()

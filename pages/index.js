@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 import Layout from "../components/layout"
-
+import Produto from "../components/produto"
 
 
 
@@ -17,17 +17,14 @@ export default function Home() {
 
 
 
-  return (
-    
-    <div className='bg-[blue] h-full'>
-     
-      
-     <h1>home page</h1>
-   
-    
-    </div>
-   
-  )
+
+return(
+  <div className="flex flex-col grid grid-cols-12">
+  <Produto/>
+
+  </div>
+
+)
 }
 
 

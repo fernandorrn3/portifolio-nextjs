@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { inserirProdutos } from '../../reducer/reducerProdutos';
 import { useDispatch } from 'react-redux';
 import EditorTexto from '../elementos/editortexto/editorTexto';
@@ -21,17 +23,35 @@ export default function Formaddproduto() {
     const [styleDetail, setStyleDetail] = useState('hidden')
     const [styleCaracte, setStyleCaracte] = useState('invisible')
     const [tipo, setTipo] = useState()
-    const pegardetalhe = useSelector(state => state.reducerEditText)
+    const pegardetalhe = useSelector(state => state.reducerDetalhesProd)
     const pegarCaractere = useSelector(state => state.reducerProdCarac)
-   
+    const pegarStatus = useSelector(state => state.reducerProdutos.status)
     const router = useRouter()
     const { user } = router.query
-
+    const toastId = useRef(null);
     useEffect(() => {
-      
+        if (pegarStatus == 'loading') {
+            toastId.current = toast("inserindo os produtos", {
+                position: "top-right",
+                type: toast.TYPE.INFO
+            });
+        }
+
+        if (pegarStatus == 'succeeded') {
+            toast.update(toastId.current, {
+                render: "inseridos com sucesso",
+                type: "success",
+                isLoading: false,
+                autoClose: 5000
+            });
+
+        }
+    }, [pegarStatus])
+    useEffect(() => {
+
 
         addDetalhe ? setStyleDetail('flex flex-col my-4 bg-[#00CD66]') : setStyleDetail('hidden')
-       
+
         addDetalhe ? setAtivado(prevState => {
             return { ...prevState, detalhes: 'ativado' }
         }) : setAtivado(prevState => {
@@ -40,9 +60,9 @@ export default function Formaddproduto() {
     }, [addDetalhe])
 
     useEffect(() => {
-       
+
         addCaracte ? setStyleCaracte('flex flex-col my-4 bg-[#00ff00] ') : setStyleCaracte('hidden')
-       
+
         addCaracte ? setAtivado(prevState => {
             return { ...prevState, caracteristicas: 'ativado' }
         }) : setAtivado(prevState => {
@@ -96,7 +116,7 @@ export default function Formaddproduto() {
         if (ativado.detalhes === 'ativado') {
             dataProdutos.detalhesAtiva = 'ativado'
             dataProdutos.enviarDetalhes = pegardetalhe
-console.log(dataProdutos)
+
         }
 
 
@@ -104,6 +124,7 @@ console.log(dataProdutos)
             dataProdutos.user = user
             dataProdutos.titulo = titulo
             dataProdutos.quantidade = quantidade
+            dataProdutos.quantity = '0'
             dataProdutos.descricao = descricao
             dataProdutos.preco = preco
             dispatch(inserirProdutos(dataProdutos))
@@ -137,7 +158,7 @@ console.log(dataProdutos)
                         <input type='text' name='titulo' onChange={e => settitulo(e.target.value)} placeholder='titulo' />
                     </div>
                     <div>
-                        <label>quantidade</label><br />
+                        <label>quantidade Estoque</label><br />
                         <input type={'text'} name='quantidade' onChange={e => setquantidade(e.target.value)} placeholder='quantidade' />
                     </div>
                     <div>
@@ -192,12 +213,24 @@ console.log(dataProdutos)
                 <div className='my-4'><button className='bg-[#483D8B]' onClick={salvarProdutos}>Enviar</button></div>
             </div>
 
-
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            {/* Same as */}
+            <ToastContainer />
 
 
         </div>
 
-        
+
 
     )
 }

@@ -1,36 +1,42 @@
 import VerificaLogin from "./elementos/verificalogin"
 import Carrinho from "./elementos/carrinho/carrinho"
+import { useEffect, useState} from "react"
 
-
-const abrirFechar = () =>{
-
-}
-
-export default function Navbar(){
+export default function Navbar() {
+    const [paiMenu,setPaiMenu] = useState('hidden sm:grid grid-cols-12 col-start-2 col-end-12')
+    const [abrirEfechar, setAbrirEfechar] = useState(false)
     
-    return(
-       
-<div className="grid grid-cols-12 bg-[yellow] col-start-2 col-end-12">
 
-<div className="hidden sm:col-span-5 sm:flex">
+    useEffect(() => {
+        abrirEfechar ? setPaiMenu('grid grid-cols-12 col-start-2 col-end-12') : 
+        setPaiMenu('hidden sm:grid grid-cols-12 col-start-2 col-end-12')
+    }, [abrirEfechar])
 
-<VerificaLogin />
-    
-</div>
-<div className="hidden sm:col-span-7 sm:flex sm:justify-end">
+    const abrirFechar = () => {
+        abrirEfechar ? setAbrirEfechar(false) : setAbrirEfechar(true)
+        
+    }
+    return (
 
-<Carrinho/>
+        <div className="grid grid-cols-12 bg-[yellow] ">
+            
+              <div className="sm:hidden col-span-12 flex flex-col">
+                <div><button onClick={abrirFechar}>Abrir/fechar</button></div>
+            </div>
+            <div className={paiMenu}>
+                <div className='col-span-5 flex '>
+                    <VerificaLogin />
+                </div>
 
-</div>
+                <div className='col-span-7 flex justify-end'>
+                    <Carrinho />
+                </div>
+            </div>
+          
 
-<div className="sm:hidden col-span-12 flex flex-col">
-<div><button onClick={abrirFechar}>Abrir/fechar</button></div>
+        </div>
 
-</div>
 
-       </div>
-
-       
     )
 }
 

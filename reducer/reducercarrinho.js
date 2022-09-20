@@ -1,6 +1,9 @@
 import { createSlice} from "@reduxjs/toolkit";
 
-const initialState = []
+const initialState = {
+    carrinho:[],
+    total:[]
+}
     
 
     
@@ -14,12 +17,12 @@ const carrinhoReducer = createSlice({
 
     reducers:{
         addcart(state,action){
-         
+        
            
             const produtos = {
                 nome:action.payload.nome,
                 valor:action.payload.valor,
-                quantidade: parseInt(action.payload.quantidade) ,
+                quantidade: parseInt(action.payload.quantidade ),
                 adicionado:action.payload.adicionado,
                 id:action.payload.id
             }
@@ -27,24 +30,30 @@ const carrinhoReducer = createSlice({
             
           
               
-                return[
-                   ...state,
+                
+                state.carrinho.push(produtos)
                   
-                   produtos
-        ]      
+                   
+                  
             
         },
 updateCart(state,action){
-    const produto = state.find(el => el.id === action.payload.id)
-  console.log(produto)
+    const produto = state.carrinho.find(el => el.id === action.payload.id)
+ 
     if(produto){
         produto.quantidade = produto.quantidade + 1
     }
 
 
-}
+},
+
+addTotal(state,action){
+state.total = action.payload
+
+},
+
         
     }
 })
-export const {addcart,updateCart} = carrinhoReducer.actions
+export const {addcart,updateCart,addTotal} = carrinhoReducer.actions
 export default carrinhoReducer.reducer

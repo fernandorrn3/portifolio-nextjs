@@ -9,7 +9,7 @@ const idOrder = createSlice({
 
     reducers:{
         addid(state,action){
-            console.log(action.payload.guardarid)
+            
             return [
                 ...state,
                 action.payload

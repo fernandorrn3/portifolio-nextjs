@@ -48,27 +48,25 @@ function Addproduto() {
     return null
   }
   if (!session) {
+    alert('acesso negado nao esta logado')
+    router.push('/');
     return null;
   }
-
-  if (status === "unauthenticated") {
-    alert('acesso negado nao esta autenticado')
-    router.push('/')
-  }
-
-
 
 
 
   if (session.username != user) {
     alert('acesso negado  nomes inconscistente ')
     router.push('/')
+    return null
   }
 
 
 
   if (error) {
+    alert(error)
     router.push('/')
+    return null
   }
 
 

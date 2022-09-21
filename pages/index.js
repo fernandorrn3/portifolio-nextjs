@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Script from 'next/script'
 import { useSession } from "next-auth/react"
 import Layout from "../components/layout"
 import Produto from "../components/produto"
@@ -20,6 +21,10 @@ export default function Home() {
 
 return(
   <div className="flex flex-col grid grid-cols-12">
+       <>
+       <Script src="https://www.mercadopago.com/v2/security.js" view="home"></Script>
+
+    </>
   <Produto/>
 
   </div>

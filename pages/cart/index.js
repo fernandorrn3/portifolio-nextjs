@@ -9,11 +9,13 @@ export default function Confirma() {
     const dispatch = useDispatch()
 
     const resultado = useSelector((state) => state.reducercarrinho)
-    console.log(resultado.carrinho)
-    
+  
+   
+      
+console.log(resultado.carrinho)
 
     const finalizarCompra = async () =>{
-        const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+       /* const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,22 +23,13 @@ export default function Confirma() {
                 'Authorization': 'Bearer TEST-5759687126222695-063012-18bca70c03bd70d55b65b45bba88e726-1152142933'
             },
             body: JSON.stringify({
-                'items': [
-                    {   'id' :'produtoID',
-                        'title': "camisa e short",
-                        'quantity': 2,
-                        'unit_price': 75.77,
-                        
-
-
-                    }
-                ]
+                'items': resultado.carrinho
 
             })
         });
         const res = await response.json()
         console.log(res)
-        dispatch(addid({id:res.id}))
+        dispatch(addid({id:res.id}))*/
     }
     return (
 <div className="flex flex-col min-h-screen"> 

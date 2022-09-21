@@ -25,6 +25,7 @@ model User {
   posts         Post[]
   compras       Compras[]
   produtos      Produtos[]
+  endereco      Endereco?
 }
 
 model Token {
@@ -34,6 +35,18 @@ model Token {
   acesstoken String?
   user       User    @relation(fields: [UserId], references: [id])
   UserId     Int     @unique
+}
+
+model Endereco {
+  id          Int    @id @default(autoincrement())
+  cep         String
+  estado      String
+  cidade      String
+  rua         String
+  numeroRua   Int
+  complemento String
+  user        User   @relation(fields: [userId], references: [id])
+  userId      Int    @unique
 }
 
 //===========================================base dados ecommerce===================================================

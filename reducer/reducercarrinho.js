@@ -20,10 +20,10 @@ const carrinhoReducer = createSlice({
         
            
             const produtos = {
-                nome:action.payload.nome,
-                valor:action.payload.valor,
-                quantidade: parseInt(action.payload.quantidade ),
-                adicionado:action.payload.adicionado,
+                title:action.payload.nome,
+                unit_price:parseInt(action.payload.valor),
+                quantity: parseInt(action.payload.quantidade ),
+                
                 id:action.payload.id
             }
 

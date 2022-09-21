@@ -47,10 +47,10 @@ export default function Produto() {
 
         } else {
             dispatch(addcart({
-                title: nome,
-                unit_price: valor,
-                quantity: transforma,
-                adicionado: false,
+                nome: nome,
+                valor: valor,
+                quantidade: transforma,
+                
                 id: id
 
             }))
@@ -58,7 +58,7 @@ export default function Produto() {
                 nome: nome,
                 valor: valor,
                 quantidade: quantidade,
-                adicionado: false,
+              
                 id: id
 
             }))

@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'POST':
 console.log(req.body.username)
-
+const usuario = {}
       async function main() {
         const findemail = await prisma.User.findUnique({
           where: {
@@ -15,11 +15,13 @@ console.log(req.body.username)
         
           
         })
-
-      const usuario = {
-username:findemail.username,
-email:findemail.email
-      }
+if(findemail){
+  
+    usuario.username = findemail.username,
+    usuario.email = findemail.email
+          
+}
+    
 
     try{
 if(findemail === null) throw "email incorreto"

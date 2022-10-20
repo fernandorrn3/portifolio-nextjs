@@ -4,69 +4,19 @@ import Layoutpanel from "../../../components/layoutpanel"
 import Botaomenu from '../../../components/elementos/btnmenu'
 import { useSelector } from 'react-redux'
 
-import {useState,useEffect } from "react";
 
 
 function Paineladm() {
-  const { data: session, status } = useSession()
-  const [error,setError] = useState()
-  const router = useRouter()
-  const { user } = router.query
+ 
   const estado = useSelector((state) => state.menuReducer)
   
-  
-
-  useEffect(async ()=>{
- 
-    if(!user){
-      return
-    }
-   
-const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + '/checkuser/'  + user)
-const result = await res.json()
-const status = res.status
-if(status === 401){
-  setError(result.mensagem)
-}
-
-  },[router])
-
-if(!user){
-  return null
-}
-  if(!session){
-    return null;
-  }
-
-  if (status === "unauthenticated") {
-    alert('acesso negado nao esta autenticado')
-router.push('/')
-   }
-
-   console.log(user)
-
-   console.log(session)
-
-
-
-if(session.username != user){
-alert('acesso negado  nomes inconscistente ')
-router.push('/')
-}  
-
-
-
-if(error){
-  router.push('/')
-}
-
   
 
 
 
   return(
    
- <div className="h-full">
+ <div className="min-h-screen w-full">
 
      
      {estado.estado 
@@ -116,7 +66,7 @@ Paineladm.getLayout = function getLayout(page){
   )
  
 }
-
+Paineladm.auth = true
 export default  Paineladm
 
 

@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 
 
-
 export default NextAuth({
   
   // Configure one or more authentication providers
@@ -55,6 +54,7 @@ export default NextAuth({
       if (user) {
         token.accessToken = user.access_token
         token.username = user.username
+        token.isAdm = user.isAdm
       }
 
      
@@ -65,6 +65,7 @@ export default NextAuth({
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken
       session.username = token.username
+      session.isAdm = token.isAdm
       
      
       return session

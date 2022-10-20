@@ -12,7 +12,7 @@ export default function Confirma() {
   
    
       
-console.log(resultado.carrinho)
+
 
     const finalizarCompra = async () =>{
        /* const response = await fetch('https://api.mercadopago.com/checkout/preferences', {

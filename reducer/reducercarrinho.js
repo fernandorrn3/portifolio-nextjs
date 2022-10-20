@@ -21,7 +21,7 @@ const carrinhoReducer = createSlice({
            
             const produtos = {
                 title:action.payload.nome,
-                unit_price:parseInt(action.payload.valor),
+                unit_price:action.payload.valor,
                 quantity: parseInt(action.payload.quantidade ),
                 
                 id:action.payload.id
@@ -41,7 +41,7 @@ updateCart(state,action){
     const produto = state.carrinho.find(el => el.id === action.payload.id)
  
     if(produto){
-        produto.quantidade = produto.quantidade + 1
+        produto.quantity = parseInt(produto.quantity + 1) 
     }
 
 

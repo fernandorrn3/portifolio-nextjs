@@ -17,12 +17,12 @@ export default function handler(req,res){
           try {
               if(!finduser.isAdm) throw 'acesso negado rota exclusiva para adm'
               if(finduser.isAdm){ 
-                res.json({mensagem: `bem vindo ${user}`  }) 
-                res.status(200).end()
+                res.status(200).json('admin') 
+                
               } 
           } catch (error) {
-              res.json({mensagem:error})
-              res.status(401).end()
+              res.status(401).json('usuario')
+              
           }
         }
 

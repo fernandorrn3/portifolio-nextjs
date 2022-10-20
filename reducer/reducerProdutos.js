@@ -14,7 +14,7 @@ export function upActionProduto(dados) {
     return async function midwareUpProd(dispatch, getState) {
         const fetchProduto = getState()
         const produtosStore = fetchProduto.reducerProdutos.produtos
-       
+
         const procuraProdutos = produtosStore.find(el => el.id == dados.id)
         dispatch(upQuantidade(procuraProdutos))
 
@@ -53,44 +53,37 @@ export const inserirProdutos = createAsyncThunk('produtos/inserirProdutos', asyn
 )
 
 const produtoReducer = createSlice({
+    
     name: 'produtos',
     initialState,
 
     reducers: {
-
         upQuantidade(state, action) {
-//pego o produto despachado pelo midware, procuro ele no state e atualizo a quantidade
-
-
+            //pego o produto despachado pelo midware, procuro ele no state e atualizo a quantidade
             const fetchProduto = state.produtos.find(el => el.id === action.payload.id)
-
             const flow = parseInt(fetchProduto.quantity)
-
             fetchProduto.quantity = flow
 
-
             if (fetchProduto) {
-
                 fetchProduto.quantity = parseInt(fetchProduto.quantity + 1)
             }
-
-
         }
     },
 
     extraReducers(builder) {
         builder
 
-        .addCase(inserirProdutos.pending , (state,action)=>{
-            state.status = 'loading'
-        })
+            .addCase(inserirProdutos.pending, (state, action) => {
+                state.status = 'loading'
+            })
 
-        .addCase(inserirProdutos.rejected,(state,action)=>{
-            state.status = 'failed',
-            state.error = action.error.message
-        })
+            .addCase(inserirProdutos.rejected, (state, action) => {
+                state.status = 'failed',
+                    state.error = action.error.message
+            })
             .addCase(inserirProdutos.fulfilled, (state, action) => {
                 state.status = 'succeeded'
+              
                 state.produtos.push(action.payload)
             })
 

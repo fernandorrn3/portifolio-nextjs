@@ -1,6 +1,6 @@
 import { useMercadopago } from 'react-sdk-mercadopago';
-
 import { useEffect, useState } from 'react';
+import { setCookie } from 'cookies-next';
 import { useSelector } from 'react-redux';
 import Layout from '../../components/layout';
 import Pagarcard from '../../lib/pagcart';
@@ -19,11 +19,13 @@ function Checkout() {
 
   const router = useRouter()
   const { user } = router.query
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession({
+    required: true
+  })
   const idorder = useSelector(elemento => elemento.reduceridorder)
 
   useEffect(() => {
-    console.log(pagamento)
+
     if (pagamento == 'cartao') {
       setCartaoStyle('flex flex-col')
       setBoletoStyle('hidden')
@@ -50,33 +52,29 @@ function Checkout() {
 
     }
   }, [pagamento])
-  if (!user) {
-    return null
+
+  useEffect(() => {
+    if (!user) return
+  }, [user])
+  
+
+
+  if (session) {
+    setCookie('chave', session)
   }
-
-  if (!session) {
-    alert('acesso negado nao esta autenticado')
-    router.push('/');
-    return null
-  }
-
-  if (session.username != user) {
-    alert('acesso negado  nomes inconscistente ')
-    router.push('/')
-    return null
-  }
-
-
 
   return (
     <div className='flex-flex-col min-h-screen'>
-  
+
       <div className='grid grid-cols-12'>
 
         <div className="grid grid-cols-3 gap-4 col-start-2 col-end-12">
 
           <div className='flex flex-col bg-[red]'>
-            <div><Edenreco /></div>
+            {user != undefined &&
+              <div><Edenreco usuario={user} /></div>
+            }
+
           </div>
 
           <div className='bg-[green] flex flex-col'>
@@ -88,23 +86,23 @@ function Checkout() {
 
               <div>
                 <input type="radio" id="cartao" name="fav_language" value="cartao" onClick={e => setPagamento(e.target.value)} />
-                <label for="cartao">cartao</label><br />
+                <label id="cartao">cartao</label><br />
                 <input type="radio" id="boleto" name="fav_language" value="boleto" onClick={e => setPagamento(e.target.value)} />
-                <label for="boleto">boleto</label><br />
+                <label id="boleto">boleto</label><br />
                 <input type="radio" id="pix" name="fav_language" value="pix" onClick={e => setPagamento(e.target.value)} />
-                <label for="pix">pix</label><br />
+                <label id="pix">pix</label><br />
                 <input type="radio" id="mercado" name="fav_language" value="mercado" onClick={e => setPagamento(e.target.value)} />
-                <label for="mercado">mercado</label><br />
+                <label id="mercado">mercado</label><br />
               </div>
 
               <div className={cartaoStyle}>
-               <Pagarcard/>
+                <Pagarcard />
               </div>
               <div className={boletoStyle}>
-                <Pagarboleto/>
+                <Pagarboleto />
               </div>
               <div className={pixStyle}>
-               <PagarPix/>
+                <PagarPix />
               </div>
               <div className={mercadoStyle}>
                 <h1>mercado-pago</h1>
@@ -121,7 +119,9 @@ function Checkout() {
       </div>
     </div>
   )
+
 }
+
 
 
 Checkout.getLayout = function getLayout(page) {

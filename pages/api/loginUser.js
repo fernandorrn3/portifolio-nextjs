@@ -19,6 +19,7 @@ if(findemail){
   
     usuario.username = findemail.username,
     usuario.email = findemail.email
+    usuario.isAdm = findemail.isAdm
           
 }
     

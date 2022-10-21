@@ -5,7 +5,7 @@ import Botaomenu from '../../../components/elementos/btnmenu'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import Formaddproduto from "../../../components/addProduto/addproduto"
-import Page from "../../page"
+
 function Addproduto() {
   const [styleMenu, setStyle] = useState('h-full ml-[220px] transition-all duration-700')
   const router = useRouter()

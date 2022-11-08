@@ -14,13 +14,16 @@ export default function Edenreco(props) {
     const endereco = useSelector((elemento) => elemento.reducerEndereco.endereco)
     const enderecoError = useSelector((elemento) => elemento.reducerEndereco.error)
     const statusEndereco = useSelector((elemento) => elemento.reducerEndereco.status)
-    const [editEndereco,setEditEndereco] = useState(false)
+    const [editEndereco, setEditEndereco] = useState(false)
     const cepref = useRef()
     const estadoref = useRef()
     const cidaderef = useRef()
     const ruaref = useRef()
     const numeroref = useRef()
     const complementoref = useRef()
+    useEffect(()=>{
+console.log(endereco)
+    },[endereco])
     useEffect(() => {
         if (statusEndereco === 'iddle') {
             dispatch(pegarEndereco(props.usuario))
@@ -44,9 +47,9 @@ export default function Edenreco(props) {
     }
 
     const liberarEdicao = () => {
-        setEditEndereco(true)
-       
-console.log(cepref.current.disabled)
+
+        editEndereco ? setEditEndereco(false) : setEditEndereco(true)
+        console.log(editEndereco)
         cepref.current.disabled = false
         estadoref.current.disabled = false
         cidaderef.current.disabled = false
@@ -55,10 +58,11 @@ console.log(cepref.current.disabled)
         complementoref.current.disabled = false
     }
 
-    const salvarEditEndereco = () =>{
+    const salvarEditEndereco = (e) => {
         setEditEndereco(false)
+        console.log(editEndereco)
         const data = {
-            usuario: props.usuario,
+            usuario: endereco.userId,
             criado: e.target.name,
             estado: estado,
             rua: rua,
@@ -68,7 +72,7 @@ console.log(cepref.current.disabled)
             numeroRua: numeroRua
         }
 
-        dispatch(inserirEndereco(data))
+         dispatch(inserirEndereco(data))
     }
 
     return (
@@ -79,15 +83,15 @@ console.log(cepref.current.disabled)
             <div>
                 <label>cep</label><br />
                 {editEndereco == true &&
-                <input type={'text'} placeholder='cep' ref={cepref} onChange={e => setCep(e.target.value)} />
+                    <input type={'text'} placeholder='cep' ref={cepref} onChange={e => setCep(e.target.value)} />
                 }
-                {endereco[0] != undefined && editEndereco == false &&
-                
-                    <input type={'text'} placeholder='cep' value={endereco[0].endereco.cep} onChange={e => setCep(e.target.value)} ref={cepref} disabled />
-                 
+                {Object.keys(endereco).length > 0 && editEndereco == false &&
+
+                    <input type={'text'} placeholder='cep' value={endereco.cep} ref={cepref} disabled />
+
                 }
-                {endereco[0] == undefined &&
-                    <input type={'text'} placeholder='cep' onChange={e => setCep(e.target.value)} />
+                {Object.keys(endereco).length === 0 &&
+                    <input type={'text'} placeholder='cep'  onChange={e => setCep(e.target.value)} />
                 }
 
 
@@ -95,20 +99,26 @@ console.log(cepref.current.disabled)
 
             <div>
                 <label>estado</label><br />
-                {endereco[0] != undefined &&
-                    <input type={'text'} placeholder='cidade' value={endereco[0].endereco.estado} onChange={e => setEstado(e.target.value)} ref={estadoref} disabled />
+                {editEndereco == true &&
+                    <input type={'text'} placeholder='cidade' onChange={e => setEstado(e.target.value)} ref={estadoref} />
                 }
-                {endereco[0] == undefined &&
+                {Object.keys(endereco).length > 0 && editEndereco == false &&
+                    <input type={'text'} placeholder='cidade' value={endereco.estado}  ref={estadoref} disabled />
+                }
+                {Object.keys(endereco).length === 0 &&
                     <input type={'text'} placeholder='cidade' onChange={e => setEstado(e.target.value)} />
                 }
 
             </div>
             <div>
                 <label>cidade</label><br />
-                {endereco[0] != undefined &&
-                    <input type={'text'} placeholder='cidade' value={endereco[0].endereco.cidade} onChange={e => setCidade(e.target.value)} ref={cidaderef} disabled />
+                {editEndereco == true &&
+                    <input type={'text'} placeholder='cidade' onChange={e => setCidade(e.target.value)} ref={cidaderef} />
                 }
-                {endereco[0] == undefined &&
+                {Object.keys(endereco).length > 0 && editEndereco == false &&
+                    <input type={'text'} placeholder='cidade' value={endereco.cidade}  ref={cidaderef} disabled />
+                }
+                {Object.keys(endereco).length === 0 &&
                     <input type={'text'} placeholder='cidade' onChange={e => setCidade(e.target.value)} />
                 }
 
@@ -116,43 +126,52 @@ console.log(cepref.current.disabled)
 
             <div>
                 <label>rua</label><br />
-                {endereco[0] != undefined &&
-                    <input type={'text'} placeholder='rua' value={endereco[0].endereco.rua} onChange={e => setRua(e.target.value)} ref={ruaref} disabled />
+                {editEndereco == true &&
+                    <input type={'text'} placeholder='rua' onChange={e => setRua(e.target.value)} ref={ruaref} />
                 }
-                {endereco[0] == undefined &&
+                {Object.keys(endereco).length > 0 && editEndereco == false &&
+                    <input type={'text'} placeholder='rua' value={endereco.rua}  ref={ruaref} disabled />
+                }
+                {Object.keys(endereco).length === 0 &&
                     <input type={'text'} placeholder='rua' onChange={e => setRua(e.target.value)} />
                 }
 
             </div>
             <div>
                 <label>numero Rua</label><br />
-                {endereco[0] != undefined &&
-                    <input type={'number'} placeholder='numero Rua' value={endereco[0].endereco.numeroRua} onChange={e => setNumeroRua(e.target.value)} ref={numeroref} disabled />
+                {editEndereco == true &&
+                    <input type={'number'} placeholder='numero Rua' onChange={e => setNumeroRua(e.target.value)} ref={numeroref} />
                 }
-                {endereco[0] == undefined &&
+                {Object.keys(endereco).length > 0 && editEndereco == false &&
+                    <input type={'number'} placeholder='numero Rua' value={endereco.numeroRua}  ref={numeroref} disabled />
+                }
+                {Object.keys(endereco).length === 0 &&
                     <input type={'number'} placeholder='numero Rua' onChange={e => setNumeroRua(e.target.value)} />
                 }
 
             </div>
             <div>
                 <label>complemento</label><br />
-                {endereco[0] != undefined &&
-                    <input type={'text'} placeholder='complemento' value={endereco[0].endereco.complemento} onChange={e => setComplemento(e.target.value)} ref={complementoref} disabled />
+                {editEndereco == true &&
+                    <input type={'text'} placeholder='complemento' onChange={e => setComplemento(e.target.value)} ref={complementoref} />
                 }
-                {endereco[0] == undefined &&
+                {Object.keys(endereco).length > 0 && editEndereco == false &&
+                    <input type={'text'} placeholder='complemento' value={endereco.complemento} ref={complementoref} disabled />
+                }
+                {Object.keys(endereco).length === 0 &&
                     <input type={'text'} placeholder='complemento' onChange={e => setComplemento(e.target.value)} />
                 }
 
             </div>
-            {endereco[0] != undefined &&
+            {endereco != undefined &&
                 <div className="bg-[green]"><button onClick={liberarEdicao} name='endereco' >Editar Endereco</button></div>
             }
-            {endereco[0] == undefined &&
-                <div className="bg-[green]"><button onClick={enviarEndereco} name='endereco' >adicionar Endereco</button></div>
+            {endereco == undefined &&
+                <div className="bg-[blue]"><button onClick={enviarEndereco} name='endereco' >adicionar Endereco</button></div>
             }
-{editEndereco &&
- <div className="bg-[yellow]"><button onClick={salvarEditEndereco} name='endereco' >adicionar Endereco</button></div>
-}
+            {editEndereco &&
+                <div className="bg-[yellow]"><button onClick={salvarEditEndereco} name='upEndereco' >Salvar Edicao</button></div>
+            }
         </div>
     )
 }

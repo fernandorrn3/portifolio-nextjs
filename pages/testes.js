@@ -1,10 +1,17 @@
-import EditorTexto from "../components/elementos/editortexto/editorTexto"
-export default function Teste(){
-    return(
-        <div className="flex flex-col w-[100%] h-full items-center justify-center  bg-[black]">
-<EditorTexto/>
+
+export default function Teste() {
+    const testecorreios = async () => {
+        const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'teste', {
+            method: 'POST',
+           
+        })
+        const response = await res.json()
+        console.log(response)
+    }
+    return (
+        <div><h1>testando</h1>
+            <button onClick={testecorreios}>clica aqui</button>
         </div>
     )
 }
 
-//criar uma div onde o editor sera renderizado

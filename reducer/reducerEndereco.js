@@ -7,6 +7,7 @@ const initialState = {
 }
 
 export const inserirEndereco = createAsyncThunk('endereco/inserirEndereco', async data => {
+    console.log(data)
     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'cadastrarUsuario/' + data.usuario, {
         method: 'PUT',
         headers: {
@@ -46,14 +47,15 @@ const enderecoRedux = createSlice({
     extraReducers(builder) {
         builder
             .addCase(inserirEndereco.fulfilled, (state, action) => {
-                state.status = 'succeeded'            
-                state.endereco.push(action.payload)  
+                state.status = 'succeeded'
+
+                state.endereco = action.payload  
             })
 
             .addCase(pegarEndereco.fulfilled,(state,action)=>{
                 state.status = 'succeeded'
            
-                state.endereco.push(action.payload[0])
+                state.endereco = action.payload[0].endereco
             })
 
             .addCase(pegarEndereco.rejected,(state,action)=>{

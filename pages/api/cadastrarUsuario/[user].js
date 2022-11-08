@@ -60,15 +60,12 @@ export default async function handler(req, res) {
                     throw e
                 })
                 .finally(async () => {
-
                     await prisma.$disconnect()
                 })
             break;
         //===============================================================
         case 'GET':
-
-
-
+            
             async function pegarEndereco() {
 
                 const selecionarEndereco = await prisma.user.findMany({
@@ -80,17 +77,15 @@ export default async function handler(req, res) {
                         endereco: true
                     }
                 })
-              
+            
                 try {
                     if (selecionarEndereco[0].endereco === null) throw 'nao possui endereco cadastrado'
                     if (selecionarEndereco[0].endereco) res.status(200).json(selecionarEndereco)
                 }
-
                 catch (err) {
                     console.log(err)
                     res.status(404).json({ mensagem: err })
                 }
-
             }
             pegarEndereco()
                 .catch((e) => {
@@ -102,24 +97,45 @@ export default async function handler(req, res) {
             break;
         //================================================================
         case 'PUT':
+            
             async function atualiza() {
-                const endereco = await prisma.endereco.create({
-                    data: {
-                        cep: req.body.cep,
-                        estado: req.body.estado,
-                        cidade: req.body.cidade,
-                        rua: req.body.rua,
-                        numeroRua: parseInt(req.body.numeroRua),
-                        complemento: req.body.complemento,
-                        user: {
-                            connect: {
-                                username: req.body.usuario
+                if(req.body.criado == 'upEndereco'){
+                    const upEndereco = await prisma.endereco.update({
+                        where:{
+                            userId:req.body.usuario
+                        },
+                        data:{
+                            cep: req.body.cep,
+                            estado: req.body.estado,
+                            cidade: req.body.cidade,
+                            rua: req.body.rua,
+                            numeroRua: parseInt(req.body.numeroRua),
+                            complemento: req.body.complemento,
+                        }
+                    })
+                    res.json(upEndereco)
+                }
+
+                if(req.body.criado == 'endereco'){
+                    const endereco = await prisma.endereco.create({
+                        data: {
+                            cep: req.body.cep,
+                            estado: req.body.estado,
+                            cidade: req.body.cidade,
+                            rua: req.body.rua,
+                            numeroRua: parseInt(req.body.numeroRua),
+                            complemento: req.body.complemento,
+                            user: {
+                                connect: {
+                                    username: req.body.usuario
+                                }
                             }
                         }
-                    }
-                })
-
-                res.json(endereco)
+                    })
+    
+                    res.json(endereco)
+                }
+             
             }
 
             atualiza()

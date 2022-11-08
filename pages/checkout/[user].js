@@ -9,7 +9,7 @@ import PagarPix from '../../lib/pagpix';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Edenreco from '../../components/endereco/cadastrarEdenreco';
-
+import CalculoDeFrete from '../../components/elementos/calculoFrete/calculoFrete';
 function Checkout() {
   const [pagamento, setPagamento] = useState()
   const [cartaoStyle, setCartaoStyle] = useState('hidden')
@@ -79,7 +79,7 @@ function Checkout() {
 
           <div className='bg-[green] flex flex-col'>
             <div>
-              <h1>opcao de entrega</h1>
+             <CalculoDeFrete/>
             </div>
             <div className='flex flex-col'>
               <div><h1>formas de pagamento</h1></div>
@@ -96,7 +96,7 @@ function Checkout() {
               </div>
 
               <div className={cartaoStyle}>
-                <Pagarcard />
+                <Pagarcard usuario={user}/>
               </div>
               <div className={boletoStyle}>
                 <Pagarboleto />

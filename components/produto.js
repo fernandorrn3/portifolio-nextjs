@@ -116,7 +116,7 @@ export default function Produto() {
         <div className="grid grid-cols-12 col-start-2 col-end-12 mx-1 my-1 min-h-screen">
 
             <div className="hidden sm:flex col-start-1 col-end-4 bg-[orange]">
-                <h1>Credenciais e rotas</h1>
+                <h1>filter produto</h1>
             </div>
             <div className="flex flex-col col-start-1 col-end-13 sm:col-start-4 ">
                 {novoArray.map((eli, index, arr) => {
@@ -137,7 +137,7 @@ export default function Produto() {
 }
 
 
-//adicionei,atualiza no carrinho e tambem atualiza a quantidade no produto
+
 
 const Quantidadeprt = (props) => {
     const produtos = useSelector((state) => state.reducerProdutos.produtos)

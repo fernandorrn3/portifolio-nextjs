@@ -52,7 +52,7 @@ model Endereco {
 //===========================================base dados ecommerce===================================================
 model Compras {
   id        Int    @id @default(autoincrement())
-  Idcompras String
+  Idcompras Int
   user      User   @relation(fields: [comprasId], references: [id])
   comprasId Int
 }

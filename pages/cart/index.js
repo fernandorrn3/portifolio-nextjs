@@ -7,7 +7,6 @@ import Link from "next/link";
 export default function Confirma() {
     const [id, setorderid] = useState()
     const dispatch = useDispatch()
-
     const resultado = useSelector((state) => state.reducercarrinho)
   
    
@@ -39,7 +38,7 @@ export default function Confirma() {
                 </div>
             <div className="col-start-7 col-end-12 bg-[green]">
                 <div><h1>Resumo</h1></div>
-                <div><button onClick={finalizarCompra}><Link href={'/checkout/fernandorrn'}>Finalizar Compra</Link></button></div>
+                <div><button onClick={finalizarCompra}><Link href={'/checkout/testando'}>Finalizar Compra</Link></button></div>
                 </div>
             
         </div>

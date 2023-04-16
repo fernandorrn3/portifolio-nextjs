@@ -8,7 +8,10 @@ import reducerProdutos from "./reducer/reducerProdutos";
 import reducerDetalhesProd from "./reducer/reducerDetalhesProd";
 import reducerProdCarac from "./reducer/reducerProdCarac";
 import reducerEndereco from "./reducer/reducerEndereco";
+import elementosReducers from "./reducer/elementosReducers";
+
   export const combinedReducer =  combineReducers({
+  
   menuReducer,
   reducercarrinho,
   reducercredential,
@@ -16,7 +19,9 @@ import reducerEndereco from "./reducer/reducerEndereco";
   reducerProdutos,
   reducerDetalhesProd,
   reducerProdCarac,
-  reducerEndereco
+  reducerEndereco,
+  elementosReducers,
+  
 })
 
 

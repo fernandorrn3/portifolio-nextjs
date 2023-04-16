@@ -1,4 +1,6 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
+  important: true,
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -17,8 +19,20 @@ module.exports = {
         'gray-light': '#d3dce6',
         'verde' : '#00ff00'
       },
+ 
+      transitionProperty: {
+        'height': 'height'
+      }
     },
-    
+    screens: {
+      'smm': {'max': '639px'},
+      'medio': {'min': '450px', 'max': '640px'},
+      'xs': '320px',
+      'grande':'1024px',
+      ...defaultTheme.screens,
+    },
   },
-  plugins: [],
+  plugins: [
+    
+  ],
 }

@@ -1,0 +1,13 @@
+
+
+//estilo do box 
+//box estilo grid
+//box estilo flex
+
+//item dentro do box
+//cada item ira representar 1 layount unico
+
+
+=====================opcoes de layount do box==================================
+//direçao dos itens dentro do box
+//configurar estilo dos itens

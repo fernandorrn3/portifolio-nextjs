@@ -40,14 +40,18 @@ casos de uso para adicionar o produto
 //adicionar produto +  detahles
 //adicionar produto + caracteristica
 //adicionar produto + categoria
-
 //adicionar produto + detalhes + categoria + caracteristica
-
-
-
-
-
 //ter uma rota so para adicionar e outra rota so para editar
-
-
 //botao de editar o produto
+
+//========================= INFORMAÇOES PAGINA STATUS PAGAMENTO================================//
+
+//order id
+//data do pedido
+//estimativa de quando ira chegar
+//status do pagamento
+//itens comprados
+//metodo de pagamento da compra
+//endereço de entrega
+
+senha banco wp:D0rM/tTw@9b6jY5b

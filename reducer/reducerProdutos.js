@@ -27,7 +27,7 @@ export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async ()
 
     const res = await fetch(process.env.NEXT_PUBLIC_DB_HOST + 'addproduto/user')
     const response = await res.json()
-
+    console.log(response)
     return response
 
 })
